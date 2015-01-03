@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>6F9B9470-D090-4061-9E5A-55736F72536D</string>
+	<key>IDESourceControlProjectName</key>
+	<string>joyfly-cpp</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>aee2d1a1-4426-0410-a5f0-a01be3619014++3692</key>
+		<string>http://www.esanbock.com/svn/repos/Linux/joyfly-cpp</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>joyfly-cpp.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>aee2d1a1-4426-0410-a5f0-a01be3619014++3692</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>aee2d1a1-4426-0410-a5f0-a01be3619014++3692</key>
+		<string>http://www.esanbock.com/svn/repos</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>http://www.esanbock.com/svn/repos/Linux/joyfly-cpp/joyfly-cpp.xcodeproj</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>aee2d1a1-4426-0410-a5f0-a01be3619014++3692</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>aee2d1a1-4426-0410-a5f0-a01be3619014++3692</string>
+			<key>IDESourceControlWCCName</key>
+			<string>joyfly-cpp</string>
+		</dict>
+	</array>
+</dict>
+</plist>
