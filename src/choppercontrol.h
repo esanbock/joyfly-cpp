@@ -11,6 +11,7 @@
 
 using namespace std;
 
+// this is the model class
 class ChopperControl
 {
 private:

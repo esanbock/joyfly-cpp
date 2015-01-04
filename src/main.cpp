@@ -25,6 +25,8 @@
 #include "SerialStream.h"
 #include "SerialPort.h"
 #include "choppercontrol.h"
+#include "c-joy-fly-controller.h"
+
 
 const int JOYSTICK_X = 0;
 const int JOYSTICK_Y = 1;
@@ -139,8 +141,9 @@ int main (int argc, char * const argv[])
 	string serialDevice = string(argv[1] );
     int secondsUpdate = atoi(argv[2]);
 
-
-	cout << "Opening joystick" << endl;
+	CJoyFlyController controller;
+	
+	controller.DebugMessage("Opening joystick");
 	try
 	{
 		CJoyTest sidewinder(0);
