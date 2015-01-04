@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Very Unorganized. All rights reserved.
 //
 
-//#include <stdio.h>
+#include <stdlib.h>
 #include <iostream>
 #include <iomanip>
 #include <sstream>
