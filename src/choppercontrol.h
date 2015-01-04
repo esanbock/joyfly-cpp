@@ -18,14 +18,18 @@ private:
     SerialPort& _serialPort;
     int _lastPingNum;
     clock_t _sentPingClock;
+    clock_t _lastTime = clock();
+    int _secondsUpdate;
 public:
-    ChopperControl(SerialPort& serialPort);
+    ChopperControl(SerialPort& serialPort, int secondsUpdate);
     void ProcessPingResponse( string& line );
     void SendPing();
-    void ProcessCommandResponse( string& line );
     void SendSimpleCommand(const char* szCommand, int value);
     void SendCommand(const char* szCommand);
     void SendCommand(const char* szCommand, bool toggle);
+    bool ProcessData();
+protected:
+    void ProcessCommandResponse( string& line );
 };
 
 #endif

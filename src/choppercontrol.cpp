@@ -17,11 +17,12 @@
 
 using namespace std;
 
-ChopperControl::ChopperControl(SerialPort& serialPort)
+ChopperControl::ChopperControl(SerialPort& serialPort, int secondsUpdate)
     :_serialPort(serialPort)
 {
     _lastPingNum = 3;
     _sentPingClock = clock();
+    _secondsUpdate = secondsUpdate;
 }
 
 void ChopperControl::SendPing()
@@ -88,4 +89,38 @@ void ChopperControl::SendCommand(const char* szCommand, bool toggle)
     string command = sstream.str();
     cout << command << endl;
     _serialPort.Write( command );
+}
+
+bool ChopperControl::ProcessData()
+{
+    bool haveData = false;
+    if( _serialPort.IsDataAvailable() )
+    {
+        try
+        {
+            string line = _serialPort.ReadLine( 200 );
+            
+            if( line[0] == ':' )
+                ProcessCommandResponse(line);
+            
+            cout << line << endl;
+            
+            haveData = true;
+        }
+        catch( SerialPort::ReadTimeout& timeout )
+        {
+            cerr << "I got nothing" << endl;
+        }
+    }
+    
+    clock_t now = clock();
+    
+    if( now - _lastTime >= CLOCKS_PER_SEC * _secondsUpdate )
+    {
+        _lastTime = clock();
+        SendPing();
+    }
+
+    
+    return haveData;
 }
