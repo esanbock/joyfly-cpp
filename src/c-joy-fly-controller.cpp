@@ -32,7 +32,7 @@ void CJoyFlyController::AddView(CJoyFlyView* pView)
 
 CJoyFlyController::~CJoyFlyController()
 {
-    delete pChopperControl;
+    delete _pChopperControl;
 }
 
 void CJoyFlyController::OnChopperMessage( const char* szMsg )
@@ -56,8 +56,8 @@ ChopperControl& CJoyFlyController::ConnectToChopper( const string serialDevice, 
     DebugMessage( (string("Opening serial port ") + serialDevice).c_str() );
     SerialPort comPort( serialDevice.c_str() );
     comPort.Open( SerialPort::BAUD_9600, SerialPort::CHAR_SIZE_8, SerialPort::PARITY_NONE, SerialPort::STOP_BITS_1) ;
-    pChopperControl = new ChopperControl(comPort, secondsUpdate);
-    return *pChopperControl;
+    _pChopperControl = new ChopperControl(comPort, secondsUpdate);
+    return *_pChopperControl;
 }
 
 int CJoyFlyController::AxisCommandSimple( ChopperControl& control, CJoyTest& sidewinder, const char* szCommand, int joyAxis, int min, int max )
@@ -148,14 +148,27 @@ void CJoyFlyController::RunJoystickTests()
 void CJoyFlyController::ProcessJoystickInput()
 {
     
-    AxisCommandSimple( *pChopperControl, *_sidewinder, ":T", JOYSTICK_THROTTLE, 255, 0);
-    AxisCommandSimple( *pChopperControl, *_sidewinder, ":B", JOYSTICK_X, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
-    AxisCommandSimple( *pChopperControl, *_sidewinder, ":P", JOYSTICK_Y, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
-    AxisCommandSimple( *pChopperControl, *_sidewinder, ":Y", JOYSTICK_Z, -255, 255);
-    ButtonCommandToggle( *pChopperControl, *_sidewinder, ":N", JOYSTICK_AUTOPILOT, 0, 1 );
-    ButtonCommandToggle( *pChopperControl, *_sidewinder, ":H", JOYSTICK_HOME);
-    ButtonCommandToggle( *pChopperControl, *_sidewinder, ":S", JOYSTICK_STATUS);
-    ButtonCommandToggle( *pChopperControl, *_sidewinder, ":V", JOYSTICK_VOLTAGE);
+    AxisCommandSimple( *_pChopperControl, *_sidewinder, ":T", JOYSTICK_THROTTLE, 255, 0);
+    AxisCommandSimple( *_pChopperControl, *_sidewinder, ":B", JOYSTICK_X, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
+    AxisCommandSimple( *_pChopperControl, *_sidewinder, ":P", JOYSTICK_Y, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
+    AxisCommandSimple( *_pChopperControl, *_sidewinder, ":Y", JOYSTICK_Z, -255, 255);
+    ButtonCommandToggle( *_pChopperControl, *_sidewinder, ":N", JOYSTICK_AUTOPILOT, 0, 1 );
+    ButtonCommandToggle( *_pChopperControl, *_sidewinder, ":H", JOYSTICK_HOME);
+    ButtonCommandToggle( *_pChopperControl, *_sidewinder, ":S", JOYSTICK_STATUS);
+    ButtonCommandToggle( *_pChopperControl, *_sidewinder, ":V", JOYSTICK_VOLTAGE);
     
-    HatCommandIncrement( *pChopperControl, *_sidewinder, SDL_HAT_DOWN, SDL_HAT_UP, ":L", -20, 20 );
+    HatCommandIncrement( *_pChopperControl, *_sidewinder, SDL_HAT_DOWN, SDL_HAT_UP, ":L", -20, 20 );
+}
+
+void CJoyFlyController::DoCommandLoop()
+{
+    bool quitting = false;
+    do
+    {
+        ProcessJoystickInput();
+        SDL_JoystickUpdate();
+        _pChopperControl->ProcessData();
+        
+        
+    } while( !quitting );
 }

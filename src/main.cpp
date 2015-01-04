@@ -26,14 +26,9 @@
 #include "c-joy-test.h"
 #include "choppercontrol.h"
 #include "c-joy-fly-controller.h"
-
-
-
+#include "c-terminal-view.h"
 
 using namespace std;
-using namespace LibSerial;
-
-
 
 int main (int argc, char * const argv[])
 {
@@ -49,7 +44,9 @@ int main (int argc, char * const argv[])
     int secondsUpdate = atoi(argv[2]);
 
 	CJoyFlyController controller;
-	
+    
+    CTerminalView terminalView;
+    controller.AddView( &terminalView );
 
 	try
 	{
@@ -64,20 +61,10 @@ int main (int argc, char * const argv[])
 			return 0;
 		}
 
-        ChopperControl& chopperControl = controller.ConnectToChopper( serialDevice.c_str(), secondsUpdate );
+        controller.ConnectToChopper( serialDevice.c_str(), secondsUpdate );
         
-		bool quitting = false;
-
-		do
-		{
-            controller.ProcessJoystickInput();
-			SDL_JoystickUpdate();
-
-		
-            chopperControl.ProcessData();
-
-
-		} while( !quitting );
+        // this doesn't return until it's over
+        controller.DoCommandLoop();
 
 		return 0;
 	}

@@ -35,6 +35,8 @@ public:
     void ProcessJoystickInput();
     void OpenJoystick(int joystickNum);
     void RunJoystickTests();
+    void DoCommandLoop();
+    
 protected:
     int AxisCommandSimple( ChopperControl& control, CJoyTest& sidewinder, const char* szCommand, int joyAxis, int min, int max );
     int HatCommandIncrement( ChopperControl& control, CJoyTest& sidewinder, Uint8 down, Uint8 up, const char* szCommand, int lowVal, int highVal );
@@ -42,7 +44,7 @@ protected:
     int ButtonCommandToggle( ChopperControl& control, CJoyTest& sidewinder, const char* szCommand, int joyAxis, int ifTrue, int ifFalse );
 private:
 	vector<CJoyFlyView*> _views;
-    ChopperControl* pChopperControl = NULL;
+    ChopperControl* _pChopperControl = NULL;
     CJoyTest* _sidewinder = NULL;
     
     const int JOYSTICK_X = 0;
