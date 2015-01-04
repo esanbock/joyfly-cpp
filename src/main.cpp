@@ -48,49 +48,38 @@ bool buttonToggle[5];
 using namespace std;
 using namespace LibSerial;
 
-int AxisCommandSimple( SerialPort& serialPort, CJoyTest& sidewinder, const char* szCommand, int joyAxis, int min, int max )
+int AxisCommandSimple( ChopperControl& control, CJoyTest& sidewinder, const char* szCommand, int joyAxis, int min, int max )
 {
 	curVals[joyAxis] = sidewinder.GetAxisNormalized (joyAxis, min, max);
 	if( prevVals[joyAxis] != curVals[joyAxis] )
 	{
-		stringstream sstream;
-		sstream << szCommand << setfill('0') << setw(3) << curVals[joyAxis];
-		string command = sstream.str();
-		cout << command << endl;
-		serialPort.Write( command );
+        control.SendSimpleCommand(szCommand, curVals[joyAxis]);
 	}
 	prevVals[joyAxis] = curVals[joyAxis];
     
     return prevVals[joyAxis];
 }
 
-int ButtonCommandToggle( SerialPort& serialPort, CJoyTest& sidewinder, const char* szCommand, int joyAxis, int ifTrue, int ifFalse )
+int ButtonCommandToggle( ChopperControl& control, CJoyTest& sidewinder, const char* szCommand, int joyAxis, int ifTrue, int ifFalse )
 {
 	curButtonVals[joyAxis] = sidewinder.GetButton (joyAxis);
 	if( prevButtonVals[joyAxis] != curButtonVals[joyAxis] && curButtonVals[joyAxis] == 1 )
 	{
 		buttonToggle[joyAxis] = !buttonToggle[joyAxis];
-		stringstream sstream;
-		sstream << szCommand << setfill('0') << setw(3) << (buttonToggle[joyAxis] ? ifTrue : ifFalse);
-		string command = sstream.str();
-		cout << command << endl;
-		serialPort.Write( command );
+        
+        control.SendCommand(szCommand, buttonToggle[joyAxis] ? ifTrue : ifFalse);
 	}
 	prevButtonVals[joyAxis] = curButtonVals[joyAxis];
     return prevButtonVals[joyAxis];
 }
 
-int ButtonCommandToggle( SerialPort& serialPort, CJoyTest& sidewinder, const char* szCommand, int joyAxis )
+int ButtonCommandToggle( ChopperControl& control, CJoyTest& sidewinder, const char* szCommand, int joyAxis )
 {
 	curButtonVals[joyAxis] = sidewinder.GetButton (joyAxis);
 	if( prevButtonVals[joyAxis] != curButtonVals[joyAxis] && curButtonVals[joyAxis] == 1 )
 	{
 		buttonToggle[joyAxis] = !buttonToggle[joyAxis];
-		stringstream sstream;
-		sstream << szCommand;
-		string command = sstream.str();
-		cout << command << endl;
-		serialPort.Write( command );
+        control.SendCommand(szCommand);
 	}
 	prevButtonVals[joyAxis] = curButtonVals[joyAxis];
     return prevButtonVals[joyAxis];
@@ -98,7 +87,7 @@ int ButtonCommandToggle( SerialPort& serialPort, CJoyTest& sidewinder, const cha
 
 
 
-int HatCommandIncrement( SerialPort& serialPort, CJoyTest& sidewinder, Uint8 down, Uint8 up, const char* szCommand, 
+int HatCommandIncrement( ChopperControl& control, CJoyTest& sidewinder, Uint8 down, Uint8 up, const char* szCommand,
                          int lowVal, int highVal )
 {
 	static long lastHatTime=666;
@@ -129,12 +118,7 @@ int HatCommandIncrement( SerialPort& serialPort, CJoyTest& sidewinder, Uint8 dow
 	}
 
 	currentHatY = min( highVal, max( lowVal, currentHatY) );
-
-	stringstream sstream;
-	sstream << szCommand << setfill('0') << setw(3) << currentHatY;
-	string command = sstream.str();
-	cout << command << endl;
-	serialPort.Write( command );
+    control.SendCommand( szCommand, currentHatY);
 	
 	return currentHatY;
 }
@@ -152,11 +136,9 @@ int main (int argc, char * const argv[])
 		return -1;
 	}
     
-    int secondsUpdate = atoi(argv[1]);
-
-
-
 	string serialDevice = string(argv[1] );
+    int secondsUpdate = atoi(argv[2]);
+
 
 	cout << "Opening joystick" << endl;
 	try
@@ -184,16 +166,16 @@ int main (int argc, char * const argv[])
 		{
 			SDL_JoystickUpdate();
 
-			AxisCommandSimple( comPort, sidewinder, ":T", JOYSTICK_THROTTLE, 255, 0);
-			AxisCommandSimple( comPort,sidewinder, ":B", JOYSTICK_X, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
-			AxisCommandSimple( comPort,sidewinder, ":P", JOYSTICK_Y, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
-			AxisCommandSimple( comPort,sidewinder, ":Y", JOYSTICK_Z, -255, 255);
-			ButtonCommandToggle( comPort, sidewinder, ":N", JOYSTICK_AUTOPILOT, 0, 1 );
-			ButtonCommandToggle( comPort, sidewinder, ":H", JOYSTICK_HOME);
-			ButtonCommandToggle( comPort, sidewinder, ":S", JOYSTICK_STATUS);
-			ButtonCommandToggle( comPort, sidewinder, ":V", JOYSTICK_VOLTAGE);
+			AxisCommandSimple( chopperControl, sidewinder, ":T", JOYSTICK_THROTTLE, 255, 0);
+			AxisCommandSimple( chopperControl,sidewinder, ":B", JOYSTICK_X, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
+			AxisCommandSimple( chopperControl,sidewinder, ":P", JOYSTICK_Y, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
+			AxisCommandSimple( chopperControl,sidewinder, ":Y", JOYSTICK_Z, -255, 255);
+			ButtonCommandToggle( chopperControl, sidewinder, ":N", JOYSTICK_AUTOPILOT, 0, 1 );
+			ButtonCommandToggle( chopperControl, sidewinder, ":H", JOYSTICK_HOME);
+			ButtonCommandToggle( chopperControl, sidewinder, ":S", JOYSTICK_STATUS);
+			ButtonCommandToggle( chopperControl, sidewinder, ":V", JOYSTICK_VOLTAGE);
 
-			HatCommandIncrement( comPort, sidewinder, SDL_HAT_DOWN, SDL_HAT_UP, ":L", -20, 20 );
+			HatCommandIncrement( chopperControl, sidewinder, SDL_HAT_DOWN, SDL_HAT_UP, ":L", -20, 20 );
 		
 			if( comPort.IsDataAvailable() )
 			{

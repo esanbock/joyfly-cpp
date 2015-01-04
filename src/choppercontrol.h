@@ -22,6 +22,9 @@ public:
     void ProcessPingResponse( string& line );
     void SendPing();
     void ProcessCommandResponse( string& line );
+    void SendSimpleCommand(const char* szCommand, int value);
+    void SendCommand(const char* szCommand);
+    void SendCommand(const char* szCommand, bool toggle);
 };
 
 #endif

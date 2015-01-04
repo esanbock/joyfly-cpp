@@ -11,6 +11,7 @@
 		1F09BCB41A5731D100C8D0D3 /* c-joy-test.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F09BCB21A5731D100C8D0D3 /* c-joy-test.cc */; };
 		1F09BCB61A574F5700C8D0D3 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F09BCB51A574F5700C8D0D3 /* SDL2.framework */; };
 		1F09BCB81A574F9D00C8D0D3 /* libserial.0.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F09BCB71A574F9D00C8D0D3 /* libserial.0.0.0.dylib */; };
+		1F13F94E1A58D1CB008674F3 /* choppercontrol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F13F94D1A58D1CB008674F3 /* choppercontrol.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,6 +33,8 @@
 		1F09BCB21A5731D100C8D0D3 /* c-joy-test.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "c-joy-test.cc"; path = "src/c-joy-test.cc"; sourceTree = "<group>"; };
 		1F09BCB51A574F5700C8D0D3 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		1F09BCB71A574F9D00C8D0D3 /* libserial.0.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libserial.0.0.0.dylib; path = "../libserial-0.5.2/lib/lib/libserial.0.0.0.dylib"; sourceTree = "<group>"; };
+		1F13F94C1A58D0DF008674F3 /* choppercontrol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = choppercontrol.h; path = src/choppercontrol.h; sourceTree = "<group>"; };
+		1F13F94D1A58D1CB008674F3 /* choppercontrol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = choppercontrol.cpp; path = src/choppercontrol.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +53,8 @@
 		1F09BC9D1A57318900C8D0D3 = {
 			isa = PBXGroup;
 			children = (
+				1F13F94D1A58D1CB008674F3 /* choppercontrol.cpp */,
+				1F13F94C1A58D0DF008674F3 /* choppercontrol.h */,
 				1F09BCB71A574F9D00C8D0D3 /* libserial.0.0.0.dylib */,
 				1F09BCB51A574F5700C8D0D3 /* SDL2.framework */,
 				1F09BCB01A5731D100C8D0D3 /* main.cpp */,
@@ -125,6 +130,7 @@
 			files = (
 				1F09BCB41A5731D100C8D0D3 /* c-joy-test.cc in Sources */,
 				1F09BCB31A5731D100C8D0D3 /* main.cpp in Sources */,
+				1F13F94E1A58D1CB008674F3 /* choppercontrol.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

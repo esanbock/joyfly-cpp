@@ -63,3 +63,29 @@ void ChopperControl::ProcessCommandResponse( string& line )
     cout << "unrecognized command from chopper" << endl;
 }
 
+void ChopperControl::SendSimpleCommand(const char* szCommand, int value)
+{
+    stringstream sstream;
+    sstream << szCommand << setfill('0') << setw(3) << value;
+    string command = sstream.str();
+    cout << command << endl;
+    _serialPort.Write( command );
+}
+
+void ChopperControl::SendCommand(const char* szCommand)
+{
+    stringstream sstream;
+    sstream << szCommand;
+    string command = sstream.str();
+    cout << command << endl;
+    _serialPort.Write( command );
+}
+
+void ChopperControl::SendCommand(const char* szCommand, bool toggle)
+{
+    stringstream sstream;
+    sstream << szCommand << setfill('0') << setw(3) << toggle;
+    string command = sstream.str();
+    cout << command << endl;
+    _serialPort.Write( command );
+}
