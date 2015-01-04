@@ -24,6 +24,7 @@
 #include "c-joy-test.h"
 #include "SerialStream.h"
 #include "SerialPort.h"
+#include "choppercontrol.h"
 
 const int JOYSTICK_X = 0;
 const int JOYSTICK_Y = 1;
@@ -34,8 +35,7 @@ const int JOYSTICK_HOME = 1;
 const int JOYSTICK_STATUS = 8;
 const int JOYSTICK_VOLTAGE = 5;
 
-int lastPingNum;
-clock_t sentPingClock;
+
 int currentHatY;
 
 int prevVals[4] = {0,0,0,127};
@@ -139,43 +139,8 @@ int HatCommandIncrement( SerialPort& serialPort, CJoyTest& sidewinder, Uint8 dow
 	return currentHatY;
 }
 
-void SendPing(SerialPort& serialPort)
-{
-	sentPingClock = clock();
-	lastPingNum++;
-	if( lastPingNum > 999 )
-		lastPingNum = 1;
 
-	stringstream sstream;
-	sstream << ":E" << setfill('0') << setw(3) << lastPingNum;
-	string command = sstream.str();
-	cout << command << endl;
-	serialPort.Write( command );
-}
 
-void ProcessPingResponse( string& line )
-{
-	int pingResponse = atoi( line.substr(3).c_str() );
-	if( pingResponse != lastPingNum )
-	{
-		cout << "unmatched ping " << pingResponse << ".  Expected " << lastPingNum << endl;
-		return;
-	}
-	float latency = (float)(clock() - sentPingClock ) / CLOCKS_PER_SEC ;
-	cout << "latency = " << latency << ": " << " " << clock() << "," << sentPingClock << endl; ;
-}
-
-void ProcessCommandResponse( string& line )
-{
-	if( line.compare(0,3,":ER") == 0 )
-	{
-		ProcessPingResponse( line );
-		return;
-	}
-
-	// otherwise, NAK
-	cout << "unrecognized command from chopper" << endl;
-}
 
 int main (int argc, char * const argv[])
 {
@@ -189,8 +154,7 @@ int main (int argc, char * const argv[])
     
     int secondsUpdate = atoi(argv[1]);
 
-	lastPingNum = 3;
-	sentPingClock = clock();
+
 
 	string serialDevice = string(argv[1] );
 
@@ -214,7 +178,7 @@ int main (int argc, char * const argv[])
 
 		clock_t lastTime = clock();
 		//bool flipper = false;
-
+        ChopperControl chopperControl(comPort);
 
 		do
 		{
@@ -238,7 +202,7 @@ int main (int argc, char * const argv[])
 					string line = comPort.ReadLine( 200 );
 
 					if( line[0] == ':' )
-						ProcessCommandResponse(line);
+						chopperControl.ProcessCommandResponse(line);
 
 					cout << line << endl;
 				}
@@ -255,7 +219,7 @@ int main (int argc, char * const argv[])
 			if( now - lastTime >= CLOCKS_PER_SEC * secondsUpdate )
 			{
 				lastTime = clock();
-				SendPing(comPort);
+				chopperControl.SendPing();
 			}
 
 		} while( !quitting );
