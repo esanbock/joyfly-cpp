@@ -17,7 +17,7 @@
  */
 
 #include <iostream>
-#include "SDL.h"
+#include "SDL2/SDL.h"
 #include "c-joy-test.h"
 
 using namespace std;
