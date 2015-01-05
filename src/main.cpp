@@ -34,14 +34,13 @@ int main (int argc, char * const argv[])
 {
 	cout << "Hello world!" << std::endl;
 
-	if( argc < 2 )
+	if( argc < 1 )
 	{
 		cout << "wrong number of parameters" << endl;
 		return -1;
 	}
     
 	string serialDevice = string(argv[1] );
-    int secondsUpdate = atoi(argv[2]);
 
 	CJoyFlyController controller;
     
@@ -60,7 +59,13 @@ int main (int argc, char * const argv[])
 
 			return 0;
 		}
+        if( argc < 2)
+        {
+            cout << "wrong number of parameters" << endl;
+            return -1;
+        }
 
+        int secondsUpdate = atoi(argv[2]);
         controller.ConnectToChopper( serialDevice.c_str(), secondsUpdate );
         
         // this doesn't return until it's over
