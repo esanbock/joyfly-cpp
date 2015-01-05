@@ -20,10 +20,16 @@
 #include <vector>
 #include "SerialStream.h"
 #include "SerialPort.h"
-#include "Choppercontrol.h"
+#include "choppercontrol.h"
 #include "SDL2/SDL.h"
 #include "c-joy-test.h"
 #include "c-joy-fly-controller.h"
+
+CJoyFlyController::CJoyFlyController()
+{
+	int _prevVals[4] = {0,0,0,127};
+    int _curVals[4]  = {0,0,0,127};
+}
 
 void CJoyFlyController::AddView(CJoyFlyView* pView)
 {

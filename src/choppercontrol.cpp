@@ -23,6 +23,7 @@ ChopperControl::ChopperControl(SerialPort& serialPort, int secondsUpdate)
     _lastPingNum = 3;
     _sentPingClock = clock();
     _secondsUpdate = secondsUpdate;
+	_lastTime = clock();
 }
 
 void ChopperControl::SendPing()

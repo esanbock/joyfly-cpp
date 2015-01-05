@@ -27,6 +27,7 @@ using namespace std;
 class CJoyFlyController
 {
 public:
+	CJoyFlyController();
 	void AddView(CJoyFlyView* pView);
 	void OnChopperMessage( const char* szMsg );
 	void DebugMessage( const char* szMsg );
@@ -47,20 +48,20 @@ private:
     ChopperControl* _pChopperControl = NULL;
     CJoyTest* _sidewinder = NULL;
     
-    const int JOYSTICK_X = 0;
-    const int JOYSTICK_Y = 1;
-    const int JOYSTICK_Z = 2;
-    const int JOYSTICK_THROTTLE = 3;
-    const int JOYSTICK_AUTOPILOT = 4;
-    const int JOYSTICK_HOME = 1;
-    const int JOYSTICK_STATUS = 8;
-    const int JOYSTICK_VOLTAGE = 5;
+    static const int JOYSTICK_X = 0;
+    static const int JOYSTICK_Y = 1;
+    static const int JOYSTICK_Z = 2;
+    static const int JOYSTICK_THROTTLE = 3;
+    static const int JOYSTICK_AUTOPILOT = 4;
+    static const int JOYSTICK_HOME = 1;
+    static const int JOYSTICK_STATUS = 8;
+    static const int JOYSTICK_VOLTAGE = 5;
     
     
     int _currentHatY;
     
-    int _prevVals[4] = {0,0,0,127};
-    int _curVals[4]  = {0,0,0,127};
+    int _prevVals[4];
+    int _curVals[4];
     
     int _prevButtonVals[5];
     int _curButtonVals[5];

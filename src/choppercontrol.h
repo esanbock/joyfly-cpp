@@ -18,7 +18,7 @@ private:
     SerialPort& _serialPort;
     int _lastPingNum;
     clock_t _sentPingClock;
-    clock_t _lastTime = clock();
+    clock_t _lastTime;
     int _secondsUpdate;
 public:
     ChopperControl(SerialPort& serialPort, int secondsUpdate);
