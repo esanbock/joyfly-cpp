@@ -26,9 +26,8 @@
 #include "c-joy-fly-controller.h"
 
 CJoyFlyController::CJoyFlyController()
+    :_prevVals {0,0,0,127} ,_curVals{0,0,0,127}
 {
-	int _prevVals[4] = {0,0,0,127};
-    int _curVals[4]  = {0,0,0,127};
 }
 
 void CJoyFlyController::AddView(CJoyFlyView* pView)
