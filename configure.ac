@@ -10,9 +10,9 @@ AC_REQUIRE_CPP
 AC_LANG_CPLUSPLUS
 
 # Checks for programs.
-#AC_PROG_CXX
-#AC_PROG_CC
 AC_PROG_CXX(g++)
+
+CXXFLAGS="$CXXFLAGS -std=c++11"
 
 # Checks for libraries.
 # Checks for typedefs, structures, and compiler characteristics.
