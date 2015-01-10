@@ -15,7 +15,26 @@
 		1F13F96A1A59A63B008674F3 /* c-joy-fly-controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F13F9641A59A63B008674F3 /* c-joy-fly-controller.cpp */; };
 		1F13F96B1A59A63B008674F3 /* c-joy-fly-view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F13F9661A59A63B008674F3 /* c-joy-fly-view.cpp */; };
 		1F13F96C1A59A63B008674F3 /* c-terminal-view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F13F9681A59A63B008674F3 /* c-terminal-view.cpp */; };
+		1F13F9701A61CE79008674F3 /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F13F96F1A61CE79008674F3 /* QtGui.framework */; };
+		1F13F9721A61CEFC008674F3 /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F13F9711A61CEFC008674F3 /* QtCore.framework */; };
+		1F13F9751A61D0B7008674F3 /* mainwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F13F9731A61D0B7008674F3 /* mainwindow.cpp */; };
+		1F13F9791A61D60D008674F3 /* mainwindow.ui in Sources */ = {isa = PBXBuildFile; fileRef = 1F13F9761A61D260008674F3 /* mainwindow.ui */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		1F13F9781A61D3AD008674F3 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.ui";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"${INPUT_FILE_DIR}/GeneratedFiles/ui_${INPUT_FILE_BASE}.h",
+				"",
+			);
+			script = "~/Qt/5.4/clang_64/bin/uic -o ${INPUT_FILE_DIR}/GeneratedFiles/ui_${INPUT_FILE_BASE}.h ${INPUT_FILE_PATH}\n";
+		};
+/* End PBXBuildRule section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		1F09BCA41A57318900C8D0D3 /* CopyFiles */ = {
@@ -44,6 +63,12 @@
 		1F13F9671A59A63B008674F3 /* c-joy-fly-view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "c-joy-fly-view.h"; path = "src/c-joy-fly-view.h"; sourceTree = "<group>"; };
 		1F13F9681A59A63B008674F3 /* c-terminal-view.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "c-terminal-view.cpp"; path = "src/c-terminal-view.cpp"; sourceTree = "<group>"; };
 		1F13F9691A59A63B008674F3 /* c-terminal-view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "c-terminal-view.h"; path = "src/c-terminal-view.h"; sourceTree = "<group>"; };
+		1F13F96D1A61CE21008674F3 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
+		1F13F96F1A61CE79008674F3 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = ../../../../Qt/5.4/clang_64/lib/QtGui.framework; sourceTree = "<group>"; };
+		1F13F9711A61CEFC008674F3 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = ../../../../Qt/5.4/clang_64/lib/QtCore.framework; sourceTree = "<group>"; };
+		1F13F9731A61D0B7008674F3 /* mainwindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mainwindow.cpp; path = src/mainwindow.cpp; sourceTree = "<group>"; };
+		1F13F9741A61D0B7008674F3 /* mainwindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mainwindow.h; path = src/mainwindow.h; sourceTree = "<group>"; };
+		1F13F9761A61D260008674F3 /* mainwindow.ui */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mainwindow.ui; path = src/mainwindow.ui; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +76,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F13F9721A61CEFC008674F3 /* QtCore.framework in Frameworks */,
+				1F13F9701A61CE79008674F3 /* QtGui.framework in Frameworks */,
 				1F09BCB81A574F9D00C8D0D3 /* libserial.0.0.0.dylib in Frameworks */,
 				1F09BCB61A574F5700C8D0D3 /* SDL2.framework in Frameworks */,
 			);
@@ -62,6 +89,12 @@
 		1F09BC9D1A57318900C8D0D3 = {
 			isa = PBXGroup;
 			children = (
+				1F13F9761A61D260008674F3 /* mainwindow.ui */,
+				1F13F9731A61D0B7008674F3 /* mainwindow.cpp */,
+				1F13F9741A61D0B7008674F3 /* mainwindow.h */,
+				1F13F9711A61CEFC008674F3 /* QtCore.framework */,
+				1F13F96F1A61CE79008674F3 /* QtGui.framework */,
+				1F13F96D1A61CE21008674F3 /* QTKit.framework */,
 				1F13F9641A59A63B008674F3 /* c-joy-fly-controller.cpp */,
 				1F13F9651A59A63B008674F3 /* c-joy-fly-controller.h */,
 				1F13F9661A59A63B008674F3 /* c-joy-fly-view.cpp */,
@@ -99,6 +132,7 @@
 				1F09BCA41A57318900C8D0D3 /* CopyFiles */,
 			);
 			buildRules = (
+				1F13F9781A61D3AD008674F3 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -143,8 +177,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F13F9791A61D60D008674F3 /* mainwindow.ui in Sources */,
 				1F13F96A1A59A63B008674F3 /* c-joy-fly-controller.cpp in Sources */,
 				1F09BCB41A5731D100C8D0D3 /* c-joy-test.cc in Sources */,
+				1F13F9751A61D0B7008674F3 /* mainwindow.cpp in Sources */,
 				1F13F96B1A59A63B008674F3 /* c-joy-fly-view.cpp in Sources */,
 				1F09BCB31A5731D100C8D0D3 /* main.cpp in Sources */,
 				1F13F96C1A59A63B008674F3 /* c-terminal-view.cpp in Sources */,
@@ -236,12 +272,16 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"/Library/Frameworks/**",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+					/Users/esanbockd/Qt/5.4/clang_64/lib,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"/Library/Frameworks/SDL2.framework/**",
 					"/Users/esanbockd/Documents/Development/cpp/libserial-0.5.2/lib/include",
+					"/Users/esanbockd/Qt/5.4/clang_64/lib/QtCore.framework/**",
+					"/Users/esanbockd/Qt/5.4/clang_64/lib/QtGui.framework/**",
+					"/Users/esanbockd/Qt/5.4/clang_64/lib/QtWidgets.framework/**",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -259,12 +299,16 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"/Library/Frameworks/**",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+					/Users/esanbockd/Qt/5.4/clang_64/lib,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"/Library/Frameworks/SDL2.framework/**",
 					"/Users/esanbockd/Documents/Development/cpp/libserial-0.5.2/lib/include",
+					"/Users/esanbockd/Qt/5.4/clang_64/lib/QtCore.framework/**",
+					"/Users/esanbockd/Qt/5.4/clang_64/lib/QtGui.framework/**",
+					"/Users/esanbockd/Qt/5.4/clang_64/lib/QtWidgets.framework/**",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
