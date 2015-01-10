@@ -19,6 +19,7 @@
 		1F13F9721A61CEFC008674F3 /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F13F9711A61CEFC008674F3 /* QtCore.framework */; };
 		1F13F9751A61D0B7008674F3 /* mainwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F13F9731A61D0B7008674F3 /* mainwindow.cpp */; };
 		1F13F9791A61D60D008674F3 /* mainwindow.ui in Sources */ = {isa = PBXBuildFile; fileRef = 1F13F9761A61D260008674F3 /* mainwindow.ui */; };
+		1F13F97B1A61D78B008674F3 /* QtWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F13F97A1A61D78B008674F3 /* QtWidgets.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -69,6 +70,8 @@
 		1F13F9731A61D0B7008674F3 /* mainwindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mainwindow.cpp; path = src/mainwindow.cpp; sourceTree = "<group>"; };
 		1F13F9741A61D0B7008674F3 /* mainwindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mainwindow.h; path = src/mainwindow.h; sourceTree = "<group>"; };
 		1F13F9761A61D260008674F3 /* mainwindow.ui */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mainwindow.ui; path = src/mainwindow.ui; sourceTree = "<group>"; };
+		1F13F97A1A61D78B008674F3 /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtWidgets.framework; path = ../../../../Qt/5.4/clang_64/lib/QtWidgets.framework; sourceTree = "<group>"; };
+		1F13F97D1A61D9A9008674F3 /* GeneratedFiles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = GeneratedFiles; path = src/GeneratedFiles; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F13F97B1A61D78B008674F3 /* QtWidgets.framework in Frameworks */,
 				1F13F9721A61CEFC008674F3 /* QtCore.framework in Frameworks */,
 				1F13F9701A61CE79008674F3 /* QtGui.framework in Frameworks */,
 				1F09BCB81A574F9D00C8D0D3 /* libserial.0.0.0.dylib in Frameworks */,
@@ -89,6 +93,8 @@
 		1F09BC9D1A57318900C8D0D3 = {
 			isa = PBXGroup;
 			children = (
+				1F13F97D1A61D9A9008674F3 /* GeneratedFiles */,
+				1F13F97A1A61D78B008674F3 /* QtWidgets.framework */,
 				1F13F9761A61D260008674F3 /* mainwindow.ui */,
 				1F13F9731A61D0B7008674F3 /* mainwindow.cpp */,
 				1F13F9741A61D0B7008674F3 /* mainwindow.h */,
