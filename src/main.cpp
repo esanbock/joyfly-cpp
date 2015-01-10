@@ -20,7 +20,18 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+
+#include "mainwindow.h"
+
+#include <QApplication>
+
+// apple junk
+#ifdef __APPLE__
+#include "SDL.h"
+#else
 #include "SDL2/SDL.h"
+#endif
+
 #include "SerialStream.h"
 #include "SerialPort.h"
 #include "c-joy-test.h"
@@ -30,8 +41,15 @@
 
 using namespace std;
 
-int main (int argc, char * const argv[])
+
+int main (int argc, char * argv[])
 {
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+
+    return a.exec();
+
 	cout << "Hello world!" << std::endl;
 
 	if( argc < 1 )

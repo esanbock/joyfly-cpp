@@ -21,7 +21,13 @@
 #include "SerialStream.h"
 #include "SerialPort.h"
 #include "choppercontrol.h"
+
+#ifdef __APPLE__
+#include "SDL.h"
+#else
 #include "SDL2/SDL.h"
+#endif
+
 #include "c-joy-test.h"
 #include "c-joy-fly-controller.h"
 
