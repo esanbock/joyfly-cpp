@@ -12,9 +12,13 @@ TARGET = joyfly_cpp
 TEMPLATE = app
 
 QMAKE_CXXFLAGS += -std=c++11
+#QMAKE_CXXFLAGS += -std=gnu++11
 
 mac: INCLUDEPATH += /Library/Frameworks/SDL2.framework/Headers
-mac: INCLUDEPATH += ../../libserial-0.5.2/lib/include
+mac: QMAKE_LFLAGS += -F/Library/Frameworks
+
+mac: INCLUDEPATH += /opt/local/include
+mac: QMAKE_LFLAGS += -L /opt/local/lib
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -33,12 +37,8 @@ HEADERS  += mainwindow.h \
 
 FORMS += mainwindow.ui
 
-mac: QMAKE_LFLAGS += -F/Library/Frameworks
-mac: QMAKE_LFLAGS += -L../../libserial-0.5.2/lib/lib
-
-LIBS += -lserial
-
 mac: LIBS += -framework SDL2
 else:unix|win32: LIBS += -lSDL2
 
-
+LIBS += -lserial
+#LIBS += -/opt/local/lib/libserial.dylib

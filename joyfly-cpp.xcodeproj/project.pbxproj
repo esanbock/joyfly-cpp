@@ -31,9 +31,19 @@
 			isEditable = 1;
 			outputFiles = (
 				"${INPUT_FILE_DIR}/GeneratedFiles/ui_${INPUT_FILE_BASE}.h",
-				"",
 			);
-			script = "~/Qt/5.4/clang_64/bin/uic -o ${INPUT_FILE_DIR}/GeneratedFiles/ui_${INPUT_FILE_BASE}.h ${INPUT_FILE_PATH}\n";
+			script = "~/Qt/5.4/clang_64/bin/uic -n -o ${INPUT_FILE_DIR}/GeneratedFiles/ui_${INPUT_FILE_BASE}.h ${INPUT_FILE_PATH}\n";
+		};
+		1F13F97E1A61FE47008674F3 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.h";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"${INPUT_FILE_DIR}/GeneratedFiles/${INPUT_FILE_BASE}_moc.cpp",
+			);
+			script = "~/Qt/5.4/clang_64/bin/moc ${INPUT_FILE_PATH} -f -o ${INPUT_FILE_DIR}/GeneratedFiles/${INPUT_FILE_BASE}_moc.cpp";
 		};
 /* End PBXBuildRule section */
 
@@ -138,6 +148,7 @@
 				1F09BCA41A57318900C8D0D3 /* CopyFiles */,
 			);
 			buildRules = (
+				1F13F97E1A61FE47008674F3 /* PBXBuildRule */,
 				1F13F9781A61D3AD008674F3 /* PBXBuildRule */,
 			);
 			dependencies = (
