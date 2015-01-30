@@ -11,6 +11,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = joyfly_cpp
 TEMPLATE = app
 
+CONFIG += thread
+
 QMAKE_CXXFLAGS += -std=c++11
 #QMAKE_CXXFLAGS += -std=gnu++11
 
@@ -19,6 +21,8 @@ mac: QMAKE_LFLAGS += -F/Library/Frameworks
 
 mac: INCLUDEPATH += /opt/local/include
 mac: QMAKE_LFLAGS += -L /opt/local/lib
+
+mac: QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
 
 SOURCES += main.cpp\
         mainwindow.cpp \
