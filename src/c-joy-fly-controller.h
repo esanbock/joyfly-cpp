@@ -36,18 +36,21 @@ public:
     void ProcessJoystickInput();
     void OpenJoystick(int joystickNum);
     void RunJoystickTests();
-    void DoCommandLoop();
-    
+
+    int Start(string& serialDevice, int secondsUpdate);
 protected:
     int AxisCommandSimple( ChopperControl& control, CJoyTest& sidewinder, const char* szCommand, int joyAxis, int min, int max );
     int HatCommandIncrement( ChopperControl& control, CJoyTest& sidewinder, Uint8 down, Uint8 up, const char* szCommand, int lowVal, int highVal );
     int ButtonCommandToggle( ChopperControl& control, CJoyTest& sidewinder, const char* szCommand, int joyAxis );
     int ButtonCommandToggle( ChopperControl& control, CJoyTest& sidewinder, const char* szCommand, int joyAxis, int ifTrue, int ifFalse );
+    void DoCommandLoop();
+
 private:
 	vector<CJoyFlyView*> _views;
     ChopperControl* _pChopperControl = NULL;
     CJoyTest* _sidewinder = NULL;
-    
+    thread* pCommandLoopThread;
+
     static const int JOYSTICK_X = 0;
     static const int JOYSTICK_Y = 1;
     static const int JOYSTICK_Z = 2;

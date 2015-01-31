@@ -30,14 +30,16 @@ SOURCES += main.cpp\
     choppercontrol.cpp \
     c-joy-fly-view.cpp \
     c-joy-test.cc \
-    c-terminal-view.cpp
+    c-terminal-view.cpp \
+    qtjoyflyview.cpp
 
 HEADERS  += mainwindow.h \
     c-joy-fly-controller.h \
     choppercontrol.h \
     c-joy-fly-view.h \
     c-terminal-view.h \
-    c-joy-test.h
+    c-joy-test.h \
+    qtjoyflyview.h
 
 FORMS += mainwindow.ui
 

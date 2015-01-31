@@ -18,6 +18,7 @@
  */
 
 #include <vector>
+#include <thread>
 #include "SerialStream.h"
 #include "SerialPort.h"
 #include "choppercontrol.h"
@@ -182,4 +183,18 @@ void CJoyFlyController::DoCommandLoop()
         
         
     } while( !quitting );
+}
+
+int CJoyFlyController::Start(string& serialDevice, int secondsUpdate)
+{
+    OpenJoystick(0);
+
+    SDL_JoystickUpdate();
+
+
+    ConnectToChopper( serialDevice.c_str(), secondsUpdate );
+
+    pCommandLoopThread = new std::thread([this]() {DoCommandLoop();});
+
+    return 0;
 }

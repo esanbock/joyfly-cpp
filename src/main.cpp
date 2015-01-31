@@ -20,6 +20,7 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <thread>
 
 #include <QApplication>
 
@@ -33,8 +34,6 @@
 #include <QApplication>
 
 #include "mainwindow.h"
-
-
 #include "SerialStream.h"
 #include "SerialPort.h"
 #include "c-joy-test.h"
@@ -49,11 +48,7 @@ int main (int argc, char * argv[])
 {
     cout << "Hello world!" << std::endl;
 
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-
-    return a.exec();
+    QApplication app(argc, argv);
 
 
 	if( argc < 1 )
@@ -61,26 +56,17 @@ int main (int argc, char * argv[])
 		cout << "wrong number of parameters" << endl;
 		return -1;
 	}
-    
-	string serialDevice = string(argv[1] );
+    CJoyFlyController controller;
+    string serialDevice = string(argv[1] );
 
-	CJoyFlyController controller;
-    
-    CTerminalView terminalView;
-    controller.AddView( &terminalView );
-
-	try
-	{
-        controller.OpenJoystick(0);
-
-		SDL_JoystickUpdate();
-
-		if( serialDevice == "/test" )
-		{
+    try
+    {
+        if( serialDevice == "/test" )
+        {
             controller.RunJoystickTests();
 
-			return 0;
-		}
+            return 0;
+        }
         if( argc < 2)
         {
             cout << "wrong number of parameters" << endl;
@@ -88,12 +74,12 @@ int main (int argc, char * argv[])
         }
 
         int secondsUpdate = atoi(argv[2]);
-        controller.ConnectToChopper( serialDevice.c_str(), secondsUpdate );
-        
-        // this doesn't return until it's over
-        controller.DoCommandLoop();
 
-		return 0;
+        CTerminalView terminalView;
+        controller.AddView( &terminalView );
+
+        controller.Start(serialDevice, secondsUpdate);
+        app.exec();
 	}
 	catch( JoystickException& jExcept )
 	{
