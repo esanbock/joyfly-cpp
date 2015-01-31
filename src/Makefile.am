@@ -11,7 +11,10 @@ joyfly_cpp_SOURCES = \
 	c-joy-fly-view.cpp \
 	c-joy-fly-view.h \
 	c-terminal-view.cpp \
-	c-terminal-view.h
+	c-terminal-view.h \
+	mainwindow.cpp \
+	mainwindow.h \
+	mainwindow.ui
 
 joyfly_cpp_LDADD = \
 	$(SDL_LIBS) \

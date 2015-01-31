@@ -44,13 +44,14 @@ using namespace std;
 
 int main (int argc, char * argv[])
 {
+    cout << "Hello world!" << std::endl;
+
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
 
     return a.exec();
 
-	cout << "Hello world!" << std::endl;
 
 	if( argc < 1 )
 	{
