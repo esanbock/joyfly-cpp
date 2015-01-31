@@ -20,17 +20,11 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <SDL.h>
+#include <QApplication>
 
 #include "mainwindow.h"
 
-#include <QApplication>
-
-// apple junk
-#ifdef __APPLE__
-#include "SDL.h"
-#else
-#include "SDL2/SDL.h"
-#endif
 
 #include "SerialStream.h"
 #include "SerialPort.h"
