@@ -30,6 +30,7 @@
 #include "choppercontrol.h"
 #include "c-joy-fly-controller.h"
 #include "c-terminal-view.h"
+#include "joystickexception.h"
 
 using namespace std;
 

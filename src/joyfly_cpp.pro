@@ -42,7 +42,8 @@ HEADERS  += mainwindow.h \
     c-joy-test.h \
     qtjoyflyview.h \
     joystickinputer.h \
-    controllerinputer.h
+    controllerinputer.h \
+    joystickexception.h
 
 FORMS += mainwindow.ui
 
