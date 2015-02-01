@@ -27,7 +27,7 @@
 
 using namespace std;
 
-class CJoyFlyController : public IControllerInputer
+class CJoyFlyController : public IControllerInputer, public IChopperMessages
 {
 public:
 	CJoyFlyController();
@@ -54,6 +54,10 @@ public:
     // go
     int Start(string& serialDevice, int secondsUpdate);
     void Quit();
+
+    // message sink
+    virtual void OnVoltageChange(float newVoltage);
+    virtual void OnMessage(const char* data);
 
 protected:
     void OnChopperMessage( const char* szMsg );

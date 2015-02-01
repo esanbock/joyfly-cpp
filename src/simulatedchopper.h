@@ -4,7 +4,7 @@
 class CSimulatedChopper : public AbstractChopper
 {
 public:
-    CSimulatedChopper( int secondsUpdate );
+    CSimulatedChopper( int secondsUpdate, IChopperMessages& msgSink );
     virtual ~CSimulatedChopper();
 
     virtual void SendPing();
@@ -12,7 +12,9 @@ public:
     virtual void SendCommand(const char* szCommand);
     virtual void SendCommand(const char* szCommand, bool toggle);
     virtual bool ProcessData();
-
+private:
+    int _secondsUpdate = 2;
+    IChopperMessages& _msgSink;
 };
 
 #endif // SIMULATEDCHOPPER_H

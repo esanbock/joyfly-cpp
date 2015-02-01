@@ -17,8 +17,8 @@
 
 using namespace std;
 
-ChopperControl::ChopperControl(SerialPort& serialPort, int secondsUpdate)
-    :_serialPort(serialPort)
+ChopperControl::ChopperControl(SerialPort& serialPort, int secondsUpdate, IChopperMessages& msgSink)
+    :_serialPort(serialPort), _msgSink(msgSink)
 {
     _lastPingNum = 3;
     _sentPingClock = clock();

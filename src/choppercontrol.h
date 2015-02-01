@@ -14,6 +14,13 @@
 
 using namespace std;
 
+class IChopperMessages
+{
+public:
+    virtual void OnMessage(const char* data)=0;
+    virtual void OnVoltageChange(float newVoltage)=0;
+};
+
 class AbstractChopper
 {
 public:
@@ -34,8 +41,9 @@ private:
     clock_t _sentPingClock;
     clock_t _lastTime;
     int _secondsUpdate;
+    IChopperMessages& _msgSink;
 public:
-    ChopperControl(SerialPort& serialPort, int secondsUpdate);
+    ChopperControl(SerialPort& serialPort, int secondsUpdate, IChopperMessages& msgSink);
     virtual ~ChopperControl();
 
     virtual void SendPing();

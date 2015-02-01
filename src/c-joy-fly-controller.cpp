@@ -67,13 +67,13 @@ AbstractChopper* CJoyFlyController::ConnectToChopper( const string serialDevice,
     DebugMessage( (string("Opening serial port ") + serialDevice).c_str() );
     SerialPort comPort( serialDevice.c_str() );
     comPort.Open( SerialPort::BAUD_9600, SerialPort::CHAR_SIZE_8, SerialPort::PARITY_NONE, SerialPort::STOP_BITS_1) ;
-    return new ChopperControl(comPort, secondsUpdate);
+    return new ChopperControl(comPort, secondsUpdate, *this);
 }
 
 AbstractChopper* CJoyFlyController::ConnectToSimulator( int secondsUpdate )
 {
     //DebugMessage ("simulator");
-    return new CSimulatedChopper(secondsUpdate);
+    return new CSimulatedChopper(secondsUpdate, *this);
 }
 
 void CJoyFlyController::Quit()
@@ -97,9 +97,19 @@ void CJoyFlyController::DoCommandLoop()
     {
         _pChopperControl->ProcessData();
 
-        DebugMessage("doing some stuff");
+        //DebugMessage("doing some stuff");
         
     } while( !_quitting );
+}
+
+void CJoyFlyController::OnMessage(const char *data)
+{
+    DebugMessage(data);
+}
+
+void CJoyFlyController::OnVoltageChange(float newVoltage)
+{
+
 }
 
 int CJoyFlyController::Start(string& serialDevice, int secondsUpdate)
@@ -165,7 +175,6 @@ void CJoyFlyController::SetThrottle(int val)
 {
     _pChopperControl->SendSimpleCommand(":T",  val);
 }
-
 
 void CJoyFlyController::Lift(int val)
 {

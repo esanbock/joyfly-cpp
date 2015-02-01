@@ -1,8 +1,10 @@
 #include "choppercontrol.h"
 #include "simulatedchopper.h"
 
-CSimulatedChopper::CSimulatedChopper( int secondsUpdate )
+CSimulatedChopper::CSimulatedChopper(int secondsUpdate, IChopperMessages &msgSink )
+    :_msgSink(msgSink)
 {
+    _secondsUpdate = secondsUpdate;
 }
 
 CSimulatedChopper::~CSimulatedChopper()
@@ -33,5 +35,6 @@ void CSimulatedChopper::SendCommand(const char* szCommand, bool toggle)
 
 bool CSimulatedChopper::ProcessData()
 {
-    sleep(1);
+    sleep(_secondsUpdate);
+    _msgSink.OnMessage( "test data" );
 }
