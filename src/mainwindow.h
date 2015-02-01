@@ -22,12 +22,12 @@ public:
     virtual void Sent(const char* szMsg);
 
 signals:
-    void AppendLog(const char* szLog);
+    void AppendLog(QString log);
     void ChangeVoltage( float newVoltage );
     void Ping( float latency );
 
 protected slots:
-    void onAppendLog(const char* szLog);
+    void onAppendLog(QString log);
     void onChangeVoltage( float newVoltage );
     void onPing( float latency );
 private slots:

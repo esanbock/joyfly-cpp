@@ -1,7 +1,10 @@
+#include <string>
 #include "controllerinputer.h"
 #include "c-joy-fly-view.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
+using namespace std;
 
 MainWindow::MainWindow(IControllerInputer* pController, QWidget *parent) :
     CJoyFlyView(pController),
@@ -10,7 +13,7 @@ MainWindow::MainWindow(IControllerInputer* pController, QWidget *parent) :
 {
     ui->setupUi(this);
     connect(this,SIGNAL(ChangeVoltage(float)), this,SLOT(onChangeVoltage(float)));
-    connect(this,SIGNAL(AppendLog(const char*)), this,SLOT(onAppendLog(const char*)));
+    connect(this,SIGNAL(AppendLog(QString)), this,SLOT(onAppendLog(QString)));
     connect(this,SIGNAL(Ping(float)), this,SLOT(onPing(float)));
     show();
 }
@@ -20,9 +23,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::onAppendLog(const char* szLog)
+void MainWindow::onAppendLog(QString log)
 {
-    ui->textLog->appendPlainText(szLog);
+    ui->textLog->appendPlainText(log);
     ui->textLog->ensureCursorVisible();
 }
 
