@@ -26,9 +26,7 @@ public:
 	CJoyFlyView(  );
 	virtual void OnChopperMessage( const char* szMsg )=0;
 	virtual void OnDebugMessage( const char* szMsg )=0;
-protected:
 
-private:
 };
 
 #endif // _C_JOY_FLY_VIEW_H_

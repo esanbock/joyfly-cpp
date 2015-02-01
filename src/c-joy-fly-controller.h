@@ -21,6 +21,7 @@
 #define _C_JOY_FLY_CONTROLLER_H_
 
 #include "controllerinputer.h"
+#include "mainwindow.h"
 #include "c-joy-fly-view.h"
 #include "joystickinputer.h"
 

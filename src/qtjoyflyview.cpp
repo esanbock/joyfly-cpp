@@ -1,8 +1,14 @@
+#include <QApplication>
+#include "mainwindow.h"
+#include "c-joy-fly-view.h"
 #include "qtjoyflyview.h"
 
-CQtJoyFlyView::CQtJoyFlyView(QWidget *parent) : QMainWindow(parent)
+using namespace std;
+
+CQtJoyFlyView::CQtJoyFlyView(MainWindow *pMainWindow)
 {
-    show();
+    _pMainWindow = pMainWindow;
+    _pMainWindow->show();
 }
 
 CQtJoyFlyView::~CQtJoyFlyView()
@@ -10,3 +16,13 @@ CQtJoyFlyView::~CQtJoyFlyView()
 
 }
 
+void CQtJoyFlyView::OnChopperMessage( const char* szMsg )
+{
+    _pMainWindow->AppendLog(szMsg);
+
+}
+
+void CQtJoyFlyView::OnDebugMessage(const char* szMsg )
+{
+    _pMainWindow->AppendLog(szMsg);
+}

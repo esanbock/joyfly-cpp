@@ -15,6 +15,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void AppendLog(const char* szLog);
 
 private:
     Ui::MainWindow *ui;

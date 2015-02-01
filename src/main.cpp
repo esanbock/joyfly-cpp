@@ -28,6 +28,7 @@
 #include "choppercontrol.h"
 #include "c-joy-fly-controller.h"
 #include "c-terminal-view.h"
+#include "qtjoyflyview.h"
 #include "joystickexception.h"
 
 using namespace std;
@@ -55,7 +56,7 @@ int main (int argc, char * argv[])
 
             return 0;
         }
-        if( argc < 2)
+        if( argc < 3)
         {
             cout << "wrong number of parameters" << endl;
             return -1;
@@ -65,6 +66,8 @@ int main (int argc, char * argv[])
 
         CTerminalView terminalView;
         controller.AddView( &terminalView );
+        CQtJoyFlyView guiView(new MainWindow());
+        controller.AddView( &guiView );
         controller.Start(serialDevice, secondsUpdate);
         app.exec();
 	}

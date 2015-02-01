@@ -12,3 +12,8 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::AppendLog(const char* szLog)
+{
+    ui->textLog->appendPlainText(szLog);
+}

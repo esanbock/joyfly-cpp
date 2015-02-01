@@ -33,5 +33,5 @@ void CSimulatedChopper::SendCommand(const char* szCommand, bool toggle)
 
 bool CSimulatedChopper::ProcessData()
 {
-
+    sleep(1);
 }

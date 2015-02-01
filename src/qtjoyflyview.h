@@ -3,12 +3,17 @@
 
 #include <QMainWindow>
 
-class CQtJoyFlyView : public QMainWindow
+class CQtJoyFlyView : public CJoyFlyView
 {
-    Q_OBJECT
 public:
-    explicit CQtJoyFlyView(QWidget *parent = 0);
-    ~CQtJoyFlyView();
+    CQtJoyFlyView(MainWindow* pMainWindow);
+    virtual ~CQtJoyFlyView();
+
+    virtual void OnChopperMessage( const char* szMsg );
+    virtual void OnDebugMessage( const char* szMsg );
+
+private:
+    MainWindow* _pMainWindow;
 
 signals:
 
