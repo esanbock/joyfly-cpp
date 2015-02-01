@@ -100,3 +100,23 @@ void CJoyFlyController::RunJoystickTests()
     CJoyTest t;
     t.RunTests();
 }
+
+void CJoyFlyController::SetAutoPilot(bool onOff)
+{
+    _pChopperControl->SendCommand(":N", onOff ? 1 : 0);
+}
+
+void CJoyFlyController::SetHome()
+{
+    _pChopperControl->SendCommand(":H");
+}
+
+void CJoyFlyController::GetStatus()
+{
+    _pChopperControl->SendCommand(":S");
+}
+
+void CJoyFlyController::GetVoltage()
+{
+    _pChopperControl->SendCommand(":V");
+}

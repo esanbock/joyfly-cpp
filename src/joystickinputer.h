@@ -25,8 +25,7 @@ protected:
     void DoSdlLoop();
     int AxisCommandSimple(CJoyTest& sidewinder, const char* szCommand, int joyAxis, int min, int max );
     int HatCommandIncrement( CJoyTest& sidewinder, Uint8 down, Uint8 up, const char* szCommand, int lowVal, int highVal );
-    int ButtonCommandToggle( CJoyTest& sidewinder, const char* szCommand, int joyAxis );
-    int ButtonCommandToggle( CJoyTest& sidewinder, const char* szCommand, int joyAxis, int ifTrue, int ifFalse );
+    int ButtonCommandToggle(CJoyTest& sidewinder, function<void (int)> toggleFunction, int joyAxis);
     void ProcessJoystickInput();
     void OpenJoystick(int joystickNum);
     void RunJoystickTests();

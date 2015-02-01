@@ -41,26 +41,14 @@ int CJoystickInputer::AxisCommandSimple( CJoyTest& sidewinder, const char* szCom
     return _prevVals[joyAxis];
 }
 
-int CJoystickInputer::ButtonCommandToggle(CJoyTest& sidewinder, const char* szCommand, int joyAxis, int ifTrue, int ifFalse )
+int CJoystickInputer::ButtonCommandToggle(CJoyTest& sidewinder, function<void (int)> toggleFunction, int joyAxis)
 {
     _curButtonVals[joyAxis] = sidewinder.GetButton (joyAxis);
     if( _prevButtonVals[joyAxis] != _curButtonVals[joyAxis] && _curButtonVals[joyAxis] == 1 )
     {
         _buttonToggle[joyAxis] = !_buttonToggle[joyAxis];
 
-        control.SendCommand(szCommand, _buttonToggle[joyAxis] ? ifTrue : ifFalse);
-    }
-    _prevButtonVals[joyAxis] = _curButtonVals[joyAxis];
-    return _prevButtonVals[joyAxis];
-}
-
-int CJoystickInputer::ButtonCommandToggle(CJoyTest& sidewinder, const char* szCommand, int joyAxis )
-{
-    _curButtonVals[joyAxis] = sidewinder.GetButton (joyAxis);
-    if( _prevButtonVals[joyAxis] != _curButtonVals[joyAxis] && _curButtonVals[joyAxis] == 1 )
-    {
-        _buttonToggle[joyAxis] = !_buttonToggle[joyAxis];
-        control.SendCommand(szCommand);
+        toggleFunction(_buttonToggle[joyAxis]);
     }
     _prevButtonVals[joyAxis] = _curButtonVals[joyAxis];
     return _prevButtonVals[joyAxis];
@@ -119,10 +107,11 @@ void CJoystickInputer::ProcessJoystickInput()
     AxisCommandSimple( *_sidewinder, ":B", JOYSTICK_X, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
     AxisCommandSimple( *_sidewinder, ":P", JOYSTICK_Y, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
     AxisCommandSimple( *_sidewinder, ":Y", JOYSTICK_Z, -255, 255);
-    ButtonCommandToggle( *_sidewinder, ":N", JOYSTICK_AUTOPILOT, 0, 1 );
-    ButtonCommandToggle( *_sidewinder, ":H", JOYSTICK_HOME);
-    ButtonCommandToggle( *_sidewinder, ":S", JOYSTICK_STATUS);
-    ButtonCommandToggle( *_sidewinder, ":V", JOYSTICK_VOLTAGE);
+
+    ButtonCommandToggle( *_sidewinder, [&] (bool result) {_controller.SetAutoPilot(result);}, JOYSTICK_AUTOPILOT );
+    ButtonCommandToggle( *_sidewinder, [&] (bool) {_controller.SetHome();}, JOYSTICK_HOME);
+    ButtonCommandToggle( *_sidewinder, [&] (bool) {_controller.GetStatus();}, JOYSTICK_STATUS);
+    ButtonCommandToggle( *_sidewinder, [&] (bool) {_controller.GetVoltage();}, JOYSTICK_VOLTAGE);
 
     HatCommandIncrement( *_sidewinder, SDL_HAT_DOWN, SDL_HAT_UP, ":L", -20, 20 );
 }

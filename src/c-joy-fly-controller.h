@@ -40,6 +40,10 @@ public:
     int Start(string& serialDevice, int secondsUpdate);
     void RunJoystickTests();
     void SetThrottle(int val);
+    virtual void SetAutoPilot(bool onOff);
+    virtual void SetHome();
+    virtual void GetStatus();
+    virtual void GetVoltage();
 
 protected:
     void DoCommandLoop();
