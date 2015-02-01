@@ -67,7 +67,7 @@ private:
 	vector<CJoyFlyView*> _views;
     AbstractChopper* _pChopperControl = NULL;
     thread* pCommandLoopThread;
-    CJoystickInputer* _pJoystickInputer;
+    CJoystickInputer* _pJoystickInputer = NULL;
     bool _quitting = false;
 
 };
