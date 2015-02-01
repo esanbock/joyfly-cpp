@@ -9,7 +9,6 @@ public:
     CSimulatedChopper( int secondsUpdate, IChopperMessages& msgSink );
     virtual ~CSimulatedChopper();
 
-    virtual void SendSimpleCommand(const char* szCommand, int value);
     virtual void SendCommand(const char* szCommand);
     virtual bool ProcessData();
 private:

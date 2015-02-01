@@ -63,14 +63,7 @@ void ChopperControl::ProcessCommandResponse( string& line )
     _msgSink.OnMessage(line.c_str());
 }
 
-void ChopperControl::SendSimpleCommand(const char* szCommand, int value)
-{
-    stringstream sstream;
-    sstream << szCommand << setfill('0') << setw(3) << value;
-    string command = sstream.str();
-    _msgSink.Sent(command.c_str());
-    _serialPort.Write( command );
-}
+
 
 void ChopperControl::SendCommand(const char* szCommand)
 {

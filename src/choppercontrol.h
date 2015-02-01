@@ -27,8 +27,7 @@ public:
     virtual ~ChopperControl();
 
 
-    virtual void SendSimpleCommand(const char* szCommand, int value);
-    virtual void SendCommand(const char* szCommand);
+     virtual void SendCommand(const char* szCommand);
     virtual bool ProcessData();
 protected:
     void ProcessPingResponse( string& line );

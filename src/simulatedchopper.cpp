@@ -16,13 +16,6 @@ CSimulatedChopper::~CSimulatedChopper()
 
 }
 
-void CSimulatedChopper::SendSimpleCommand(const char* szCommand, int value)
-{
-    stringstream sstream;
-    sstream << szCommand << value;
-    _msgSink.Sent(sstream.str().c_str());
-}
-
 void CSimulatedChopper::SendCommand(const char* szCommand)
 {
     _msgSink.Sent(szCommand);
