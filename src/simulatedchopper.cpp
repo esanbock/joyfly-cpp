@@ -1,6 +1,8 @@
 #include "choppercontrol.h"
 #include "simulatedchopper.h"
 
+using namespace std;
+
 CSimulatedChopper::CSimulatedChopper(int secondsUpdate, IChopperMessages &msgSink )
     :_msgSink(msgSink)
 {
@@ -37,4 +39,11 @@ bool CSimulatedChopper::ProcessData()
 {
     sleep(_secondsUpdate);
     _msgSink.OnMessage( "test data" );
+
+    std::uniform_real_distribution<> dis(0, 100);
+
+    sleep(_secondsUpdate);
+
+    _msgSink.OnVoltageChange( dis(_gen) );
+    return true;
 }

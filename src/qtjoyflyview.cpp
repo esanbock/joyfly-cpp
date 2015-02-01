@@ -26,3 +26,8 @@ void CQtJoyFlyView::OnDebugMessage(const char* szMsg )
 {
     _pMainWindow->AppendLog(szMsg);
 }
+
+void CQtJoyFlyView::OnVoltageChange( float newVoltage )
+{
+    _pMainWindow->changeVoltage(newVoltage);
+}

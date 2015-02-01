@@ -1,6 +1,8 @@
 #ifndef SIMULATEDCHOPPER_H
 #define SIMULATEDCHOPPER_H
 
+#include <random>
+
 class CSimulatedChopper : public AbstractChopper
 {
 public:
@@ -15,6 +17,9 @@ public:
 private:
     int _secondsUpdate = 2;
     IChopperMessages& _msgSink;
+
+    random_device _rd;
+    mt19937 _gen;//(rd());
 };
 
 #endif // SIMULATEDCHOPPER_H

@@ -18,3 +18,8 @@ void MainWindow::AppendLog(const char* szLog)
 {
     ui->textLog->appendPlainText(szLog);
 }
+
+void MainWindow::changeVoltage(float newVoltage)
+{
+    ui->voltage->setValue(newVoltage);
+}

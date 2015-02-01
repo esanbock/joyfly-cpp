@@ -19,7 +19,7 @@ signals:
 
 public slots:
     void AppendLog(const char* szLog);
-
+    void changeVoltage( float newVoltage );
 private:
     Ui::MainWindow *ui;
 };

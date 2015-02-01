@@ -97,8 +97,6 @@ void CJoyFlyController::DoCommandLoop()
     {
         _pChopperControl->ProcessData();
 
-        //DebugMessage("doing some stuff");
-        
     } while( !_quitting );
 }
 
@@ -109,7 +107,10 @@ void CJoyFlyController::OnMessage(const char *data)
 
 void CJoyFlyController::OnVoltageChange(float newVoltage)
 {
-
+    for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
+    {
+        (*it)->OnVoltageChange(newVoltage);
+    }
 }
 
 int CJoyFlyController::Start(string& serialDevice, int secondsUpdate)

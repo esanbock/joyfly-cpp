@@ -31,3 +31,8 @@ void CTerminalView::OnDebugMessage(const char* szMsg )
 {
 	cout << szMsg << endl;
 }
+
+void CTerminalView::OnVoltageChange( float newVoltage )
+{
+    cout << "new voltage:" << newVoltage << endl;
+}
