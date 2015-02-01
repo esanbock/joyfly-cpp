@@ -18,16 +18,16 @@ CQtJoyFlyView::~CQtJoyFlyView()
 
 void CQtJoyFlyView::OnChopperMessage( const char* szMsg )
 {
-    _pMainWindow->OnAppendLog(szMsg);
+    _pMainWindow->AppendLog(szMsg);
 
 }
 
 void CQtJoyFlyView::OnDebugMessage(const char* szMsg )
 {
-    _pMainWindow->OnAppendLog(szMsg);
+    _pMainWindow->AppendLog(szMsg);
 }
 
 void CQtJoyFlyView::OnVoltageChange( float newVoltage )
 {
-    _pMainWindow->OnChangeVoltage(newVoltage);
+    _pMainWindow->ChangeVoltage(newVoltage);
 }

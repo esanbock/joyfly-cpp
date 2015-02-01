@@ -16,12 +16,12 @@ public:
     ~MainWindow();
 
 signals:
-    void OnAppendLog(const char* szLog);
-    void OnChangeVoltage( float newVoltage );
+    void AppendLog(const char* szLog);
+    void ChangeVoltage( float newVoltage );
 
 protected slots:
-    void AppendLog(const char* szLog);
-    void changeVoltage( float newVoltage );
+    void onAppendLog(const char* szLog);
+    void onChangeVoltage( float newVoltage );
 private:
     Ui::MainWindow *ui;
 };

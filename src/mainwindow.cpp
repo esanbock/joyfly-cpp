@@ -6,8 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(this,SIGNAL(OnChangeVoltage(float)), this,SLOT(changeVoltage(float)));
-    connect(this,SIGNAL(OnAppendLog(const char*)), this,SLOT(AppendLog(const char*)));
+    connect(this,SIGNAL(ChangeVoltage(float)), this,SLOT(onChangeVoltage(float)));
+    connect(this,SIGNAL(AppendLog(const char*)), this,SLOT(onAppendLog(const char*)));
 }
 
 MainWindow::~MainWindow()
@@ -15,12 +15,12 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::AppendLog(const char* szLog)
+void MainWindow::onAppendLog(const char* szLog)
 {
     ui->textLog->appendPlainText(szLog);
 }
 
-void MainWindow::changeVoltage(float newVoltage)
+void MainWindow::onChangeVoltage(float newVoltage)
 {
     ui->voltage->setValue(newVoltage);
 }
