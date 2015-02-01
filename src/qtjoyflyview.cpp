@@ -24,7 +24,12 @@ void CQtJoyFlyView::OnChopperMessage( const char* szMsg )
 
 void CQtJoyFlyView::OnDebugMessage(const char* szMsg )
 {
-    _pMainWindow->AppendLog(szMsg);
+    OnChopperMessage(szMsg);
+}
+
+void CQtJoyFlyView::Sent(const char* szMsg )
+{
+    OnDebugMessage(szMsg);
 }
 
 void CQtJoyFlyView::OnVoltageChange( float newVoltage )

@@ -41,3 +41,8 @@ void CTerminalView::OnPing( float latency )
 {
     cout << "ping latency " << latency << endl;
 }
+
+void CTerminalView::Sent(const char* szMsg)
+{
+    OnDebugMessage(szMsg);
+}

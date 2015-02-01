@@ -7,7 +7,6 @@
 //
 
 #include <stdlib.h>
-#include <iostream>
 #include <iomanip>
 #include <sstream>
 
@@ -42,7 +41,7 @@ void ChopperControl::SendPing()
     stringstream sstream;
     sstream << ":E" << setfill('0') << setw(3) << _lastPingNum;
     string command = sstream.str();
-    cout << command << endl;
+    _msgSink.Sent(command.c_str());
     _serialPort.Write( command );
 }
 
@@ -51,11 +50,13 @@ void ChopperControl::ProcessPingResponse( string& line )
     int pingResponse = atoi( line.substr(3).c_str() );
     if( pingResponse != _lastPingNum )
     {
-        cout << "unmatched ping " << pingResponse << ".  Expected " << _lastPingNum << endl;
+        stringstream sstream;
+        sstream << "unmatched ping " << pingResponse << ".  Expected " << _lastPingNum << endl;
+        _msgSink.OnDebug(sstream.str().c_str());
         return;
     }
     float latency = (float)(clock() - _sentPingClock ) / CLOCKS_PER_SEC ;
-    cout << "latency = " << latency << ": " << " " << clock() << "," << _sentPingClock << endl; ;
+    _msgSink.OnPing(latency);
 }
 
 
@@ -82,7 +83,7 @@ void ChopperControl::SendSimpleCommand(const char* szCommand, int value)
     stringstream sstream;
     sstream << szCommand << setfill('0') << setw(3) << value;
     string command = sstream.str();
-    cout << command << endl;
+    _msgSink.Sent(command.c_str());
     _serialPort.Write( command );
 }
 
@@ -91,7 +92,7 @@ void ChopperControl::SendCommand(const char* szCommand)
     stringstream sstream;
     sstream << szCommand;
     string command = sstream.str();
-    cout << command << endl;
+    _msgSink.Sent(command.c_str());
     _serialPort.Write( command );
 }
 
@@ -100,8 +101,9 @@ void ChopperControl::SendCommand(const char* szCommand, bool toggle)
     stringstream sstream;
     sstream << szCommand << setfill('0') << setw(3) << toggle;
     string command = sstream.str();
-    cout << command << endl;
+    _msgSink.Sent(command.c_str());
     _serialPort.Write( command );
+
 }
 
 bool ChopperControl::ProcessData()
@@ -120,13 +122,13 @@ bool ChopperControl::ProcessData()
         }
         catch( SerialPort::ReadTimeout& timeout )
         {
-            cerr << "I got nothing" << endl;
+            _msgSink.OnDebug("I got nothing");
         }
     }
     
     clock_t now = clock();
     
-    if( now - _lastTime >= CLOCKS_PER_SEC * _secondsUpdate )
+    if( (now - _lastTime) >= (CLOCKS_PER_SEC * _secondsUpdate) )
     {
         _lastTime = clock();
         SendPing();

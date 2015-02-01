@@ -105,6 +105,16 @@ void CJoyFlyController::OnMessage(const char *data)
     DebugMessage(data);
 }
 
+void CJoyFlyController::OnDebug(const char *data)
+{
+    DebugMessage(data);
+}
+
+void CJoyFlyController::Sent(const char *data)
+{
+    DebugMessage(data);
+}
+
 void CJoyFlyController::OnVoltageChange(float newVoltage)
 {
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
