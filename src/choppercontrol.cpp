@@ -67,6 +67,11 @@ void ChopperControl::ProcessCommandResponse( string& line )
         return;
     }
     
+    if( line.compare(0,2,"V=") == 0 )
+    {
+        _msgSink.OnVoltageChange(100 * (1023 / stoi(line.substr(2,4))));
+    }
+
     // otherwise, NAK
     //cout << "unrecognized command from chopper" << endl;
     _msgSink.OnMessage(line.c_str());
