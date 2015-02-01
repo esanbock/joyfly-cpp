@@ -23,7 +23,6 @@
 class CJoyFlyView
 {
 public:
-	CJoyFlyView(  );
 	virtual void OnChopperMessage( const char* szMsg )=0;
 	virtual void OnDebugMessage( const char* szMsg )=0;
     virtual void OnVoltageChange( float newVoltage )=0;

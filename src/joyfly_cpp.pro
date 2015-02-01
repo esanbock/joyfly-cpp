@@ -28,7 +28,6 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     c-joy-fly-controller.cpp \
     choppercontrol.cpp \
-    c-joy-fly-view.cpp \
     c-joy-test.cc \
     c-terminal-view.cpp \
     qtjoyflyview.cpp \
