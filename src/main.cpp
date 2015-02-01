@@ -25,8 +25,6 @@
 #include <QApplication>
 
 #include "mainwindow.h"
-#include "SerialStream.h"
-#include "SerialPort.h"
 #include "choppercontrol.h"
 #include "c-joy-fly-controller.h"
 #include "c-terminal-view.h"

@@ -9,6 +9,9 @@
 #ifndef joyfly_cpp_choppercontrol_h
 #define joyfly_cpp_choppercontrol_h
 
+#include "SerialStream.h"
+#include "SerialPort.h"
+
 using namespace std;
 
 // this is the model class
