@@ -100,6 +100,9 @@ int CJoyTest::RunTests()
 	int joyCount = SDL_NumJoysticks();
 
 	cout << "I found " << joyCount << " joysticks\n";
+
+    if( joyCount == 0 )
+        return -2;
 	
 	// using joystick # 0
 	int selectedJoystick = 0;
