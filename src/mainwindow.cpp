@@ -1,3 +1,4 @@
+#include "c-joy-fly-view.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -9,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this,SIGNAL(ChangeVoltage(float)), this,SLOT(onChangeVoltage(float)));
     connect(this,SIGNAL(AppendLog(const char*)), this,SLOT(onAppendLog(const char*)));
     connect(this,SIGNAL(Ping(float)), this,SLOT(onPing(float)));
+    show();
 }
 
 MainWindow::~MainWindow()
@@ -35,4 +37,30 @@ void MainWindow::onPing(float latency)
 void MainWindow::on_throttleControl_sliderMoved(int position)
 {
 
+}
+
+void MainWindow::OnChopperMessage( const char* szMsg )
+{
+    AppendLog(szMsg);
+
+}
+
+void MainWindow::OnDebugMessage(const char* szMsg )
+{
+    OnChopperMessage(szMsg);
+}
+
+void MainWindow::Sent(const char* szMsg )
+{
+    OnDebugMessage(szMsg);
+}
+
+void MainWindow::OnVoltageChange( float newVoltage )
+{
+    ChangeVoltage(newVoltage);
+}
+
+void MainWindow::OnPing( float latency )
+{
+    Ping(latency);
 }

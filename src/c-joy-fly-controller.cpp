@@ -30,6 +30,7 @@
 #include "SDL2/SDL.h"
 #endif
 
+#include "c-joy-fly-view.h"
 #include "c-joy-fly-controller.h"
 
 CJoyFlyController::CJoyFlyController()

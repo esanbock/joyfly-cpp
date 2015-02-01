@@ -24,11 +24,11 @@
 
 #include <QApplication>
 
+#include "c-joy-fly-view.h"
 #include "mainwindow.h"
 #include "choppercontrol.h"
 #include "c-joy-fly-controller.h"
 #include "c-terminal-view.h"
-#include "qtjoyflyview.h"
 #include "joystickexception.h"
 
 using namespace std;
@@ -66,7 +66,7 @@ int main (int argc, char * argv[])
 
         CTerminalView terminalView;
         controller.AddView( &terminalView );
-        CQtJoyFlyView guiView(new MainWindow());
+        MainWindow guiView;
         controller.AddView( &guiView );
         controller.Start(serialDevice, secondsUpdate);
         app.exec();

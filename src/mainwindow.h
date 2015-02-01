@@ -2,18 +2,24 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "c-joy-fly-view.h"
 
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public CJoyFlyView
 {
     Q_OBJECT
 
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    virtual void OnChopperMessage( const char* szMsg );
+    virtual void OnDebugMessage( const char* szMsg );
+    virtual void OnVoltageChange( float newVoltage );
+    virtual void OnPing( float latency );
+    virtual void Sent(const char* szMsg);
 
 signals:
     void AppendLog(const char* szLog);
