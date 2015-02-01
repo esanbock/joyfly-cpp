@@ -68,7 +68,8 @@ void ChopperControl::ProcessCommandResponse( string& line )
     }
     
     // otherwise, NAK
-    cout << "unrecognized command from chopper" << endl;
+    //cout << "unrecognized command from chopper" << endl;
+    _msgSink.OnMessage(line.c_str());
 }
 
 void ChopperControl::SendSimpleCommand(const char* szCommand, int value)
@@ -109,9 +110,7 @@ bool ChopperControl::ProcessData()
             
             if( line[0] == ':' )
                 ProcessCommandResponse(line);
-            
-            cout << line << endl;
-            
+
             haveData = true;
         }
         catch( SerialPort::ReadTimeout& timeout )
