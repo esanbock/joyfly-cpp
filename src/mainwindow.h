@@ -16,8 +16,10 @@ public:
     ~MainWindow();
 
 signals:
+    void OnAppendLog(const char* szLog);
+    void OnChangeVoltage( float newVoltage );
 
-public slots:
+protected slots:
     void AppendLog(const char* szLog);
     void changeVoltage( float newVoltage );
 private:

@@ -6,7 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    connect(this,SIGNAL(OnChangeVoltage(float)), this,SLOT(changeVoltage(float)));
+    connect(this,SIGNAL(OnAppendLog(const char*)), this,SLOT(AppendLog(const char*)));
 }
 
 MainWindow::~MainWindow()
