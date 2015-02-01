@@ -31,7 +31,8 @@ SOURCES += main.cpp\
     c-joy-fly-view.cpp \
     c-joy-test.cc \
     c-terminal-view.cpp \
-    qtjoyflyview.cpp
+    qtjoyflyview.cpp \
+    joystickinputer.cpp
 
 HEADERS  += mainwindow.h \
     c-joy-fly-controller.h \
@@ -39,7 +40,9 @@ HEADERS  += mainwindow.h \
     c-joy-fly-view.h \
     c-terminal-view.h \
     c-joy-test.h \
-    qtjoyflyview.h
+    qtjoyflyview.h \
+    joystickinputer.h \
+    controllerinputer.h
 
 FORMS += mainwindow.ui
 

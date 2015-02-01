@@ -20,11 +20,13 @@
 #ifndef _C_JOY_FLY_CONTROLLER_H_
 #define _C_JOY_FLY_CONTROLLER_H_
 
+#include "controllerinputer.h"
 #include "c-joy-fly-view.h"
+#include "joystickinputer.h"
 
 using namespace std;
 
-class CJoyFlyController
+class CJoyFlyController : public IControllerInputer
 {
 public:
 	CJoyFlyController();
@@ -34,41 +36,21 @@ public:
     ChopperControl& ConnectToChopper( const string serialDevice, int secondsUpdate );
     virtual ~CJoyFlyController();
     void ProcessJoystickInput();
-    void OpenJoystick(int joystickNum);
-    void RunJoystickTests();
-
+    void AddJoyStick(int joyNum);
     int Start(string& serialDevice, int secondsUpdate);
+    void RunJoystickTests();
+    void SetThrottle(int val);
+
 protected:
-    int AxisCommandSimple( ChopperControl& control, CJoyTest& sidewinder, const char* szCommand, int joyAxis, int min, int max );
-    int HatCommandIncrement( ChopperControl& control, CJoyTest& sidewinder, Uint8 down, Uint8 up, const char* szCommand, int lowVal, int highVal );
-    int ButtonCommandToggle( ChopperControl& control, CJoyTest& sidewinder, const char* szCommand, int joyAxis );
-    int ButtonCommandToggle( ChopperControl& control, CJoyTest& sidewinder, const char* szCommand, int joyAxis, int ifTrue, int ifFalse );
     void DoCommandLoop();
 
 private:
 	vector<CJoyFlyView*> _views;
     ChopperControl* _pChopperControl = NULL;
-    CJoyTest* _sidewinder = NULL;
     thread* pCommandLoopThread;
+    CJoystickInputer* _pJoystickInputer;
+    bool _quitting = false;
 
-    static const int JOYSTICK_X = 0;
-    static const int JOYSTICK_Y = 1;
-    static const int JOYSTICK_Z = 2;
-    static const int JOYSTICK_THROTTLE = 3;
-    static const int JOYSTICK_AUTOPILOT = 4;
-    static const int JOYSTICK_HOME = 1;
-    static const int JOYSTICK_STATUS = 8;
-    static const int JOYSTICK_VOLTAGE = 5;
-    
-    
-    int _currentHatY;
-    
-    int _prevVals[4];
-    int _curVals[4];
-    
-    int _prevButtonVals[5];
-    int _curButtonVals[5];
-    bool _buttonToggle[5];
 };
 
 #endif // _C_JOY_FLY_CONTROLLER_H_

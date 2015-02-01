@@ -2,7 +2,7 @@
 
 CQtJoyFlyView::CQtJoyFlyView(QWidget *parent) : QMainWindow(parent)
 {
-
+    show();
 }
 
 CQtJoyFlyView::~CQtJoyFlyView()

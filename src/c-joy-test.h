@@ -19,6 +19,7 @@
 #ifndef _C_JOY_TEST_H_
 #define _C_JOY_TEST_H_
 
+#include <string>
 #include <exception>
 
 using namespace std;

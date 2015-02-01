@@ -24,19 +24,9 @@
 
 #include <QApplication>
 
-// apple junk
-#ifdef __APPLE__
-#include "SDL.h"
-#else
-#include "SDL2/SDL.h"
-#endif
-
-#include <QApplication>
-
 #include "mainwindow.h"
 #include "SerialStream.h"
 #include "SerialPort.h"
-#include "c-joy-test.h"
 #include "choppercontrol.h"
 #include "c-joy-fly-controller.h"
 #include "c-terminal-view.h"
@@ -49,7 +39,6 @@ int main (int argc, char * argv[])
     cout << "Hello world!" << std::endl;
 
     QApplication app(argc, argv);
-
 
 	if( argc < 1 )
 	{
