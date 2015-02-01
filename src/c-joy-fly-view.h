@@ -26,6 +26,7 @@ public:
 	virtual void OnChopperMessage( const char* szMsg )=0;
 	virtual void OnDebugMessage( const char* szMsg )=0;
     virtual void OnVoltageChange( float newVoltage )=0;
+    virtual void OnPing( float latency )=0;
 };
 
 #endif // _C_JOY_FLY_VIEW_H_

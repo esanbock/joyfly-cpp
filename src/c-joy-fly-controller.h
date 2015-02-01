@@ -58,6 +58,7 @@ public:
     // message sink
     virtual void OnVoltageChange(float newVoltage);
     virtual void OnMessage(const char* data);
+    virtual void OnPing(float latency);
 
 protected:
     void OnChopperMessage( const char* szMsg );

@@ -12,6 +12,7 @@ public:
     virtual void OnChopperMessage( const char* szMsg );
     virtual void OnDebugMessage( const char* szMsg );
     virtual void OnVoltageChange( float newVoltage );
+    virtual void OnPing( float latency );
 private:
     MainWindow* _pMainWindow;
 

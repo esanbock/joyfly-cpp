@@ -43,5 +43,6 @@ bool CSimulatedChopper::ProcessData()
     std::uniform_real_distribution<> dis(0, 100);
 
     _msgSink.OnVoltageChange( dis(_gen) );
+    _msgSink.OnPing(dis(_gen));
     return true;
 }

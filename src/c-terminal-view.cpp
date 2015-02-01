@@ -36,3 +36,8 @@ void CTerminalView::OnVoltageChange( float newVoltage )
 {
     cout << "new voltage:" << newVoltage << endl;
 }
+
+void CTerminalView::OnPing( float latency )
+{
+    cout << "ping latency " << latency << endl;
+}

@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     connect(this,SIGNAL(ChangeVoltage(float)), this,SLOT(onChangeVoltage(float)));
     connect(this,SIGNAL(AppendLog(const char*)), this,SLOT(onAppendLog(const char*)));
+    connect(this,SIGNAL(Ping(float)), this,SLOT(onPing(float)));
 }
 
 MainWindow::~MainWindow()
@@ -23,4 +24,9 @@ void MainWindow::onAppendLog(const char* szLog)
 void MainWindow::onChangeVoltage(float newVoltage)
 {
     ui->voltage->setValue(newVoltage);
+}
+
+void MainWindow::onPing(float latency)
+{
+    ui->latency->display(latency);
 }

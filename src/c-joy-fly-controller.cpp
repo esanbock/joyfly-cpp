@@ -113,6 +113,14 @@ void CJoyFlyController::OnVoltageChange(float newVoltage)
     }
 }
 
+void CJoyFlyController::OnPing(float latency)
+{
+    for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
+    {
+        (*it)->OnPing(latency);
+    }
+}
+
 int CJoyFlyController::Start(string& serialDevice, int secondsUpdate)
 {
     if( serialDevice == "/simulator" )

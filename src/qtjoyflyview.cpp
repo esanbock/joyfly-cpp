@@ -31,3 +31,8 @@ void CQtJoyFlyView::OnVoltageChange( float newVoltage )
 {
     _pMainWindow->ChangeVoltage(newVoltage);
 }
+
+void CQtJoyFlyView::OnPing( float latency )
+{
+    _pMainWindow->Ping(latency);
+}

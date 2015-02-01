@@ -18,10 +18,12 @@ public:
 signals:
     void AppendLog(const char* szLog);
     void ChangeVoltage( float newVoltage );
+    void Ping( float latency );
 
 protected slots:
     void onAppendLog(const char* szLog);
     void onChangeVoltage( float newVoltage );
+    void onPing( float latency );
 private:
     Ui::MainWindow *ui;
 };

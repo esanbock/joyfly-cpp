@@ -19,6 +19,7 @@ class IChopperMessages
 public:
     virtual void OnMessage(const char* data)=0;
     virtual void OnVoltageChange(float newVoltage)=0;
+    virtual void OnPing(float latency)=0;
 };
 
 class AbstractChopper
