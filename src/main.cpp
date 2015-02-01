@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
  * main.cc
- * Copyright (C) Douglas Esanbock 2011 <douglas@>
+ * Copyright (C) Douglas Esanbock 2011 <douglas@esanbock.com>
  * 
  * joyfly-cpp is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -27,6 +27,7 @@
 #include "controllerinputer.h"
 #include "c-joy-fly-view.h"
 #include "mainwindow.h"
+#include "abstractchopper.h"
 #include "choppercontrol.h"
 #include "c-joy-fly-controller.h"
 #include "c-terminal-view.h"

@@ -12,6 +12,7 @@
 
 #include "SerialStream.h"
 #include "SerialPort.h"
+#include "abstractchopper.h"
 #include "choppercontrol.h"
 
 using namespace std;
@@ -19,8 +20,6 @@ using namespace std;
 ChopperControl::ChopperControl(SerialPort& serialPort, int secondsUpdate, IChopperMessages& msgSink)
     :_serialPort(serialPort), _msgSink(msgSink)
 {
-    _lastPingNum = 3;
-    _sentPingClock = clock();
     _secondsUpdate = secondsUpdate;
 	_lastTime = clock();
 }
@@ -29,20 +28,6 @@ ChopperControl::ChopperControl(SerialPort& serialPort, int secondsUpdate, IChopp
 ChopperControl::~ChopperControl()
 {
     _serialPort.Close();
-}
-
-void ChopperControl::SendPing()
-{
-    _sentPingClock = clock();
-    _lastPingNum++;
-    if( _lastPingNum > 999 )
-        _lastPingNum = 1;
-    
-    stringstream sstream;
-    sstream << ":E" << setfill('0') << setw(3) << _lastPingNum;
-    string command = sstream.str();
-    _msgSink.Sent(command.c_str());
-    _serialPort.Write( command );
 }
 
 void ChopperControl::ProcessPingResponse( string& line )
@@ -89,22 +74,11 @@ void ChopperControl::SendSimpleCommand(const char* szCommand, int value)
 
 void ChopperControl::SendCommand(const char* szCommand)
 {
-    stringstream sstream;
-    sstream << szCommand;
-    string command = sstream.str();
-    _msgSink.Sent(command.c_str());
-    _serialPort.Write( command );
+    _msgSink.Sent(szCommand);
+    _serialPort.Write( szCommand );
 }
 
-void ChopperControl::SendCommand(const char* szCommand, bool toggle)
-{
-    stringstream sstream;
-    sstream << szCommand << setfill('0') << setw(3) << toggle;
-    string command = sstream.str();
-    _msgSink.Sent(command.c_str());
-    _serialPort.Write( command );
 
-}
 
 bool ChopperControl::ProcessData()
 {

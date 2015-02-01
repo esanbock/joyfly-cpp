@@ -14,34 +14,11 @@
 
 using namespace std;
 
-class IChopperMessages
-{
-public:
-    virtual void OnMessage(const char* data)=0;
-    virtual void OnDebug(const char* data)=0;
-    virtual void OnVoltageChange(float newVoltage)=0;
-    virtual void OnPing(float latency)=0;
-    virtual void Sent(const char* szMsg)=0;
-};
-
-class AbstractChopper
-{
-public:
-    virtual void SendPing()=0;
-    virtual void SendSimpleCommand(const char* szCommand, int value)=0;
-    virtual void SendCommand(const char* szCommand)=0;
-    virtual void SendCommand(const char* szCommand, bool toggle)=0;
-    virtual bool ProcessData()=0;
-    virtual ~AbstractChopper(){}
-};
-
 // this is the model class
 class ChopperControl : public AbstractChopper
 {
 private:
     SerialPort& _serialPort;
-    int _lastPingNum;
-    clock_t _sentPingClock;
     clock_t _lastTime;
     int _secondsUpdate;
     IChopperMessages& _msgSink;
@@ -49,10 +26,9 @@ public:
     ChopperControl(SerialPort& serialPort, int secondsUpdate, IChopperMessages& msgSink);
     virtual ~ChopperControl();
 
-    virtual void SendPing();
+
     virtual void SendSimpleCommand(const char* szCommand, int value);
     virtual void SendCommand(const char* szCommand);
-    virtual void SendCommand(const char* szCommand, bool toggle);
     virtual bool ProcessData();
 protected:
     void ProcessPingResponse( string& line );

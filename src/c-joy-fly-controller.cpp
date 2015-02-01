@@ -21,6 +21,7 @@
 #include <thread>
 #include "SerialStream.h"
 #include "SerialPort.h"
+#include "abstractchopper.h"
 #include "choppercontrol.h"
 #include "simulatedchopper.h"
 

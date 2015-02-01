@@ -44,7 +44,6 @@ void MainWindow::on_throttleControl_sliderMoved(int position)
 void MainWindow::OnChopperMessage( const char* szMsg )
 {
     AppendLog(szMsg);
-
 }
 
 void MainWindow::OnDebugMessage(const char* szMsg )

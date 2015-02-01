@@ -1,4 +1,5 @@
 #include <sstream>
+#include "abstractchopper.h"
 #include "choppercontrol.h"
 #include "simulatedchopper.h"
 
@@ -15,25 +16,16 @@ CSimulatedChopper::~CSimulatedChopper()
 
 }
 
-
-void CSimulatedChopper::SendPing()
-{
-
-}
-
 void CSimulatedChopper::SendSimpleCommand(const char* szCommand, int value)
 {
-
+    stringstream sstream;
+    sstream << szCommand << value;
+    _msgSink.Sent(sstream.str().c_str());
 }
 
 void CSimulatedChopper::SendCommand(const char* szCommand)
 {
-
-}
-
-void CSimulatedChopper::SendCommand(const char* szCommand, bool toggle)
-{
-
+    _msgSink.Sent(szCommand);
 }
 
 bool CSimulatedChopper::ProcessData()
@@ -41,9 +33,7 @@ bool CSimulatedChopper::ProcessData()
     std::uniform_real_distribution<> dis(0, 100);
 
     sleep(_secondsUpdate);
-    stringstream sstream;
-    sstream << "test data " << dis(_gen);
-    _msgSink.OnMessage( sstream.str().c_str() );
+    SendPing();
 
     _msgSink.OnVoltageChange( dis(_gen) );
     _msgSink.OnPing(dis(_gen));
