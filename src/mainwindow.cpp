@@ -19,6 +19,7 @@ MainWindow::~MainWindow()
 void MainWindow::onAppendLog(const char* szLog)
 {
     ui->textLog->appendPlainText(szLog);
+    ui->textLog->ensureCursorVisible();
 }
 
 void MainWindow::onChangeVoltage(float newVoltage)
@@ -29,4 +30,9 @@ void MainWindow::onChangeVoltage(float newVoltage)
 void MainWindow::onPing(float latency)
 {
     ui->latency->display(latency);
+}
+
+void MainWindow::on_throttleControl_sliderMoved(int position)
+{
+
 }

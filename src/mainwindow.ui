@@ -26,10 +26,6 @@
     <property name="readOnly">
      <bool>false</bool>
     </property>
-    <property name="plainText">
-     <string>hi
-</string>
-    </property>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
@@ -50,7 +46,7 @@
       <x>10</x>
       <y>30</y>
       <width>31</width>
-      <height>71</height>
+      <height>161</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -274,6 +270,35 @@
     </property>
     <property name="text">
      <string>Latency</string>
+    </property>
+   </widget>
+   <widget class="QSlider" name="throttleControl">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>30</y>
+      <width>22</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <number>1024</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>10</y>
+      <width>51</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Throttle</string>
     </property>
    </widget>
   </widget>

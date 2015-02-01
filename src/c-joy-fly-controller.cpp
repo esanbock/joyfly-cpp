@@ -72,7 +72,7 @@ AbstractChopper* CJoyFlyController::ConnectToChopper( const string serialDevice,
 
 AbstractChopper* CJoyFlyController::ConnectToSimulator( int secondsUpdate )
 {
-    //DebugMessage ("simulator");
+    DebugMessage ("simulator");
     return new CSimulatedChopper(secondsUpdate, *this);
 }
 

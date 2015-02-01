@@ -24,6 +24,9 @@ protected slots:
     void onAppendLog(const char* szLog);
     void onChangeVoltage( float newVoltage );
     void onPing( float latency );
+private slots:
+    void on_throttleControl_sliderMoved(int position);
+
 private:
     Ui::MainWindow *ui;
 };
