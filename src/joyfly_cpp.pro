@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     c-joy-test.cc \
     c-terminal-view.cpp \
     qtjoyflyview.cpp \
-    joystickinputer.cpp
+    joystickinputer.cpp \
+    simulatedchopper.cpp
 
 HEADERS  += mainwindow.h \
     c-joy-fly-controller.h \
@@ -43,7 +44,8 @@ HEADERS  += mainwindow.h \
     qtjoyflyview.h \
     joystickinputer.h \
     controllerinputer.h \
-    joystickexception.h
+    joystickexception.h \
+    simulatedchopper.h
 
 FORMS += mainwindow.ui
 

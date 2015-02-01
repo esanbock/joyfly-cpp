@@ -26,6 +26,12 @@ ChopperControl::ChopperControl(SerialPort& serialPort, int secondsUpdate)
 	_lastTime = clock();
 }
 
+
+ChopperControl::~ChopperControl()
+{
+    _serialPort.Close();
+}
+
 void ChopperControl::SendPing()
 {
     _sentPingClock = clock();

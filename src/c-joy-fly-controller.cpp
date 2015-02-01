@@ -22,6 +22,7 @@
 #include "SerialStream.h"
 #include "SerialPort.h"
 #include "choppercontrol.h"
+#include "simulatedchopper.h"
 
 #ifdef __APPLE__
 #include "SDL.h"
@@ -61,15 +62,19 @@ void CJoyFlyController::DebugMessage( const char* szMsg )
 	}
 }
 
-ChopperControl& CJoyFlyController::ConnectToChopper( const string serialDevice, int secondsUpdate )
+AbstractChopper* CJoyFlyController::ConnectToChopper( const string serialDevice, int secondsUpdate )
 {
     DebugMessage( (string("Opening serial port ") + serialDevice).c_str() );
     SerialPort comPort( serialDevice.c_str() );
     comPort.Open( SerialPort::BAUD_9600, SerialPort::CHAR_SIZE_8, SerialPort::PARITY_NONE, SerialPort::STOP_BITS_1) ;
-    _pChopperControl = new ChopperControl(comPort, secondsUpdate);
-    return *_pChopperControl;
+    return new ChopperControl(comPort, secondsUpdate);
 }
 
+AbstractChopper* CJoyFlyController::ConnectToSimulator( int secondsUpdate )
+{
+    DebugMessage ("simulator");
+    return new CSimulatedChopper(secondsUpdate);
+}
 
 void CJoyFlyController::DoCommandLoop()
 {
@@ -82,7 +87,10 @@ void CJoyFlyController::DoCommandLoop()
 
 int CJoyFlyController::Start(string& serialDevice, int secondsUpdate)
 {
-    ConnectToChopper( serialDevice.c_str(), secondsUpdate );
+    if( serialDevice == "/simulator" )
+        _pChopperControl = ConnectToSimulator(secondsUpdate);
+    else
+        _pChopperControl = ConnectToChopper( serialDevice.c_str(), secondsUpdate );
 
     pCommandLoopThread = new std::thread([this]() {DoCommandLoop();});
 

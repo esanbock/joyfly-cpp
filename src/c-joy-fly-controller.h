@@ -30,15 +30,16 @@ class CJoyFlyController : public IControllerInputer
 {
 public:
 	CJoyFlyController();
-	void AddView(CJoyFlyView* pView);
-	void OnChopperMessage( const char* szMsg );
-	void DebugMessage( const char* szMsg );
-    ChopperControl& ConnectToChopper( const string serialDevice, int secondsUpdate );
     virtual ~CJoyFlyController();
-    void ProcessJoystickInput();
+
+    // GUI
+    void AddView(CJoyFlyView* pView);
+
+    // joystick
     void AddJoyStick(int joyNum);
-    int Start(string& serialDevice, int secondsUpdate);
     void RunJoystickTests();
+
+    // NAV
     virtual void SetAutoPilot(bool onOff);
     virtual void SetHome();
     virtual void GetStatus();
@@ -49,12 +50,21 @@ public:
     virtual void SetThrottle(int val);
     virtual void Lift(int val);
 
+    // go
+    int Start(string& serialDevice, int secondsUpdate);
+
+
 protected:
+    void OnChopperMessage( const char* szMsg );
+    void DebugMessage( const char* szMsg );
     void DoCommandLoop();
+    AbstractChopper* ConnectToChopper( const string serialDevice, int secondsUpdate );
+    AbstractChopper* ConnectToSimulator( int secondsUpdate );
+    void ProcessJoystickInput();
 
 private:
 	vector<CJoyFlyView*> _views;
-    ChopperControl* _pChopperControl = NULL;
+    AbstractChopper* _pChopperControl = NULL;
     thread* pCommandLoopThread;
     CJoystickInputer* _pJoystickInputer;
     bool _quitting = false;

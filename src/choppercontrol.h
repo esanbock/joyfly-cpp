@@ -14,8 +14,19 @@
 
 using namespace std;
 
+class AbstractChopper
+{
+public:
+    virtual void SendPing()=0;
+    virtual void SendSimpleCommand(const char* szCommand, int value)=0;
+    virtual void SendCommand(const char* szCommand)=0;
+    virtual void SendCommand(const char* szCommand, bool toggle)=0;
+    virtual bool ProcessData()=0;
+    virtual ~AbstractChopper(){}
+};
+
 // this is the model class
-class ChopperControl
+class ChopperControl : public AbstractChopper
 {
 private:
     SerialPort& _serialPort;
@@ -25,13 +36,15 @@ private:
     int _secondsUpdate;
 public:
     ChopperControl(SerialPort& serialPort, int secondsUpdate);
-    void ProcessPingResponse( string& line );
-    void SendPing();
-    void SendSimpleCommand(const char* szCommand, int value);
-    void SendCommand(const char* szCommand);
-    void SendCommand(const char* szCommand, bool toggle);
-    bool ProcessData();
+    virtual ~ChopperControl();
+
+    virtual void SendPing();
+    virtual void SendSimpleCommand(const char* szCommand, int value);
+    virtual void SendCommand(const char* szCommand);
+    virtual void SendCommand(const char* szCommand, bool toggle);
+    virtual bool ProcessData();
 protected:
+    void ProcessPingResponse( string& line );
     void ProcessCommandResponse( string& line );
 };
 

@@ -65,7 +65,6 @@ int main (int argc, char * argv[])
 
         CTerminalView terminalView;
         controller.AddView( &terminalView );
-
         controller.Start(serialDevice, secondsUpdate);
         app.exec();
 	}
