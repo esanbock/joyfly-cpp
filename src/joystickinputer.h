@@ -21,6 +21,8 @@ public:
     CJoystickInputer(int joyNum, IControllerInputer& controller);
     ~CJoystickInputer();
     void Start();
+    void Stop();
+
 protected:
     void DoSdlLoop();
     int AxisCommandSimple( CJoyTest& sidewinder, function<void (int)> axisFunction, int joyAxis, int min, int max );

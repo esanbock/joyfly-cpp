@@ -53,7 +53,7 @@ public:
 
     // go
     int Start(string& serialDevice, int secondsUpdate);
-
+    void Quit();
 
 protected:
     void OnChopperMessage( const char* szMsg );

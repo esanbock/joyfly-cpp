@@ -76,6 +76,21 @@ AbstractChopper* CJoyFlyController::ConnectToSimulator( int secondsUpdate )
     return new CSimulatedChopper(secondsUpdate);
 }
 
+void CJoyFlyController::Quit()
+{
+    _quitting = true;
+
+    // stop all updates
+    _views.clear();
+
+    if( _pJoystickInputer != NULL )
+    {
+        _pJoystickInputer->Stop();
+        delete _pJoystickInputer;
+        _pJoystickInputer = NULL;
+    }
+}
+
 void CJoyFlyController::DoCommandLoop()
 {
     do

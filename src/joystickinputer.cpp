@@ -12,12 +12,19 @@ CJoystickInputer::CJoystickInputer(int joyNum, IControllerInputer& controller)
 
 CJoystickInputer::~CJoystickInputer()
 {
-
+    if( _sidewinder != NULL)
+        delete _sidewinder;
 }
 
 void CJoystickInputer::Start()
 {
       pSdlLoopThread = new std::thread([this]() {DoSdlLoop();});
+}
+
+
+void CJoystickInputer::Stop()
+{
+      _quitting = true;
 }
 
 void CJoystickInputer::DoSdlLoop()

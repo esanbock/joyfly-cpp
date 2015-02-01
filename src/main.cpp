@@ -70,6 +70,7 @@ int main (int argc, char * argv[])
         controller.AddView( &guiView );
         controller.Start(serialDevice, secondsUpdate);
         app.exec();
+        controller.Quit();
 	}
 	catch( JoystickException& jExcept )
 	{
