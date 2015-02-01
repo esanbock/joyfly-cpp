@@ -120,3 +120,30 @@ void CJoyFlyController::GetVoltage()
 {
     _pChopperControl->SendCommand(":V");
 }
+
+void CJoyFlyController::Bank(int val)
+{
+    _pChopperControl->SendSimpleCommand(":B",  val);
+}
+
+void CJoyFlyController::Pitch(int val)
+{
+    _pChopperControl->SendSimpleCommand(":P",  val);
+}
+
+void CJoyFlyController::Yaw(int val)
+{
+    _pChopperControl->SendSimpleCommand(":Y",  val);
+}
+
+void CJoyFlyController::SetThrottle(int val)
+{
+    _pChopperControl->SendSimpleCommand(":T",  val);
+}
+
+
+void CJoyFlyController::Lift(int val)
+{
+    _pChopperControl->SendSimpleCommand(":L",  val);
+}
+

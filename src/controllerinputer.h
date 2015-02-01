@@ -9,6 +9,11 @@ public:
     virtual void SetHome()=0;
     virtual void GetStatus()=0;
     virtual void GetVoltage()=0;
+    virtual void Bank(int val)=0;
+    virtual void Pitch(int val)=0;
+    virtual void Yaw(int val)=0;
+    virtual void SetThrottle(int val)=0;
+    virtual void Lift(int val)=0;
 };
 
 #endif // CONTROLLERINPUTER

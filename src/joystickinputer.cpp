@@ -29,12 +29,12 @@ void CJoystickInputer::DoSdlLoop()
     }while (!_quitting);
 }
 
-int CJoystickInputer::AxisCommandSimple( CJoyTest& sidewinder, const char* szCommand, int joyAxis, int min, int max )
+int CJoystickInputer::AxisCommandSimple( CJoyTest& sidewinder, function<void (int)> axisFunction, int joyAxis, int min, int max )
 {
     _curVals[joyAxis] = sidewinder.GetAxisNormalized (joyAxis, min, max);
     if( _prevVals[joyAxis] != _curVals[joyAxis] )
     {
-        control.SendSimpleCommand(szCommand, _curVals[joyAxis]);
+        axisFunction(_curVals[joyAxis]);
     }
     _prevVals[joyAxis] = _curVals[joyAxis];
 
@@ -56,7 +56,7 @@ int CJoystickInputer::ButtonCommandToggle(CJoyTest& sidewinder, function<void (i
 
 
 
-int CJoystickInputer::HatCommandIncrement(CJoyTest& sidewinder, Uint8 down, Uint8 up, const char* szCommand, int lowVal, int highVal )
+int CJoystickInputer::HatCommandIncrement(CJoyTest& sidewinder, Uint8 down, Uint8 up, function<void (int)> axisFunction, int lowVal, int highVal )
 {
     static long lastHatTime=666;
 
@@ -84,7 +84,7 @@ int CJoystickInputer::HatCommandIncrement(CJoyTest& sidewinder, Uint8 down, Uint
     }
 
     _currentHatY = min( highVal, max( lowVal, _currentHatY) );
-    control.SendCommand( szCommand, _currentHatY);
+    axisFunction(_currentHatY);
 
     return _currentHatY;
 }
@@ -103,15 +103,15 @@ void CJoystickInputer::RunJoystickTests()
 
 void CJoystickInputer::ProcessJoystickInput()
 {
-    AxisCommandSimple( *_sidewinder, ":T", JOYSTICK_THROTTLE, 255, 0);
-    AxisCommandSimple( *_sidewinder, ":B", JOYSTICK_X, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
-    AxisCommandSimple( *_sidewinder, ":P", JOYSTICK_Y, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
-    AxisCommandSimple( *_sidewinder, ":Y", JOYSTICK_Z, -255, 255);
+    AxisCommandSimple( *_sidewinder, [&](int val) {_controller.SetThrottle(val);}, JOYSTICK_THROTTLE, 255, 0);
+    AxisCommandSimple( *_sidewinder, [&](int val) {_controller.Bank(val);}, JOYSTICK_X, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
+    AxisCommandSimple( *_sidewinder, [&](int val) {_controller.Pitch(val);}, JOYSTICK_Y, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
+    AxisCommandSimple( *_sidewinder, [&](int val) {_controller.Yaw(val);}, JOYSTICK_Z, -255, 255);
 
     ButtonCommandToggle( *_sidewinder, [&] (bool result) {_controller.SetAutoPilot(result);}, JOYSTICK_AUTOPILOT );
     ButtonCommandToggle( *_sidewinder, [&] (bool) {_controller.SetHome();}, JOYSTICK_HOME);
     ButtonCommandToggle( *_sidewinder, [&] (bool) {_controller.GetStatus();}, JOYSTICK_STATUS);
     ButtonCommandToggle( *_sidewinder, [&] (bool) {_controller.GetVoltage();}, JOYSTICK_VOLTAGE);
 
-    HatCommandIncrement( *_sidewinder, SDL_HAT_DOWN, SDL_HAT_UP, ":L", -20, 20 );
+    HatCommandIncrement( *_sidewinder, SDL_HAT_DOWN, SDL_HAT_UP, [&](int val) {_controller.Lift(val);}, -20, 20 );
 }

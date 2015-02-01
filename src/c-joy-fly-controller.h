@@ -39,11 +39,15 @@ public:
     void AddJoyStick(int joyNum);
     int Start(string& serialDevice, int secondsUpdate);
     void RunJoystickTests();
-    void SetThrottle(int val);
     virtual void SetAutoPilot(bool onOff);
     virtual void SetHome();
     virtual void GetStatus();
     virtual void GetVoltage();
+    virtual void Bank(int val);
+    virtual void Pitch(int val);
+    virtual void Yaw(int val);
+    virtual void SetThrottle(int val);
+    virtual void Lift(int val);
 
 protected:
     void DoCommandLoop();
