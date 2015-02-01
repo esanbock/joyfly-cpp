@@ -18,9 +18,16 @@
  */
 
 #include <iostream>
+#include "controllerinputer.h"
 #include "c-terminal-view.h"
 
 using namespace std;
+
+CTerminalView::CTerminalView( IControllerInputer* pController )
+    :CJoyFlyView(pController)
+{
+
+}
 
 void CTerminalView::OnChopperMessage( const char* szMsg )
 {

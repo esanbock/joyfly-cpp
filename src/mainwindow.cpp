@@ -1,8 +1,10 @@
+#include "controllerinputer.h"
 #include "c-joy-fly-view.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(IControllerInputer* pController, QWidget *parent) :
+    CJoyFlyView(pController),
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
@@ -36,7 +38,7 @@ void MainWindow::onPing(float latency)
 
 void MainWindow::on_throttleControl_sliderMoved(int position)
 {
-
+    _pController->SetThrottle(position);
 }
 
 void MainWindow::OnChopperMessage( const char* szMsg )

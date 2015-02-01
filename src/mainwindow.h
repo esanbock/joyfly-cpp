@@ -13,7 +13,7 @@ class MainWindow : public QMainWindow, public CJoyFlyView
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(IControllerInputer* pController, QWidget *parent=0);
     ~MainWindow();
     virtual void OnChopperMessage( const char* szMsg );
     virtual void OnDebugMessage( const char* szMsg );

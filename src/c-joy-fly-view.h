@@ -20,14 +20,20 @@
 #ifndef _C_JOY_FLY_VIEW_H_
 #define _C_JOY_FLY_VIEW_H_
 
+#include "controllerinputer.h"
+
 class CJoyFlyView
 {
 public:
+    CJoyFlyView(IControllerInputer* pController){_pController = pController;}
+
 	virtual void OnChopperMessage( const char* szMsg )=0;
 	virtual void OnDebugMessage( const char* szMsg )=0;
     virtual void OnVoltageChange( float newVoltage )=0;
     virtual void OnPing( float latency )=0;
     virtual void Sent(const char* szMsg)=0;
+protected:
+    IControllerInputer* _pController;
 };
 
 #endif // _C_JOY_FLY_VIEW_H_

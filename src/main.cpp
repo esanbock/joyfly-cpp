@@ -24,6 +24,7 @@
 
 #include <QApplication>
 
+#include "controllerinputer.h"
 #include "c-joy-fly-view.h"
 #include "mainwindow.h"
 #include "choppercontrol.h"
@@ -64,9 +65,9 @@ int main (int argc, char * argv[])
 
         int secondsUpdate = atoi(argv[2]);
 
-        CTerminalView terminalView;
+        CTerminalView terminalView(&controller);
         controller.AddView( &terminalView );
-        MainWindow guiView;
+        MainWindow guiView(&controller);
         controller.AddView( &guiView );
         controller.Start(serialDevice, secondsUpdate);
         app.exec();
