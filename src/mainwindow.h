@@ -18,6 +18,7 @@ public:
     virtual void OnChopperMessage( const char* szMsg );
     virtual void OnDebugMessage( const char* szMsg );
     virtual void OnVoltageChange( float newVoltage );
+
     virtual void OnPing( float latency );
     virtual void Sent(const char* szMsg);
 
@@ -25,6 +26,7 @@ signals:
     void AppendLog(QString log);
     void ChangeVoltage( float newVoltage );
     void Ping( float latency );
+    virtual void OnThrottleChange( int newThrottle );
 
 protected slots:
     void onAppendLog(QString log);

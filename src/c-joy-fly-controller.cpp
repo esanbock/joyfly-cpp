@@ -126,6 +126,14 @@ void CJoyFlyController::OnVoltageChange(float newVoltage)
     }
 }
 
+void CJoyFlyController::OnThrottleChange(int newThrottle)
+{
+    for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
+    {
+        (*it)->OnThrottleChange(newThrottle);
+    }
+}
+
 void CJoyFlyController::OnPing(float latency)
 {
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
@@ -196,6 +204,7 @@ void CJoyFlyController::Yaw(int val)
 void CJoyFlyController::SetThrottle(int val)
 {
     _pChopperControl->SendSimpleCommand(":T",  val);
+    OnThrottleChange(val);
 }
 
 void CJoyFlyController::Lift(int val)

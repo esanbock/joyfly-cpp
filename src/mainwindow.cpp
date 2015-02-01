@@ -15,6 +15,7 @@ MainWindow::MainWindow(IControllerInputer* pController, QWidget *parent) :
     connect(this,SIGNAL(ChangeVoltage(float)), this,SLOT(onChangeVoltage(float)));
     connect(this,SIGNAL(AppendLog(QString)), this,SLOT(onAppendLog(QString)));
     connect(this,SIGNAL(Ping(float)), this,SLOT(onPing(float)));
+    connect(this,SIGNAL(OnThrottleChange(int)), ui->throttleControl,SLOT(setValue(int)));
     show();
 }
 
@@ -63,6 +64,7 @@ void MainWindow::OnVoltageChange( float newVoltage )
 {
     ChangeVoltage(newVoltage);
 }
+
 
 void MainWindow::OnPing( float latency )
 {

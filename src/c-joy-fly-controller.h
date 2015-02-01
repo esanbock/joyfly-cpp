@@ -57,6 +57,7 @@ public:
 
     // message sink
     virtual void OnVoltageChange(float newVoltage);
+    virtual void OnThrottleChange(int newThrottle);
     virtual void OnMessage(const char* data);
     virtual void Sent(const char* data);
     virtual void OnPing(float latency);
