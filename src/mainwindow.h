@@ -38,8 +38,8 @@ protected slots:
     void onPing( float latency );
 private slots:
     void on_throttleControl_sliderMoved(int position);
-
     void on_connectButton_clicked();
+    void on_connectJoystick_clicked();
 
 private:
     Ui::MainWindow *ui;

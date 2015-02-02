@@ -37,7 +37,7 @@ public:
     void AddView(CJoyFlyView* pView);
 
     // joystick
-    void AddJoyStick(int joyNum);
+    virtual void AddJoyStick(int joyNum);
     void RunJoystickTests();
 
     // NAV

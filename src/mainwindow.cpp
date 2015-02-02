@@ -91,3 +91,9 @@ void MainWindow::populatejoysticks()
         ui->joystickList->addItem(it->c_str());
     }
 }
+
+void MainWindow::on_connectJoystick_clicked()
+{
+    _pController->AddJoyStick( ui->joystickList->currentIndex());
+    ui->connectJoystick->setEnabled(false);
+}

@@ -31,7 +31,8 @@ vector<string> CJoystickInputer::GetJoystickNames()
 
 void CJoystickInputer::Start()
 {
-      pSdlLoopThread = new std::thread([this]() {DoSdlLoop();});
+    OpenJoystick(_joyNum);
+    pSdlLoopThread = new std::thread([this]() {DoSdlLoop();});
 }
 
 

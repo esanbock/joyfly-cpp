@@ -16,6 +16,7 @@ public:
     virtual void SetThrottle(int val)=0;
     virtual void Lift(int val)=0;
     virtual int Start(const std::string serialDevice, int secondsUpdate)=0;
+    virtual void AddJoyStick(int joyNum)=0;
 };
 
 #endif // CONTROLLERINPUTER
