@@ -55,7 +55,9 @@ void ChopperControl::ProcessCommandResponse( string& line )
     
     if( line.compare(0,2,"V=") == 0 )
     {
-        _msgSink.OnVoltageChange(100 * (1023 / stoi(line.substr(2,4))));
+        int rawVoltage = stoi(line.substr(2,4));
+        float pctVoltage = (float)rawVoltage / 1023.0;
+        _msgSink.OnVoltageChange(pctVoltage * 100);
     }
 
     // otherwise, NAK
@@ -82,8 +84,8 @@ bool ChopperControl::ProcessData()
         {
             string line = _serialPort.ReadLine( 200 );
             
-            if( line[0] == ':' )
-                ProcessCommandResponse(line);
+            //if( line[0] == ':' )
+            ProcessCommandResponse(line);
 
             haveData = true;
         }
