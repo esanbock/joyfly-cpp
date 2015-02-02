@@ -16,6 +16,7 @@ MainWindow::MainWindow(IControllerInputer* pController, QWidget *parent) :
     connect(this,SIGNAL(AppendLog(QString)), this,SLOT(onAppendLog(QString)));
     connect(this,SIGNAL(Ping(float)), this,SLOT(onPing(float)));
     connect(this,SIGNAL(OnThrottleChange(int)), ui->throttleControl,SLOT(setValue(int)));
+    connect(this,SIGNAL(Debug(QString)), ui->textDebug,SLOT(appendPlainText(QString)));
     show();
 }
 
@@ -52,7 +53,7 @@ void MainWindow::OnChopperMessage( const char* szMsg )
 
 void MainWindow::OnDebugMessage(const char* szMsg )
 {
-    OnChopperMessage(szMsg);
+    Debug(szMsg);
 }
 
 void MainWindow::Sent(const char* szMsg )

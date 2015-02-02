@@ -27,6 +27,7 @@ signals:
     void ChangeVoltage( float newVoltage );
     void Ping( float latency );
     virtual void OnThrottleChange( int newThrottle );
+    void Debug( QString log );
 
 protected slots:
     void onAppendLog(QString log);

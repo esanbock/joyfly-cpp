@@ -382,7 +382,7 @@
      <string>Throttle</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="textOutput">
+   <widget class="QPlainTextEdit" name="textDebug">
     <property name="geometry">
      <rect>
       <x>13</x>
@@ -390,6 +390,9 @@
       <width>591</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="lineWrapMode">
+     <enum>QPlainTextEdit::NoWrap</enum>
     </property>
     <property name="readOnly">
      <bool>true</bool>

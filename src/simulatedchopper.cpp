@@ -30,5 +30,6 @@ bool CSimulatedChopper::ProcessData()
 
     _msgSink.OnVoltageChange( dis(_gen) );
     _msgSink.OnPing(dis(_gen));
+    _msgSink.OnMessage("hi");
     return true;
 }

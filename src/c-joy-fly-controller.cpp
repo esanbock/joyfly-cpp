@@ -62,7 +62,7 @@ void CJoyFlyController::DebugMessage( const char* szMsg )
 {
 	for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
 	{
-		(*it)->OnChopperMessage(szMsg);
+        (*it)->OnDebugMessage(szMsg);
 	}
 }
 
@@ -106,7 +106,7 @@ void CJoyFlyController::DoCommandLoop()
 
 void CJoyFlyController::OnMessage(const char *data)
 {
-    DebugMessage(data);
+    OnChopperMessage(data);
 }
 
 void CJoyFlyController::OnDebug(const char *data)
