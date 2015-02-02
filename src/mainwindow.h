@@ -35,6 +35,8 @@ protected slots:
 private slots:
     void on_throttleControl_sliderMoved(int position);
 
+    void on_connectButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

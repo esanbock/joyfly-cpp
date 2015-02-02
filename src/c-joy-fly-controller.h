@@ -52,7 +52,7 @@ public:
     virtual void Lift(int val);
 
     // go
-    int Start(string& serialDevice, int secondsUpdate);
+    virtual int Start(const string serialDevice, int secondsUpdate);
     void Quit();
 
     // message sink
@@ -74,7 +74,7 @@ protected:
 private:
 	vector<CJoyFlyView*> _views;
     AbstractChopper* _pChopperControl = NULL;
-    thread* pCommandLoopThread;
+    thread* _pCommandLoopThread = NULL;
     CJoystickInputer* _pJoystickInputer = NULL;
     bool _quitting = false;
 

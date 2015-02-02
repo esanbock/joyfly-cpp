@@ -19,6 +19,7 @@
 
 #include <vector>
 #include <thread>
+#include <stdexcept>
 #include "SerialStream.h"
 #include "SerialPort.h"
 #include "abstractchopper.h"
@@ -142,14 +143,17 @@ void CJoyFlyController::OnPing(float latency)
     }
 }
 
-int CJoyFlyController::Start(string& serialDevice, int secondsUpdate)
+int CJoyFlyController::Start(const string serialDevice, int secondsUpdate)
 {
+    if( _pCommandLoopThread != NULL )
+        throw domain_error("controller already started");
+
     if( serialDevice == "/simulator" )
         _pChopperControl = ConnectToSimulator(secondsUpdate);
     else
         _pChopperControl = ConnectToChopper( serialDevice.c_str(), secondsUpdate );
 
-    pCommandLoopThread = new std::thread([this]() {DoCommandLoop();});
+    _pCommandLoopThread = new std::thread([this]() {DoCommandLoop();});
 
     return 0;
 }

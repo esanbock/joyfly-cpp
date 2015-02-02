@@ -1,6 +1,7 @@
 #ifndef CONTROLLERINPUTER
 #define CONTROLLERINPUTER
 
+
 class IControllerInputer
 {
 public:
@@ -14,6 +15,7 @@ public:
     virtual void Yaw(int val)=0;
     virtual void SetThrottle(int val)=0;
     virtual void Lift(int val)=0;
+    virtual int Start(const std::string serialDevice, int secondsUpdate)=0;
 };
 
 #endif // CONTROLLERINPUTER

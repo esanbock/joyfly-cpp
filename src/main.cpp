@@ -21,6 +21,7 @@
 #include <iomanip>
 #include <sstream>
 #include <thread>
+#include <string>
 
 #include <QApplication>
 
@@ -58,19 +59,11 @@ int main (int argc, char * argv[])
 
             return 0;
         }
-        if( argc < 3)
-        {
-            cout << "wrong number of parameters" << endl;
-            return -1;
-        }
-
-        int secondsUpdate = atoi(argv[2]);
 
         CTerminalView terminalView(&controller);
         controller.AddView( &terminalView );
         MainWindow guiView(&controller);
         controller.AddView( &guiView );
-        controller.Start(serialDevice, secondsUpdate);
         app.exec();
         controller.Quit();
 	}

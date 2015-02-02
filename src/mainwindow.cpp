@@ -70,3 +70,9 @@ void MainWindow::OnPing( float latency )
 {
     Ping(latency);
 }
+
+void MainWindow::on_connectButton_clicked()
+{
+    _pController->Start( ui->serialDevice->text().toStdString(), ui->secondsUpdate->value());
+    ui->connectButton->setEnabled(false);
+}
