@@ -43,12 +43,6 @@ int main (int argc, char * argv[])
 
     QApplication app(argc, argv);
 
-    if( argc < 2 )
-	{
-		cout << "wrong number of parameters" << endl;
-		return -1;
-	}
-
     try
     {
         CJoyFlyController controller;
