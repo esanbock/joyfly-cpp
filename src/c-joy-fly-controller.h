@@ -77,6 +77,7 @@ private:
     thread* _pCommandLoopThread = NULL;
     CJoystickInputer* _pJoystickInputer = NULL;
     bool _quitting = false;
+    SerialPort* _comPort;
 
 };
 

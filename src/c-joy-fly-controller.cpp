@@ -48,6 +48,7 @@ void CJoyFlyController::AddView(CJoyFlyView* pView)
 CJoyFlyController::~CJoyFlyController()
 {
     delete _pChopperControl;
+    delete _comPort;
 }
 
 void CJoyFlyController::OnChopperMessage( const char* szMsg )
@@ -69,9 +70,9 @@ void CJoyFlyController::DebugMessage( const char* szMsg )
 AbstractChopper* CJoyFlyController::ConnectToChopper( const string serialDevice, int secondsUpdate )
 {
     DebugMessage( (string("Opening serial port ") + serialDevice).c_str() );
-    SerialPort comPort( serialDevice.c_str() );
-    comPort.Open( SerialPort::BAUD_9600, SerialPort::CHAR_SIZE_8, SerialPort::PARITY_NONE, SerialPort::STOP_BITS_1) ;
-    return new ChopperControl(comPort, secondsUpdate, *this);
+    _comPort = new SerialPort( serialDevice.c_str() );
+    _comPort->Open( SerialPort::BAUD_9600, SerialPort::CHAR_SIZE_8, SerialPort::PARITY_NONE, SerialPort::STOP_BITS_1) ;
+    return new ChopperControl(*_comPort, secondsUpdate, *this);
 }
 
 AbstractChopper* CJoyFlyController::ConnectToSimulator( int secondsUpdate )
