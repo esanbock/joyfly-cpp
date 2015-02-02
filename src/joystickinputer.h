@@ -11,7 +11,7 @@
 #include <thread>
 
 #include "controllerinputer.h"
-#include "c-joy-test.h"
+#include "sdljoystick.h"
 
 using namespace std;
 

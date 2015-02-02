@@ -28,23 +28,23 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     c-joy-fly-controller.cpp \
     choppercontrol.cpp \
-    c-joy-test.cc \
     c-terminal-view.cpp \
     joystickinputer.cpp \
     simulatedchopper.cpp \
-    abstractchopper.cpp
+    abstractchopper.cpp \
+    sdljoystick.cpp
 
 HEADERS  += mainwindow.h \
     c-joy-fly-controller.h \
     choppercontrol.h \
     c-joy-fly-view.h \
     c-terminal-view.h \
-    c-joy-test.h \
     joystickinputer.h \
     controllerinputer.h \
     joystickexception.h \
     simulatedchopper.h \
-    abstractchopper.h
+    abstractchopper.h \
+    sdljoystick.h
 
 FORMS += mainwindow.ui
 

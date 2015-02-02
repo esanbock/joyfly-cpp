@@ -26,7 +26,7 @@
 #include "SDL2/SDL.h"
 #endif
 
-#include "c-joy-test.h"
+#include "sdljoystick.h"
 
 using namespace std;
 

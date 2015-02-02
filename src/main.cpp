@@ -48,16 +48,20 @@ int main (int argc, char * argv[])
 		cout << "wrong number of parameters" << endl;
 		return -1;
 	}
-    CJoyFlyController controller;
-    string serialDevice = string(argv[1] );
 
     try
     {
-        if( serialDevice == "/test" )
-        {
-            controller.RunJoystickTests();
+        CJoyFlyController controller;
 
-            return 0;
+        if( argc > 1 )
+        {
+            string serialDevice = string(argv[1] );
+            if( serialDevice == "/test" )
+            {
+                controller.RunJoystickTests();
+
+                return 0;
+            }
         }
 
         CTerminalView terminalView(&controller);
