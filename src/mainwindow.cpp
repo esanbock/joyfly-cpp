@@ -3,6 +3,7 @@
 #include "c-joy-fly-view.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "joystickinputer.h"
 
 using namespace std;
 
@@ -17,6 +18,9 @@ MainWindow::MainWindow(IControllerInputer* pController, QWidget *parent) :
     connect(this,SIGNAL(Ping(float)), this,SLOT(onPing(float)));
     connect(this,SIGNAL(OnThrottleChange(int)), ui->throttleControl,SLOT(setValue(int)));
     connect(this,SIGNAL(Debug(QString)), ui->textDebug,SLOT(appendPlainText(QString)));
+
+    populatejoysticks();
+
     show();
 }
 
@@ -76,4 +80,14 @@ void MainWindow::on_connectButton_clicked()
 {
     _pController->Start( ui->serialDevice->text().toStdString(), ui->secondsUpdate->value());
     ui->connectButton->setEnabled(false);
+}
+
+void MainWindow::populatejoysticks()
+{
+    vector<string> joyNames = CJoystickInputer::GetJoystickNames();
+
+    for (auto it = std::begin(joyNames); it != std::end(joyNames); ++it)
+    {
+        ui->joystickList->addItem(it->c_str());
+    }
 }

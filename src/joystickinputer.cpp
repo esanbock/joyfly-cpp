@@ -1,3 +1,4 @@
+#include <vector>
 #include <thread>
 #include "joystickinputer.h"
 
@@ -5,6 +6,7 @@ using namespace std;
 
 CJoystickInputer::CJoystickInputer(int joyNum, IControllerInputer& controller)
     :_controller(controller),
+    _joyNum(joyNum),
     _prevVals {0,0,0,127} ,_curVals{0,0,0,127}
 {
 
@@ -14,6 +16,17 @@ CJoystickInputer::~CJoystickInputer()
 {
     if( _sidewinder != NULL)
         delete _sidewinder;
+}
+
+vector<string> CJoystickInputer::GetJoystickNames()
+{
+    vector<string> results;
+    int numSticks = CSdlJoystick::GetJoyCount();
+    for( int i=0; i < numSticks; i++ )
+    {
+        results.push_back(CSdlJoystick::GetJoyName(i));
+    }
+    return results;
 }
 
 void CJoystickInputer::Start()
@@ -36,7 +49,7 @@ void CJoystickInputer::DoSdlLoop()
     }while (!_quitting);
 }
 
-int CJoystickInputer::AxisCommandSimple( CJoyTest& sidewinder, function<void (int)> axisFunction, int joyAxis, int min, int max )
+int CJoystickInputer::AxisCommandSimple( CSdlJoystick& sidewinder, function<void (int)> axisFunction, int joyAxis, int min, int max )
 {
     _curVals[joyAxis] = sidewinder.GetAxisNormalized (joyAxis, min, max);
     if( _prevVals[joyAxis] != _curVals[joyAxis] )
@@ -48,7 +61,7 @@ int CJoystickInputer::AxisCommandSimple( CJoyTest& sidewinder, function<void (in
     return _prevVals[joyAxis];
 }
 
-int CJoystickInputer::ButtonCommandToggle(CJoyTest& sidewinder, function<void (int)> toggleFunction, int joyAxis)
+int CJoystickInputer::ButtonCommandToggle(CSdlJoystick& sidewinder, function<void (int)> toggleFunction, int joyAxis)
 {
     _curButtonVals[joyAxis] = sidewinder.GetButton (joyAxis);
     if( _prevButtonVals[joyAxis] != _curButtonVals[joyAxis] && _curButtonVals[joyAxis] == 1 )
@@ -63,7 +76,7 @@ int CJoystickInputer::ButtonCommandToggle(CJoyTest& sidewinder, function<void (i
 
 
 
-int CJoystickInputer::HatCommandIncrement(CJoyTest& sidewinder, Uint8 down, Uint8 up, function<void (int)> axisFunction, int lowVal, int highVal )
+int CJoystickInputer::HatCommandIncrement(CSdlJoystick& sidewinder, Uint8 down, Uint8 up, function<void (int)> axisFunction, int lowVal, int highVal )
 {
     static long lastHatTime=666;
 
@@ -99,13 +112,8 @@ int CJoystickInputer::HatCommandIncrement(CJoyTest& sidewinder, Uint8 down, Uint
 void CJoystickInputer::OpenJoystick(int joystickNum)
 {
     _controller.DebugMessage("Opening joystick");
-    _sidewinder = new CJoyTest(joystickNum);
+    _sidewinder = new CSdlJoystick(joystickNum);
 
-}
-
-void CJoystickInputer::RunJoystickTests()
-{
-    _sidewinder->RunTests();
 }
 
 void CJoystickInputer::ProcessJoystickInput()

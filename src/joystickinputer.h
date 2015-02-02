@@ -22,15 +22,15 @@ public:
     ~CJoystickInputer();
     void Start();
     void Stop();
+    static vector<string> GetJoystickNames();
 
 protected:
     void DoSdlLoop();
-    int AxisCommandSimple( CJoyTest& sidewinder, function<void (int)> axisFunction, int joyAxis, int min, int max );
-    int HatCommandIncrement( CJoyTest& sidewinder, Uint8 down, Uint8 up, function<void (int)> axisFunction, int lowVal, int highVal );
-    int ButtonCommandToggle(CJoyTest& sidewinder, function<void (int)> toggleFunction, int joyAxis);
+    int AxisCommandSimple( CSdlJoystick& sidewinder, function<void (int)> axisFunction, int joyAxis, int min, int max );
+    int HatCommandIncrement( CSdlJoystick& sidewinder, Uint8 down, Uint8 up, function<void (int)> axisFunction, int lowVal, int highVal );
+    int ButtonCommandToggle(CSdlJoystick& sidewinder, function<void (int)> toggleFunction, int joyAxis);
     void ProcessJoystickInput();
     void OpenJoystick(int joystickNum);
-    void RunJoystickTests();
 
 private:
     IControllerInputer& _controller;
@@ -54,7 +54,8 @@ private:
     int _prevButtonVals[5];
     int _curButtonVals[5];
     bool _buttonToggle[5];
-    CJoyTest* _sidewinder = NULL;
+    CSdlJoystick* _sidewinder = NULL;
+    int _joyNum = -1;
 };
 
 #endif // CJOYSTICKINPUTER_H

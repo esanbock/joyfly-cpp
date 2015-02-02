@@ -166,8 +166,7 @@ void CJoyFlyController::AddJoyStick(int joyNum)
 
 void CJoyFlyController::RunJoystickTests()
 {
-    CJoyTest t;
-    t.RunTests();
+    CSdlJoystick::RunTests();
 }
 
 void CJoyFlyController::SetAutoPilot(bool onOff)

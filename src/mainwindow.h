@@ -22,6 +22,9 @@ public:
     virtual void OnPing( float latency );
     virtual void Sent(const char* szMsg);
 
+protected:
+    void populatejoysticks();
+
 signals:
     void AppendLog(QString log);
     void ChangeVoltage( float newVoltage );
