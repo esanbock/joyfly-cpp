@@ -22,6 +22,7 @@ public:
     virtual void OnPing( float latency );
     virtual void Sent(const char* szMsg);
     virtual void OnBank( float newAngle );
+    virtual void OnPitch( float newAngle );
 
 protected:
     void populatejoysticks();

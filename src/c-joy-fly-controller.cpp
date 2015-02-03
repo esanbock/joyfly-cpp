@@ -222,6 +222,7 @@ void CJoyFlyController::OnIMUChanged( int x, int y, int z )
     {
         float fAngle = (float)x * (360.0 / 1024.0);
         (*it)->OnBank(fAngle);
+        (*it)->OnPitch(((float)y / 1024.0) * 2 - 1.0);
     }
 
 }
