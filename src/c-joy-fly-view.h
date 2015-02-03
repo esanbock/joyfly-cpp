@@ -33,6 +33,7 @@ public:
     virtual void OnPing( float latency )=0;
     virtual void Sent(const char* szMsg)=0;
     virtual void OnThrottleChange( int newThrottle ){}
+    virtual void OnBank( float newAngle ){}
 protected:
     IControllerInputer* _pController;
 };

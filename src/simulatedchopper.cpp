@@ -24,12 +24,13 @@ void CSimulatedChopper::SendCommand(const char* szCommand)
 bool CSimulatedChopper::ProcessData()
 {
     std::uniform_real_distribution<> dis(0, 100);
-
+    std::uniform_int_distribution<> imuRand(0,1023);
     sleep(_secondsUpdate);
     SendPing();
 
     _msgSink.OnVoltageChange( dis(_gen) );
     _msgSink.OnPing(dis(_gen));
     _msgSink.OnMessage("hi");
+    _msgSink.OnIMUChanged(imuRand(_gen), imuRand(_gen), imuRand(_gen));
     return true;
 }

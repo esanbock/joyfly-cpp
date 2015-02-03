@@ -469,6 +469,19 @@
      </rect>
     </property>
    </widget>
+   <widget class="AttitudeIndicator" name="attitude" native="true">
+    <property name="geometry">
+     <rect>
+      <x>209</x>
+      <y>99</y>
+      <width>81</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -476,7 +489,7 @@
      <x>0</x>
      <y>0</y>
      <width>614</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
@@ -491,6 +504,14 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>AttitudeIndicator</class>
+   <extends>QWidget</extends>
+   <header>attitude_indicator.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
  <slots>

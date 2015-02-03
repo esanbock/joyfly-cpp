@@ -17,6 +17,8 @@ QMAKE_CXXFLAGS += -std=c++11
 #QMAKE_CXXFLAGS += -std=gnu++11
 
 mac: INCLUDEPATH += /Library/Frameworks/SDL2.framework/Headers
+mac: INCLUDEPATH += /Library/Frameworks/qwt.framework/Headers
+
 mac: QMAKE_LFLAGS += -F/Library/Frameworks
 
 mac: INCLUDEPATH += /opt/local/include
@@ -32,7 +34,8 @@ SOURCES += main.cpp\
     joystickinputer.cpp \
     simulatedchopper.cpp \
     abstractchopper.cpp \
-    sdljoystick.cpp
+    sdljoystick.cpp \
+    attitude_indicator.cpp
 
 HEADERS  += mainwindow.h \
     c-joy-fly-controller.h \
@@ -44,7 +47,8 @@ HEADERS  += mainwindow.h \
     joystickexception.h \
     simulatedchopper.h \
     abstractchopper.h \
-    sdljoystick.h
+    sdljoystick.h \
+    attitude_indicator.h
 
 FORMS += mainwindow.ui
 
@@ -52,4 +56,5 @@ mac: LIBS += -framework SDL2
 else:unix|win32: LIBS += -lSDL2
 
 LIBS += -lserial
-#LIBS += -/opt/local/lib/libserial.dylib
+
+mac: LIBS += -framework qwt

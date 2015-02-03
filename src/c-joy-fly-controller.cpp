@@ -216,3 +216,13 @@ void CJoyFlyController::Lift(int val)
     _pChopperControl->SendSimpleCommand(":L",  val);
 }
 
+void CJoyFlyController::OnIMUChanged( int x, int y, int z )
+{
+    for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
+    {
+        float fAngle = (float)x * (360.0 / 1024.0);
+        (*it)->OnBank(fAngle);
+    }
+
+}
+

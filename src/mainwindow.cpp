@@ -97,3 +97,8 @@ void MainWindow::on_connectJoystick_clicked()
     _pController->AddJoyStick( ui->joystickList->currentIndex());
     ui->connectJoystick->setEnabled(false);
 }
+
+void MainWindow::OnBank(float newAngle )
+{
+    ui->attitude->setAngle(newAngle);
+}
