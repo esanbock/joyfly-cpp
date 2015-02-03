@@ -18,13 +18,12 @@ QMAKE_CXXFLAGS += -std=c++11
 
 mac: INCLUDEPATH += /Library/Frameworks/SDL2.framework/Headers
 mac: INCLUDEPATH += /Library/Frameworks/qwt.framework/Headers
-
 mac: QMAKE_LFLAGS += -F/Library/Frameworks
-
 mac: INCLUDEPATH += /opt/local/include
 mac: QMAKE_LFLAGS += -L /opt/local/lib
-
 mac: QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
+
+linux: INCLUDEPATH += /usr/local/qwt-6.1.0/include
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -52,8 +51,10 @@ HEADERS  += mainwindow.h \
 
 FORMS += mainwindow.ui
 
+linux: LIBS += -L/usr/local/qwt-6.1.0/lib
+
 mac: LIBS += -framework SDL2
-else:unix|win32: LIBS += -lSDL2
+else:unix|win32: LIBS += -lSDL2 -lqwt
 
 LIBS += -lserial
 
