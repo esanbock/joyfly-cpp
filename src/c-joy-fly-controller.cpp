@@ -20,8 +20,9 @@
 #include <vector>
 #include <thread>
 #include <stdexcept>
-#include "SerialStream.h"
-#include "SerialPort.h"
+#include <boost/asio.hpp>
+#include <boost/asio/serial_port.hpp>
+
 #include "abstractchopper.h"
 #include "choppercontrol.h"
 #include "simulatedchopper.h"
@@ -36,6 +37,8 @@
 #include "c-joy-fly-view.h"
 #include "c-joy-fly-controller.h"
 
+using namespace boost;
+
 CJoyFlyController::CJoyFlyController()
 {
 }
@@ -48,7 +51,7 @@ void CJoyFlyController::AddView(CJoyFlyView* pView)
 CJoyFlyController::~CJoyFlyController()
 {
     delete _pChopperControl;
-    delete _comPort;
+    delete _pComPort;
 }
 
 void CJoyFlyController::OnChopperMessage( const char* szMsg )
@@ -70,9 +73,16 @@ void CJoyFlyController::DebugMessage( const char* szMsg )
 AbstractChopper* CJoyFlyController::ConnectToChopper( const string serialDevice, int secondsUpdate )
 {
     DebugMessage( (string("Opening serial port ") + serialDevice).c_str() );
-    _comPort = new SerialPort( serialDevice.c_str() );
-    _comPort->Open( SerialPort::BAUD_9600, SerialPort::CHAR_SIZE_8, SerialPort::PARITY_NONE, SerialPort::STOP_BITS_1) ;
-    return new ChopperControl(*_comPort, secondsUpdate, *this);
+
+    _pComPort = new asio::serial_port( _io );
+    _pComPort->open(serialDevice);
+    /*_pComPort->set_option(asio::serial_port_base::baud_rate(9600));
+    _pComPort->set_option(asio::serial_port_base::character_size(8));
+    _pComPort->set_option(asio::serial_port_base::parity::none);
+    _pComPort->set_option(asio::serial_port_base::stop_bits::one);*/
+
+
+    return new ChopperControl(*_pComPort, secondsUpdate, *this);
 }
 
 AbstractChopper* CJoyFlyController::ConnectToSimulator( int secondsUpdate )

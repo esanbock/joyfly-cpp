@@ -9,21 +9,18 @@
 #ifndef joyfly_cpp_choppercontrol_h
 #define joyfly_cpp_choppercontrol_h
 
-#include "SerialStream.h"
-#include "SerialPort.h"
-
 using namespace std;
 
 // this is the model class
 class ChopperControl : public AbstractChopper
 {
 private:
-    SerialPort& _serialPort;
+    boost::asio::serial_port& _serialPort;
     clock_t _lastTime;
     int _secondsUpdate;
     IChopperMessages& _msgSink;
 public:
-    ChopperControl(SerialPort& serialPort, int secondsUpdate, IChopperMessages& msgSink);
+    ChopperControl(boost::asio::serial_port& serialPort, int secondsUpdate, IChopperMessages& msgSink);
     virtual ~ChopperControl();
 
 

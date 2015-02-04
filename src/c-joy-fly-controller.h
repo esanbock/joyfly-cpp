@@ -78,7 +78,8 @@ private:
     thread* _pCommandLoopThread = NULL;
     CJoystickInputer* _pJoystickInputer = NULL;
     bool _quitting = false;
-    SerialPort* _comPort;
+    boost::asio::io_service _io;
+    boost::asio::serial_port* _pComPort;
 
 };
 

@@ -9,15 +9,15 @@
 #include <stdlib.h>
 #include <iomanip>
 #include <sstream>
+#include <boost/asio.hpp>
+#include <boost/asio/serial_port.hpp>
 
-#include "SerialStream.h"
-#include "SerialPort.h"
 #include "abstractchopper.h"
 #include "choppercontrol.h"
 
 using namespace std;
 
-ChopperControl::ChopperControl(SerialPort& serialPort, int secondsUpdate, IChopperMessages& msgSink)
+ChopperControl::ChopperControl(boost::asio::serial_port &serialPort, int secondsUpdate, IChopperMessages& msgSink)
     :_serialPort(serialPort), _msgSink(msgSink)
 {
     _secondsUpdate = secondsUpdate;
@@ -27,7 +27,7 @@ ChopperControl::ChopperControl(SerialPort& serialPort, int secondsUpdate, IChopp
 
 ChopperControl::~ChopperControl()
 {
-    _serialPort.Close();
+    _serialPort.close();
 }
 
 void ChopperControl::ProcessPingResponse( string& line )
@@ -70,7 +70,8 @@ void ChopperControl::ProcessCommandResponse( string& line )
 void ChopperControl::SendCommand(const char* szCommand)
 {
     _msgSink.Sent(szCommand);
-    _serialPort.Write( szCommand );
+    boost::asio::write(_serialPort,szCommand);
+    //_serialPort.Write( szCommand );
 }
 
 
@@ -78,13 +79,13 @@ void ChopperControl::SendCommand(const char* szCommand)
 bool ChopperControl::ProcessData()
 {
     bool haveData = false;
+
     if( _serialPort.IsDataAvailable() )
     {
         try
         {
             string line = _serialPort.ReadLine( 200 );
-            
-            //if( line[0] == ':' )
+
             ProcessCommandResponse(line);
 
             haveData = true;

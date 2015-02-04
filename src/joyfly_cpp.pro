@@ -56,6 +56,5 @@ linux: LIBS += -L/usr/local/qwt-6.1.0/lib
 mac: LIBS += -framework SDL2
 else:unix|win32: LIBS += -lSDL2 -lqwt
 
-LIBS += -lserial
 
 mac: LIBS += -framework qwt
