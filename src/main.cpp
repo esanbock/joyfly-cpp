@@ -26,6 +26,7 @@
 #include <QApplication>
 #include <boost/asio.hpp>
 #include <boost/asio/serial_port.hpp>
+#include "serialstream.h"
 
 #include "controllerinputer.h"
 #include "c-joy-fly-view.h"

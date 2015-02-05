@@ -15,8 +15,8 @@ private:
     int _secondsUpdate = 2;
     IChopperMessages& _msgSink;
 
-    random_device _rd;
-    mt19937 _gen;//(rd());
+    std::random_device _rd;
+    std::mt19937 _gen;//(rd());
 };
 
 #endif // SIMULATEDCHOPPER_H

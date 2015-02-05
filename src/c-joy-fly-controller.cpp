@@ -22,6 +22,7 @@
 #include <stdexcept>
 #include <boost/asio.hpp>
 #include <boost/asio/serial_port.hpp>
+#include "serialstream.h"
 
 #include "abstractchopper.h"
 #include "choppercontrol.h"
@@ -74,13 +75,14 @@ AbstractChopper* CJoyFlyController::ConnectToChopper( const string serialDevice,
 {
     DebugMessage( (string("Opening serial port ") + serialDevice).c_str() );
 
-    _pComPort = new asio::serial_port( _io );
-    _pComPort->open(serialDevice);
-    /*_pComPort->set_option(asio::serial_port_base::baud_rate(9600));
-    _pComPort->set_option(asio::serial_port_base::character_size(8));
-    _pComPort->set_option(asio::serial_port_base::parity::none);
-    _pComPort->set_option(asio::serial_port_base::stop_bits::one);*/
 
+    SerialOptions options;
+    options.setDevice(serialDevice);
+    options.setFlowControl(SerialOptions::FlowControl::noflow);
+    options.setParity(SerialOptions::Parity::noparity);
+    options.setStopBits(SerialOptions::StopBits::one);
+    options.setBaudrate(9600);
+    _pComPort = new SerialStream(options);
 
     return new ChopperControl(*_pComPort, secondsUpdate, *this);
 }

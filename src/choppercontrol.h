@@ -15,12 +15,12 @@ using namespace std;
 class ChopperControl : public AbstractChopper
 {
 private:
-    boost::asio::serial_port& _serialPort;
+    SerialStream& _serialPort;
     clock_t _lastTime;
     int _secondsUpdate;
     IChopperMessages& _msgSink;
 public:
-    ChopperControl(boost::asio::serial_port& serialPort, int secondsUpdate, IChopperMessages& msgSink);
+    ChopperControl(SerialStream& serialPort, int secondsUpdate, IChopperMessages& msgSink);
     virtual ~ChopperControl();
 
 

@@ -1,6 +1,6 @@
+#include <unistd.h>
 #include <sstream>
 #include "abstractchopper.h"
-#include "choppercontrol.h"
 #include "simulatedchopper.h"
 
 using namespace std;
