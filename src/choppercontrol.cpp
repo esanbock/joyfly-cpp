@@ -91,7 +91,16 @@ void ChopperControl::ProcessData()
     while(!_quitting)
     {
         string line;
-        _serialPort >> line;
+        try
+        {
+            _serialPort >> line;
+        }
+        catch(exception& err)
+        {
+            _msgSink.OnDebug(err.what());
+            _quitting = true;
+            return;
+        }
 
         ProcessCommandResponse(line);
     }
