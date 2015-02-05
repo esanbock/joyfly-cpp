@@ -49,7 +49,7 @@ void AbstractChopper::PingThread()
 
 void AbstractChopper::SendPing()
 {
-    _sentPingClock = clock();
+    _sentPingClock = system_clock::now();
     _lastPingNum++;
     if( _lastPingNum > 999 )
         _lastPingNum = 1;

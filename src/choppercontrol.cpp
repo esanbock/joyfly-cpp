@@ -11,6 +11,7 @@
 #include <sstream>
 #include <thread>
 #include <chrono>
+#include <mutex>
 
 #include "serialstream.h"
 #include "abstractchopper.h"
@@ -51,8 +52,10 @@ void ChopperControl::ProcessPingResponse( string& line )
         _msgSink.OnDebug(sstream.str().c_str());
         return;
     }
-    float latency = (float)(clock() - _sentPingClock ) / CLOCKS_PER_SEC ;
-    _msgSink.OnPing(latency);
+    system_clock::time_point now = system_clock::now();
+    auto latency = now - _sentPingClock;
+
+    _msgSink.OnPing(chrono::duration_cast<milliseconds>(latency).count());
 }
 
 
@@ -77,9 +80,10 @@ void ChopperControl::ProcessCommandResponse( string& line )
 }
 
 
-
+static mutex g_write_mutex;
 void ChopperControl::SendCommand(const char* szCommand)
 {
+    lock_guard<std::mutex> lock(g_write_mutex); // unlocks when out of scope
     _serialPort << szCommand << endl;
     _msgSink.Sent(szCommand);
 }

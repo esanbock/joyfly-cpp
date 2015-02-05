@@ -21,10 +21,10 @@ private:
 protected:
     AbstractChopper( int pingerSeconds );
     int _lastPingNum;
-    clock_t _sentPingClock;
     std::thread* _pPingThread = NULL;
     virtual void PingThread();
     bool _quitting = false;
+    std::chrono::system_clock::time_point _sentPingClock;
 
 
 public:
