@@ -75,7 +75,6 @@ AbstractChopper* CJoyFlyController::ConnectToChopper( const string serialDevice,
 {
     DebugMessage( (string("Opening serial port ") + serialDevice).c_str() );
 
-
     SerialOptions options;
     options.setDevice(serialDevice);
     options.setFlowControl(SerialOptions::FlowControl::noflow);
@@ -83,6 +82,7 @@ AbstractChopper* CJoyFlyController::ConnectToChopper( const string serialDevice,
     options.setStopBits(SerialOptions::StopBits::one);
     options.setBaudrate(9600);
     _pComPort = new SerialStream(options);
+    _pComPort->exceptions(ios::badbit | ios::failbit);
 
     return new ChopperControl(*_pComPort, secondsUpdate, *this);
 }
