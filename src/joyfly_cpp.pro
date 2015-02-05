@@ -18,13 +18,12 @@ QMAKE_CXXFLAGS += -std=c++11
 
 mac: INCLUDEPATH += /Library/Frameworks/SDL2.framework/Headers
 mac: INCLUDEPATH += /Library/Frameworks/qwt.framework/Headers
-
 mac: QMAKE_LFLAGS += -F/Library/Frameworks
-
-mac: INCLUDEPATH += /opt/local/include
-mac: QMAKE_LFLAGS += -L /opt/local/lib
-
+mac: INCLUDEPATH += /usr/local/include
+mac: QMAKE_LFLAGS += -L /usr/local/lib
 mac: QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
+
+linux: INCLUDEPATH += /usr/local/qwt-6.1.0/include
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -35,7 +34,8 @@ SOURCES += main.cpp\
     simulatedchopper.cpp \
     abstractchopper.cpp \
     sdljoystick.cpp \
-    attitude_indicator.cpp
+    attitude_indicator.cpp \
+    serialstream.cpp
 
 HEADERS  += mainwindow.h \
     c-joy-fly-controller.h \
@@ -48,13 +48,17 @@ HEADERS  += mainwindow.h \
     simulatedchopper.h \
     abstractchopper.h \
     sdljoystick.h \
-    attitude_indicator.h
+    attitude_indicator.h \
+    serialstream.h
 
 FORMS += mainwindow.ui
 
-mac: LIBS += -framework SDL2
-else:unix|win32: LIBS += -lSDL2
+linux: LIBS += -L/usr/local/qwt-6.1.0/lib
 
-LIBS += -lserial
+mac: LIBS += -framework SDL2
+else:unix|win32: LIBS += -lSDL2 -lqwt
 
 mac: LIBS += -framework qwt
+
+LIBS += -lboost_system
+

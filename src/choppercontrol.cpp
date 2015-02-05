@@ -9,25 +9,36 @@
 #include <stdlib.h>
 #include <iomanip>
 #include <sstream>
+#include <thread>
+#include <chrono>
 
-#include "SerialStream.h"
-#include "SerialPort.h"
+#include "serialstream.h"
 #include "abstractchopper.h"
 #include "choppercontrol.h"
 
 using namespace std;
+using namespace std::chrono;
 
-ChopperControl::ChopperControl(SerialPort& serialPort, int secondsUpdate, IChopperMessages& msgSink)
-    :_serialPort(serialPort), _msgSink(msgSink)
+ChopperControl::ChopperControl(SerialStream &serialPort, int secondsUpdate, IChopperMessages& msgSink)
+    :_serialPort(serialPort), _msgSink(msgSink), AbstractChopper(secondsUpdate)
 {
     _secondsUpdate = secondsUpdate;
-	_lastTime = clock();
 }
 
 
 ChopperControl::~ChopperControl()
 {
-    _serialPort.Close();
+    _quitting = true;
+    _serialPort.close();
+}
+
+void ChopperControl::Start()
+{
+    if( _pCommandLoopThread != NULL )
+        throw logic_error("start already called");
+    AbstractChopper::Start();
+    _pCommandLoopThread = new std::thread([this]() {ProcessData();});
+
 }
 
 void ChopperControl::ProcessPingResponse( string& line )
@@ -69,40 +80,30 @@ void ChopperControl::ProcessCommandResponse( string& line )
 
 void ChopperControl::SendCommand(const char* szCommand)
 {
+    _serialPort << szCommand << endl;
     _msgSink.Sent(szCommand);
-    _serialPort.Write( szCommand );
 }
 
 
 
-bool ChopperControl::ProcessData()
+void ChopperControl::ProcessData()
 {
-    bool haveData = false;
-    if( _serialPort.IsDataAvailable() )
+    while(!_quitting)
     {
+        string line;
         try
         {
-            string line = _serialPort.ReadLine( 200 );
-            
-            //if( line[0] == ':' )
-            ProcessCommandResponse(line);
-
-            haveData = true;
+            _serialPort >> line;
         }
-        catch( SerialPort::ReadTimeout& timeout )
+        catch(exception& err)
         {
-            _msgSink.OnDebug("I got nothing");
+            _msgSink.OnDebug(err.what());
+            _quitting = true;
+            return;
         }
-    }
-    
-    clock_t now = clock();
-    
-    if( (now - _lastTime) >= (CLOCKS_PER_SEC * _secondsUpdate) )
-    {
-        _lastTime = clock();
-        SendPing();
-    }
 
-    
-    return haveData;
+        ProcessCommandResponse(line);
+    }
 }
+
+

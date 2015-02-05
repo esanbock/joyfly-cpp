@@ -52,7 +52,7 @@ public:
     virtual void Lift(int val);
 
     // go
-    virtual int Start(const string serialDevice, int secondsUpdate);
+    virtual int Connect(const string serialDevice, int secondsUpdate);
     void Quit();
 
     // message sink
@@ -75,11 +75,8 @@ protected:
 private:
 	vector<CJoyFlyView*> _views;
     AbstractChopper* _pChopperControl = NULL;
-    thread* _pCommandLoopThread = NULL;
     CJoystickInputer* _pJoystickInputer = NULL;
-    bool _quitting = false;
-    SerialPort* _pComPort;
-
+    SerialStream* _pComPort = NULL;
 };
 
 #endif // _C_JOY_FLY_CONTROLLER_H_

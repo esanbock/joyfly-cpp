@@ -15,7 +15,7 @@ public:
     virtual void Yaw(int val)=0;
     virtual void SetThrottle(int val)=0;
     virtual void Lift(int val)=0;
-    virtual int Start(const std::string serialDevice, int secondsUpdate)=0;
+    virtual int Connect(const std::string serialDevice, int secondsUpdate)=0;
     virtual void AddJoyStick(int joyNum)=0;
 };
 

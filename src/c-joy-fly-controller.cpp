@@ -20,8 +20,10 @@
 #include <vector>
 #include <thread>
 #include <stdexcept>
-#include "SerialStream.h"
-#include "SerialPort.h"
+#include <boost/asio.hpp>
+#include <boost/asio/serial_port.hpp>
+#include "serialstream.h"
+
 #include "abstractchopper.h"
 #include "choppercontrol.h"
 #include "simulatedchopper.h"
@@ -36,6 +38,8 @@
 #include "c-joy-fly-view.h"
 #include "c-joy-fly-controller.h"
 
+using namespace boost;
+
 CJoyFlyController::CJoyFlyController()
 {
 }
@@ -48,7 +52,12 @@ void CJoyFlyController::AddView(CJoyFlyView* pView)
 CJoyFlyController::~CJoyFlyController()
 {
     delete _pChopperControl;
-    delete _pComPort;
+
+    if( _pComPort != NULL )
+    {
+        _pComPort->close();
+        delete _pComPort;
+    }
 }
 
 void CJoyFlyController::OnChopperMessage( const char* szMsg )
@@ -70,21 +79,31 @@ void CJoyFlyController::DebugMessage( const char* szMsg )
 AbstractChopper* CJoyFlyController::ConnectToChopper( const string serialDevice, int secondsUpdate )
 {
     DebugMessage( (string("Opening serial port ") + serialDevice).c_str() );
-    _pComPort = new SerialPort( serialDevice.c_str() );
-    _pComPort->Open( SerialPort::BAUD_9600, SerialPort::CHAR_SIZE_8, SerialPort::PARITY_NONE, SerialPort::STOP_BITS_1) ;
-    return new ChopperControl(*_pComPort, secondsUpdate, *this);
+
+    SerialOptions options;
+    options.setDevice(serialDevice);
+    options.setFlowControl(SerialOptions::FlowControl::noflow);
+    options.setParity(SerialOptions::Parity::noparity);
+    options.setStopBits(SerialOptions::StopBits::one);
+    options.setBaudrate(9600);
+    _pComPort = new SerialStream(options);
+    _pComPort->exceptions(ios::badbit | ios::failbit);
+
+    AbstractChopper* pTeensyChopper = new ChopperControl(*_pComPort, secondsUpdate, *this);
+    pTeensyChopper->Start();
+    return pTeensyChopper;
 }
 
 AbstractChopper* CJoyFlyController::ConnectToSimulator( int secondsUpdate )
 {
     DebugMessage ("simulator");
-    return new CSimulatedChopper(secondsUpdate, *this);
+    AbstractChopper* pSimulatedChopper = new CSimulatedChopper(secondsUpdate, *this);
+    pSimulatedChopper->Start();
+    return pSimulatedChopper;
 }
 
 void CJoyFlyController::Quit()
 {
-    _quitting = true;
-
     // stop all updates
     _views.clear();
 
@@ -96,14 +115,6 @@ void CJoyFlyController::Quit()
     }
 }
 
-void CJoyFlyController::DoCommandLoop()
-{
-    do
-    {
-        _pChopperControl->ProcessData();
-
-    } while( !_quitting );
-}
 
 void CJoyFlyController::OnMessage(const char *data)
 {
@@ -144,17 +155,15 @@ void CJoyFlyController::OnPing(float latency)
     }
 }
 
-int CJoyFlyController::Start(const string serialDevice, int secondsUpdate)
+int CJoyFlyController::Connect(const string serialDevice, int secondsUpdate)
 {
-    if( _pCommandLoopThread != NULL )
+    if( _pChopperControl != NULL )
         throw domain_error("controller already started");
 
     if( serialDevice == "/simulator" )
         _pChopperControl = ConnectToSimulator(secondsUpdate);
     else
         _pChopperControl = ConnectToChopper( serialDevice.c_str(), secondsUpdate );
-
-    _pCommandLoopThread = new std::thread([this]() {DoCommandLoop();});
 
     return 0;
 }
