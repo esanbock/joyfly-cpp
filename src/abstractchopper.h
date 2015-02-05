@@ -15,19 +15,25 @@ public:
 class AbstractChopper
 {
 private:
+    std::chrono::system_clock::time_point _lastTime;
+    std::chrono::seconds _pingerSeconds;
 
 protected:
-    AbstractChopper();
+    AbstractChopper( int pingerSeconds );
     int _lastPingNum;
     clock_t _sentPingClock;
+    std::thread* _pPingThread = NULL;
+    virtual void PingThread();
+    bool _quitting = false;
+
 
 public:
+    virtual ~AbstractChopper();
+    virtual void Start();
     virtual void SendPing();
     virtual void SendSimpleCommand(const char* szCommand, int value);
     virtual void SendCommand(const char* szCommand)=0;
     virtual void SendCommand(const char* szCommand, bool toggle);
-    virtual bool ProcessData()=0;
-    virtual ~AbstractChopper();
 };
 
 #endif // ABSTRACTCHOPPER_H

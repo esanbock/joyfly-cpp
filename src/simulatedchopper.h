@@ -10,8 +10,12 @@ public:
     virtual ~CSimulatedChopper();
 
     virtual void SendCommand(const char* szCommand);
-    virtual bool ProcessData();
+    virtual void ProcessData();
+    virtual void Start();
+
 private:
+    std::thread* _pCommandLoopThread = NULL;
+    bool _quitting = false;
     int _secondsUpdate = 2;
     IChopperMessages& _msgSink;
 

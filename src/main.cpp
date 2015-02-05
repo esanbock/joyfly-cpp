@@ -22,6 +22,7 @@
 #include <sstream>
 #include <thread>
 #include <string>
+#include <chrono>
 
 #include <QApplication>
 #include <boost/asio.hpp>

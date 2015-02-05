@@ -16,19 +16,18 @@ class ChopperControl : public AbstractChopper
 {
 private:
     SerialStream& _serialPort;
-    clock_t _lastTime;
     int _secondsUpdate;
     IChopperMessages& _msgSink;
+    thread* _pCommandLoopThread = NULL;
 public:
     ChopperControl(SerialStream& serialPort, int secondsUpdate, IChopperMessages& msgSink);
     virtual ~ChopperControl();
-
-
      virtual void SendCommand(const char* szCommand);
-    virtual bool ProcessData();
+    virtual void Start();
 protected:
     void ProcessPingResponse( string& line );
     void ProcessCommandResponse( string& line );
+    void ProcessData();
 };
 
 #endif

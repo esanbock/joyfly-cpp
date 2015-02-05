@@ -9,26 +9,36 @@
 #include <stdlib.h>
 #include <iomanip>
 #include <sstream>
-//#include <boost/asio.hpp>
-//#include <boost/asio/serial_port.hpp>
-#include "serialstream.h"
+#include <thread>
+#include <chrono>
 
+#include "serialstream.h"
 #include "abstractchopper.h"
 #include "choppercontrol.h"
 
 using namespace std;
+using namespace std::chrono;
 
 ChopperControl::ChopperControl(SerialStream &serialPort, int secondsUpdate, IChopperMessages& msgSink)
-    :_serialPort(serialPort), _msgSink(msgSink)
+    :_serialPort(serialPort), _msgSink(msgSink), AbstractChopper(secondsUpdate)
 {
     _secondsUpdate = secondsUpdate;
-	_lastTime = clock();
 }
 
 
 ChopperControl::~ChopperControl()
 {
+    _quitting = true;
     _serialPort.close();
+}
+
+void ChopperControl::Start()
+{
+    if( _pCommandLoopThread != NULL )
+        throw logic_error("start already called");
+    AbstractChopper::Start();
+    _pCommandLoopThread = new std::thread([this]() {ProcessData();});
+
 }
 
 void ChopperControl::ProcessPingResponse( string& line )
@@ -76,27 +86,15 @@ void ChopperControl::SendCommand(const char* szCommand)
 
 
 
-bool ChopperControl::ProcessData()
+void ChopperControl::ProcessData()
 {
-    bool haveData = false;
-
-
-    string line;
-    _serialPort >> line;
-
-    ProcessCommandResponse(line);
-
-    haveData = true;
-
-    
-    clock_t now = clock();
-    
-    if( (now - _lastTime) >= (CLOCKS_PER_SEC * _secondsUpdate) )
+    while(!_quitting)
     {
-        _lastTime = clock();
-        SendPing();
-    }
+        string line;
+        _serialPort >> line;
 
-    
-    return haveData;
+        ProcessCommandResponse(line);
+    }
 }
+
+

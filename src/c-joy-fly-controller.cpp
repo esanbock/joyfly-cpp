@@ -52,7 +52,11 @@ void CJoyFlyController::AddView(CJoyFlyView* pView)
 CJoyFlyController::~CJoyFlyController()
 {
     delete _pChopperControl;
-    delete _pComPort;
+    if( _pComPort != NULL )
+    {
+        _pComPort->close();
+        delete _pComPort;
+    }
 }
 
 void CJoyFlyController::OnChopperMessage( const char* szMsg )
@@ -84,19 +88,21 @@ AbstractChopper* CJoyFlyController::ConnectToChopper( const string serialDevice,
     _pComPort = new SerialStream(options);
     _pComPort->exceptions(ios::badbit | ios::failbit);
 
-    return new ChopperControl(*_pComPort, secondsUpdate, *this);
+    AbstractChopper* pTeensyChopper = new ChopperControl(*_pComPort, secondsUpdate, *this);
+    pTeensyChopper->Start();
+    return pTeensyChopper;
 }
 
 AbstractChopper* CJoyFlyController::ConnectToSimulator( int secondsUpdate )
 {
     DebugMessage ("simulator");
-    return new CSimulatedChopper(secondsUpdate, *this);
+    AbstractChopper* pSimulatedChopper = new CSimulatedChopper(secondsUpdate, *this);
+    pSimulatedChopper->Start();
+    return pSimulatedChopper;
 }
 
 void CJoyFlyController::Quit()
 {
-    _quitting = true;
-
     // stop all updates
     _views.clear();
 
@@ -108,14 +114,6 @@ void CJoyFlyController::Quit()
     }
 }
 
-void CJoyFlyController::DoCommandLoop()
-{
-    do
-    {
-        _pChopperControl->ProcessData();
-
-    } while( !_quitting );
-}
 
 void CJoyFlyController::OnMessage(const char *data)
 {
@@ -156,17 +154,15 @@ void CJoyFlyController::OnPing(float latency)
     }
 }
 
-int CJoyFlyController::Start(const string serialDevice, int secondsUpdate)
+int CJoyFlyController::Connect(const string serialDevice, int secondsUpdate)
 {
-    if( _pCommandLoopThread != NULL )
+    if( _pChopperControl != NULL )
         throw domain_error("controller already started");
 
     if( serialDevice == "/simulator" )
         _pChopperControl = ConnectToSimulator(secondsUpdate);
     else
         _pChopperControl = ConnectToChopper( serialDevice.c_str(), secondsUpdate );
-
-    _pCommandLoopThread = new std::thread([this]() {DoCommandLoop();});
 
     return 0;
 }
