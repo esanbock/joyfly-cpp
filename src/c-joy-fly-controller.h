@@ -20,52 +20,62 @@
 #ifndef _C_JOY_FLY_CONTROLLER_H_
 #define _C_JOY_FLY_CONTROLLER_H_
 
+#include "controllerinputer.h"
 #include "c-joy-fly-view.h"
+#include "joystickinputer.h"
 
 using namespace std;
 
-class CJoyFlyController
+class CJoyFlyController : public IControllerInputer, public IChopperMessages
 {
 public:
 	CJoyFlyController();
-	void AddView(CJoyFlyView* pView);
-	void OnChopperMessage( const char* szMsg );
-	void DebugMessage( const char* szMsg );
-    ChopperControl& ConnectToChopper( const string serialDevice, int secondsUpdate );
     virtual ~CJoyFlyController();
-    void ProcessJoystickInput();
-    void OpenJoystick(int joystickNum);
+
+    // GUI
+    void AddView(CJoyFlyView* pView);
+
+    // joystick
+    virtual void AddJoyStick(int joyNum);
     void RunJoystickTests();
-    void DoCommandLoop();
-    
+
+    // NAV
+    virtual void SetAutoPilot(bool onOff);
+    virtual void SetHome();
+    virtual void GetStatus();
+    virtual void GetVoltage();
+    virtual void Bank(int val);
+    virtual void Pitch(int val);
+    virtual void Yaw(int val);
+    virtual void SetThrottle(int val);
+    virtual void Lift(int val);
+
+    // go
+    virtual int Connect(const string serialDevice, int secondsUpdate);
+    void Quit();
+
+    // message sink
+    virtual void OnVoltageChange(float newVoltage);
+    virtual void OnThrottleChange(int newThrottle);
+    virtual void OnMessage(const char* data);
+    virtual void Sent(const char* data);
+    virtual void OnPing(float latency);
+    virtual void OnDebug(const char* data);
+    virtual void OnIMUChanged( int x, int y, int z );
+
 protected:
-    int AxisCommandSimple( ChopperControl& control, CJoyTest& sidewinder, const char* szCommand, int joyAxis, int min, int max );
-    int HatCommandIncrement( ChopperControl& control, CJoyTest& sidewinder, Uint8 down, Uint8 up, const char* szCommand, int lowVal, int highVal );
-    int ButtonCommandToggle( ChopperControl& control, CJoyTest& sidewinder, const char* szCommand, int joyAxis );
-    int ButtonCommandToggle( ChopperControl& control, CJoyTest& sidewinder, const char* szCommand, int joyAxis, int ifTrue, int ifFalse );
+    void OnChopperMessage( const char* szMsg );
+    void DebugMessage( const char* szMsg );
+    void DoCommandLoop();
+    AbstractChopper* ConnectToChopper( const string serialDevice, int secondsUpdate );
+    AbstractChopper* ConnectToSimulator( int secondsUpdate );
+    void ProcessJoystickInput();
+
 private:
 	vector<CJoyFlyView*> _views;
-    ChopperControl* _pChopperControl = NULL;
-    CJoyTest* _sidewinder = NULL;
-    
-    static const int JOYSTICK_X = 0;
-    static const int JOYSTICK_Y = 1;
-    static const int JOYSTICK_Z = 2;
-    static const int JOYSTICK_THROTTLE = 3;
-    static const int JOYSTICK_AUTOPILOT = 4;
-    static const int JOYSTICK_HOME = 1;
-    static const int JOYSTICK_STATUS = 8;
-    static const int JOYSTICK_VOLTAGE = 5;
-    
-    
-    int _currentHatY;
-    
-    int _prevVals[4];
-    int _curVals[4];
-    
-    int _prevButtonVals[5];
-    int _curButtonVals[5];
-    bool _buttonToggle[5];
+    AbstractChopper* _pChopperControl = NULL;
+    CJoystickInputer* _pJoystickInputer = NULL;
+    SerialStream* _pComPort = NULL;
 };
 
 #endif // _C_JOY_FLY_CONTROLLER_H_

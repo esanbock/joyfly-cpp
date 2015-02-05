@@ -12,24 +12,22 @@
 using namespace std;
 
 // this is the model class
-class ChopperControl
+class ChopperControl : public AbstractChopper
 {
 private:
-    SerialPort& _serialPort;
-    int _lastPingNum;
-    clock_t _sentPingClock;
-    clock_t _lastTime;
+    SerialStream& _serialPort;
     int _secondsUpdate;
+    IChopperMessages& _msgSink;
+    thread* _pCommandLoopThread = NULL;
 public:
-    ChopperControl(SerialPort& serialPort, int secondsUpdate);
-    void ProcessPingResponse( string& line );
-    void SendPing();
-    void SendSimpleCommand(const char* szCommand, int value);
-    void SendCommand(const char* szCommand);
-    void SendCommand(const char* szCommand, bool toggle);
-    bool ProcessData();
+    ChopperControl(SerialStream& serialPort, int secondsUpdate, IChopperMessages& msgSink);
+    virtual ~ChopperControl();
+     virtual void SendCommand(const char* szCommand);
+    virtual void Start();
 protected:
+    void ProcessPingResponse( string& line );
     void ProcessCommandResponse( string& line );
+    void ProcessData();
 };
 
 #endif

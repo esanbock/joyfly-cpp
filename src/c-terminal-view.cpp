@@ -18,9 +18,16 @@
  */
 
 #include <iostream>
+#include "controllerinputer.h"
 #include "c-terminal-view.h"
 
 using namespace std;
+
+CTerminalView::CTerminalView( IControllerInputer* pController )
+    :CJoyFlyView(pController)
+{
+
+}
 
 void CTerminalView::OnChopperMessage( const char* szMsg )
 {
@@ -30,4 +37,19 @@ void CTerminalView::OnChopperMessage( const char* szMsg )
 void CTerminalView::OnDebugMessage(const char* szMsg )
 {
 	cout << szMsg << endl;
+}
+
+void CTerminalView::OnVoltageChange( float newVoltage )
+{
+    cout << "new voltage:" << newVoltage << endl;
+}
+
+void CTerminalView::OnPing( float latency )
+{
+    cout << "ping latency " << latency << endl;
+}
+
+void CTerminalView::Sent(const char* szMsg)
+{
+    OnDebugMessage(szMsg);
 }

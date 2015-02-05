@@ -24,8 +24,13 @@
 class CTerminalView: public CJoyFlyView 
 {
 public:
+    CTerminalView( IControllerInputer* pController );
+
 	virtual void OnChopperMessage( const char* szMsg );
 	virtual void OnDebugMessage( const char* szMsg );
+    virtual void OnVoltageChange( float newVoltage );
+    virtual void OnPing( float latency );
+    virtual void Sent(const char* szMsg);
 protected:
 
 private:

@@ -16,22 +16,31 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdexcept>
 #include <iostream>
+
+// apple junk
+#ifdef __APPLE__
+#include "SDL.h"
+#else
 #include "SDL2/SDL.h"
-#include "c-joy-test.h"
+#endif
+
+#include "sdljoystick.h"
 
 using namespace std;
 
-CJoyTest::CJoyTest()
+bool CSdlJoystick::_inited = false;
+
+void CSdlJoystick::Initialize()
 {
-	_pJoystick = NULL;
-	SDL_Init( SDL_INIT_JOYSTICK );
+    if( !_inited )
+    SDL_Init( SDL_INIT_JOYSTICK );
+    _inited = true;
 }
 
-CJoyTest::CJoyTest( int selectedJoy )
+CSdlJoystick::CSdlJoystick( int selectedJoy )
 {
-	CJoyTest();
-	
 	_currentJoy = selectedJoy;
 	_pJoystick = SDL_JoystickOpen(_currentJoy);
 
@@ -39,7 +48,7 @@ CJoyTest::CJoyTest( int selectedJoy )
 		throw JoystickException( "unable to open joystick" );
 }
 
-CJoyTest::~CJoyTest()
+CSdlJoystick::~CSdlJoystick()
 {
 	if( _pJoystick )
 	{
@@ -48,18 +57,19 @@ CJoyTest::~CJoyTest()
 	}
 }
 
-int CJoyTest::GetJoyCount()
+int CSdlJoystick::GetJoyCount()
 {
+    Initialize();
 	return SDL_NumJoysticks();
 }
 
-int CJoyTest::GetAxisVal( int axis )
+int CSdlJoystick::GetAxisVal( int axis )
 {
 	SDL_JoystickUpdate();
 	return SDL_JoystickGetAxis(_pJoystick, axis);
 }
 
-int CJoyTest::GetAxisNormalized( int axis, int min, int max )
+int CSdlJoystick::GetAxisNormalized( int axis, int min, int max )
 {
 	int axisVal = GetAxisVal( axis );
 	float axisPct = ((float)axisVal + (float)32767) / ((float)65534);
@@ -67,75 +77,103 @@ int CJoyTest::GetAxisNormalized( int axis, int min, int max )
 	return min + (( max - min ) * axisPct);
 }
 
-int CJoyTest::GetAxisCount( )
+int CSdlJoystick::GetAxisCount( )
 {
 	 return SDL_JoystickNumAxes( _pJoystick );
 }
 
-int CJoyTest::GetHatCount()
+int CSdlJoystick::GetButtonCount()
+{
+    return SDL_JoystickNumButtons( _pJoystick );
+}
+
+int CSdlJoystick::GetHatCount()
 {
 	return SDL_JoystickNumAxes( _pJoystick );
 }
 
 
-int CJoyTest::GetButton( int button )
+int CSdlJoystick::GetButton( int button )
 {
 	return SDL_JoystickGetButton( _pJoystick, button);
 }
 
-Uint8 CJoyTest::GetHat( int hat )
+Uint8 CSdlJoystick::GetHat( int hat )
 {
 	return SDL_JoystickGetHat( _pJoystick, hat );
 }
 
-int CJoyTest::RunTests()
+string CSdlJoystick::GetName()
 {
+    return SDL_JoystickName( _pJoystick);
+}
+
+string CSdlJoystick::GetJoyName(int joyNum)
+{
+    Initialize();
+    SDL_Joystick* pJoystick = SDL_JoystickOpen(joyNum);
+    if( pJoystick == NULL )
+    {
+        throw runtime_error("unable to open joystick to get its name");
+    }
+    string result = SDL_JoystickName(pJoystick);
+    SDL_JoystickClose(pJoystick);
+    return result;
+}
+
+void CSdlJoystick::Update()
+{
+    SDL_JoystickUpdate();
+}
+
+int CSdlJoystick::RunTests()
+{
+    Initialize();
 	int joyCount = SDL_NumJoysticks();
 
 	cout << "I found " << joyCount << " joysticks\n";
+
+    if( joyCount == 0 )
+        return -2;
 	
 	// using joystick # 0
 	int selectedJoystick = 0;
-	SDL_Joystick* pJoystick = SDL_JoystickOpen(selectedJoystick);
-	if( pJoystick == NULL )
-	{
-		cout << "ERROR opening joystick # " << selectedJoystick << endl;
-		return -1;
-	}
+
+    CSdlJoystick testStick(selectedJoystick);
     
-    cout << "joystick name is: " << SDL_JoystickName(pJoystick) << endl;
+    cout << "joystick name is: " << testStick.GetName() << endl;
 
 	// get the axis
-	int numAxis = SDL_JoystickNumAxes( pJoystick );
+    int numAxis = testStick.GetAxisCount();
 	cout << "joystick " << selectedJoystick << " has " << numAxis << " axis" << endl;
 
-	int numButtons = SDL_JoystickNumButtons( pJoystick );
+    int numButtons = testStick.GetButtonCount();
 	cout << "joystick " << selectedJoystick << " has " << numButtons << " buttons" << endl;
 
-	int numHats = GetHatCount();
+    int numHats = testStick.GetHatCount();
 	cout << "joystick " << selectedJoystick << " has " << numHats << " hats" << endl;
 	
 	//char key;
 	do
 	{
-		SDL_JoystickUpdate();
+        testStick.Update();
 		// dump axis
 		for( int axis = 0; axis < numAxis; axis++ )
 		{
-			int axisVal = SDL_JoystickGetAxis(pJoystick, axis);
+            int axisVal = testStick.GetAxisVal(axis);
 			cout << axisVal << " ";
 		}
 		cout << " | ";
 		// dump buttons
 		for( int button = 0; button < numButtons; button++ )
 		{
-			int buttonVal = GetButton(button);
+            int buttonVal = testStick.GetButton(button);
 			cout << buttonVal << " ";
 		}
 		// dump hats
 		for( int hat=0; hat < numHats; hat++ )
 		{
-			int hatVal = GetHat( hat );
+            int hatVal = testStick.GetHat( hat );
 			cout << hatVal << " ";
 		}
 		cout << endl;

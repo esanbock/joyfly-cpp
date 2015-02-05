@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
  * main.cc
- * Copyright (C) Douglas Esanbock 2011 <douglas@>
+ * Copyright (C) Douglas Esanbock 2011 <douglas@esanbock.com>
  * 
  * joyfly-cpp is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -20,58 +20,53 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
-#include "SDL2/SDL.h"
-#include "SerialStream.h"
-#include "SerialPort.h"
-#include "c-joy-test.h"
+#include <thread>
+#include <string>
+#include <chrono>
+
+#include <boost/asio.hpp>
+#include <boost/asio/serial_port.hpp>
+#include "serialstream.h"
+
+#include "controllerinputer.h"
+#include "c-joy-fly-view.h"
+#include "abstractchopper.h"
 #include "choppercontrol.h"
 #include "c-joy-fly-controller.h"
 #include "c-terminal-view.h"
+#include "joystickexception.h"
 
 using namespace std;
 
-int main (int argc, char * const argv[])
+
+int main (int argc, char * argv[])
 {
-	cout << "Hello world!" << std::endl;
+    cout << "Hello world!" << std::endl;
 
-	if( argc < 1 )
-	{
-		cout << "wrong number of parameters" << endl;
-		return -1;
-	}
-    
-	string serialDevice = string(argv[1] );
+    try
+    {
+        CJoyFlyController controller;
 
-	CJoyFlyController controller;
-    
-    CTerminalView terminalView;
-    controller.AddView( &terminalView );
-
-	try
-	{
-        controller.OpenJoystick(0);
-
-		SDL_JoystickUpdate();
-
-		if( serialDevice == "/test" )
-		{
-            controller.RunJoystickTests();
-
-			return 0;
-		}
-        if( argc < 2)
+        if( argc > 1 )
         {
-            cout << "wrong number of parameters" << endl;
-            return -1;
+            string serialDevice = string(argv[1] );
+            if( serialDevice == "/test" )
+            {
+                controller.RunJoystickTests();
+
+                return 0;
+            }
         }
 
-        int secondsUpdate = atoi(argv[2]);
-        controller.ConnectToChopper( serialDevice.c_str(), secondsUpdate );
-        
-        // this doesn't return until it's over
-        controller.DoCommandLoop();
-
-		return 0;
+        CTerminalView terminalView(&controller);
+        controller.AddView( &terminalView );
+	
+	cout << "press any enter key to exit" << endl;
+	string line;
+	cin >> line;
+	
+	
+        controller.Quit();
 	}
 	catch( JoystickException& jExcept )
 	{

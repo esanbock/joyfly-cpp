@@ -19,50 +19,39 @@
 #ifndef _C_JOY_TEST_H_
 #define _C_JOY_TEST_H_
 
+#include <string>
 #include <exception>
+
+#include "joystickexception.h"
 
 using namespace std;
 
-class JoystickException: public exception
-{
-	private:
-		string _msg;
-	public:
-	JoystickException( string msg ) throw()
-	{
-		_msg = msg;
-	}
-
-	virtual ~JoystickException() throw()
-	{
-	}
-	
-	virtual const char* what() const throw()
-	{
-		return _msg.c_str();
-	}
-} ;
-
-
-class CJoyTest
+class CSdlJoystick
 {
 public:
-	CJoyTest();
-	virtual ~CJoyTest();
-	CJoyTest( int joyNum );
-	static int GetJoyCount();
-	int GetAxisVal( int axis );
+    CSdlJoystick( int joyNum );
+    virtual ~CSdlJoystick();
+
+    static void Initialize();
+    static int GetJoyCount();
+    static string GetJoyName(int joyNum);
+    static int RunTests();
+
+    string GetName();
+    int GetAxisVal( int axis );
 	int GetAxisCount();
-	int RunTests();
+    int GetButtonCount();
 	int GetAxisNormalized( int axis, int min, int max );
 	int GetButton( int button );
 	int GetHatCount();
 	Uint8 GetHat( int hat );
+    void Update();
+
 protected:
 	int _currentJoy;
 	SDL_Joystick* _pJoystick;
 private:
-
+    static bool _inited;
 };
 
 #endif // _C_JOY_TEST_H_

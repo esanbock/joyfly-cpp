@@ -7,37 +7,39 @@
 //
 
 #include <stdlib.h>
-#include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <thread>
+#include <chrono>
+#include <mutex>
 
-#include "SerialStream.h"
-#include "SerialPort.h"
+#include "serialstream.h"
+#include "abstractchopper.h"
 #include "choppercontrol.h"
 
 using namespace std;
+using namespace std::chrono;
 
-ChopperControl::ChopperControl(SerialPort& serialPort, int secondsUpdate)
-    :_serialPort(serialPort)
+ChopperControl::ChopperControl(SerialStream &serialPort, int secondsUpdate, IChopperMessages& msgSink)
+    :_serialPort(serialPort), _msgSink(msgSink), AbstractChopper(secondsUpdate)
 {
-    _lastPingNum = 3;
-    _sentPingClock = clock();
     _secondsUpdate = secondsUpdate;
-	_lastTime = clock();
 }
 
-void ChopperControl::SendPing()
+
+ChopperControl::~ChopperControl()
 {
-    _sentPingClock = clock();
-    _lastPingNum++;
-    if( _lastPingNum > 999 )
-        _lastPingNum = 1;
-    
-    stringstream sstream;
-    sstream << ":E" << setfill('0') << setw(3) << _lastPingNum;
-    string command = sstream.str();
-    cout << command << endl;
-    _serialPort.Write( command );
+    _quitting = true;
+    _serialPort.close();
+}
+
+void ChopperControl::Start()
+{
+    if( _pCommandLoopThread != NULL )
+        throw logic_error("start already called");
+    AbstractChopper::Start();
+    _pCommandLoopThread = new std::thread([this]() {ProcessData();});
+
 }
 
 void ChopperControl::ProcessPingResponse( string& line )
@@ -45,11 +47,15 @@ void ChopperControl::ProcessPingResponse( string& line )
     int pingResponse = atoi( line.substr(3).c_str() );
     if( pingResponse != _lastPingNum )
     {
-        cout << "unmatched ping " << pingResponse << ".  Expected " << _lastPingNum << endl;
+        stringstream sstream;
+        sstream << "unmatched ping " << pingResponse << ".  Expected " << _lastPingNum << endl;
+        _msgSink.OnDebug(sstream.str().c_str());
         return;
     }
-    float latency = (float)(clock() - _sentPingClock ) / CLOCKS_PER_SEC ;
-    cout << "latency = " << latency << ": " << " " << clock() << "," << _sentPingClock << endl; ;
+    system_clock::time_point now = system_clock::now();
+    auto latency = now - _sentPingClock;
+
+    _msgSink.OnPing(chrono::duration_cast<milliseconds>(latency).count());
 }
 
 
@@ -61,67 +67,47 @@ void ChopperControl::ProcessCommandResponse( string& line )
         return;
     }
     
+    if( line.compare(0,2,"V=") == 0 )
+    {
+        int rawVoltage = stoi(line.substr(2,4));
+        float pctVoltage = (float)rawVoltage / 1023.0;
+        _msgSink.OnVoltageChange(pctVoltage * 100);
+    }
+
     // otherwise, NAK
-    cout << "unrecognized command from chopper" << endl;
+    //cout << "unrecognized command from chopper" << endl;
+    _msgSink.OnMessage(line.c_str());
 }
 
-void ChopperControl::SendSimpleCommand(const char* szCommand, int value)
-{
-    stringstream sstream;
-    sstream << szCommand << setfill('0') << setw(3) << value;
-    string command = sstream.str();
-    cout << command << endl;
-    _serialPort.Write( command );
-}
 
+static mutex g_write_mutex;
 void ChopperControl::SendCommand(const char* szCommand)
 {
-    stringstream sstream;
-    sstream << szCommand;
-    string command = sstream.str();
-    cout << command << endl;
-    _serialPort.Write( command );
+    lock_guard<std::mutex> lock(g_write_mutex); // unlocks when out of scope
+    _serialPort << szCommand << endl;
+    _msgSink.Sent(szCommand);
 }
 
-void ChopperControl::SendCommand(const char* szCommand, bool toggle)
-{
-    stringstream sstream;
-    sstream << szCommand << setfill('0') << setw(3) << toggle;
-    string command = sstream.str();
-    cout << command << endl;
-    _serialPort.Write( command );
-}
 
-bool ChopperControl::ProcessData()
+
+void ChopperControl::ProcessData()
 {
-    bool haveData = false;
-    if( _serialPort.IsDataAvailable() )
+    while(!_quitting)
     {
+        string line;
         try
         {
-            string line = _serialPort.ReadLine( 200 );
-            
-            if( line[0] == ':' )
-                ProcessCommandResponse(line);
-            
-            cout << line << endl;
-            
-            haveData = true;
+            _serialPort >> line;
         }
-        catch( SerialPort::ReadTimeout& timeout )
+        catch(exception& err)
         {
-            cerr << "I got nothing" << endl;
+            _msgSink.OnDebug(err.what());
+            _quitting = true;
+            return;
         }
-    }
-    
-    clock_t now = clock();
-    
-    if( now - _lastTime >= CLOCKS_PER_SEC * _secondsUpdate )
-    {
-        _lastTime = clock();
-        SendPing();
-    }
 
-    
-    return haveData;
+        ProcessCommandResponse(line);
+    }
 }
+
+
