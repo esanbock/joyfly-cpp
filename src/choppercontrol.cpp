@@ -80,8 +80,8 @@ void ChopperControl::ProcessCommandResponse( string& line )
 
 void ChopperControl::SendCommand(const char* szCommand)
 {
+    _serialPort << szCommand << endl;
     _msgSink.Sent(szCommand);
-    _serialPort << szCommand;
 }
 
 

@@ -61,3 +61,4 @@ else:unix|win32: LIBS += -lSDL2 -lqwt
 mac: LIBS += -framework qwt
 
 LIBS += -lboost_system
+
