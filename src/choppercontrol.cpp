@@ -97,7 +97,8 @@ void ChopperControl::ProcessData()
         string line;
         try
         {
-            _serialPort >> line;
+            std::getline( _serialPort, line );
+            //_serialPort >> line;
         }
         catch(exception& err)
         {
