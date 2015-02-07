@@ -1,7 +1,7 @@
+#include <unistd.h>
 #include <vector>
 #include <thread>
 #include "joystickinputer.h"
-
 using namespace std;
 
 CJoystickInputer::CJoystickInputer(int joyNum, IControllerInputer& controller)
@@ -47,6 +47,7 @@ void CJoystickInputer::DoSdlLoop()
     {
         SDL_JoystickUpdate();
         ProcessJoystickInput();
+        //sleep(1);
     }while (!_quitting);
 }
 
@@ -64,15 +65,15 @@ int CJoystickInputer::AxisCommandSimple( CSdlJoystick& sidewinder, function<void
 
 int CJoystickInputer::ButtonCommandToggle(CSdlJoystick& sidewinder, function<void (int)> toggleFunction, int joyAxis)
 {
+    _prevButtonVals[joyAxis] = _curButtonVals[joyAxis];
     _curButtonVals[joyAxis] = sidewinder.GetButton (joyAxis);
-    if( _prevButtonVals[joyAxis] != _curButtonVals[joyAxis] && _curButtonVals[joyAxis] == 1 )
+    if( _prevButtonVals[joyAxis] == 0 && _curButtonVals[joyAxis] == 1 )
     {
         _buttonToggle[joyAxis] = !_buttonToggle[joyAxis];
 
         toggleFunction(_buttonToggle[joyAxis]);
     }
-    _prevButtonVals[joyAxis] = _curButtonVals[joyAxis];
-    return _prevButtonVals[joyAxis];
+    return _buttonToggle[joyAxis];
 }
 
 
@@ -124,7 +125,7 @@ void CJoystickInputer::ProcessJoystickInput()
     AxisCommandSimple( *_sidewinder, [&](int val) {_controller.Pitch(val);}, JOYSTICK_Y, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
     AxisCommandSimple( *_sidewinder, [&](int val) {_controller.Yaw(val);}, JOYSTICK_Z, -255, 255);
 
-    ButtonCommandToggle( *_sidewinder, [&] (bool result) {_controller.SetAutoPilot(result);}, JOYSTICK_AUTOPILOT );
+    ButtonCommandToggle( *_sidewinder, [&] (bool result) {_controller.SetAutoPilot( result );}, JOYSTICK_AUTOPILOT );
     ButtonCommandToggle( *_sidewinder, [&] (bool) {_controller.SetHome();}, JOYSTICK_HOME);
     ButtonCommandToggle( *_sidewinder, [&] (bool) {_controller.GetStatus();}, JOYSTICK_STATUS);
     ButtonCommandToggle( *_sidewinder, [&] (bool) {_controller.GetVoltage();}, JOYSTICK_VOLTAGE);

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>614</width>
-    <height>386</height>
+    <height>758</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,10 +18,16 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>290</y>
+      <y>310</y>
       <width>591</width>
-      <height>51</height>
+      <height>401</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="readOnly">
      <bool>false</bool>
@@ -385,10 +391,10 @@
    <widget class="QPlainTextEdit" name="textDebug">
     <property name="geometry">
      <rect>
-      <x>13</x>
-      <y>236</y>
+      <x>10</x>
+      <y>200</y>
       <width>591</width>
-      <height>41</height>
+      <height>101</height>
      </rect>
     </property>
     <property name="lineWrapMode">
@@ -440,7 +446,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>/simulator</string>
+     <string>/dev/ttyUSB0</string>
     </property>
     <property name="readOnly">
      <bool>false</bool>
@@ -492,6 +498,90 @@
      </rect>
     </property>
    </widget>
+   <widget class="QPushButton" name="statusButton">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>100</y>
+      <width>85</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&amp;Status</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="autoNavCheck">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>160</y>
+      <width>131</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>AutoNav or bust</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="autoNavButton">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>130</y>
+      <width>85</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&amp;AutoNav</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="statusOnPingCheckBox">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>100</y>
+      <width>88</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>On Pin&amp;g</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="rehomeButton">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>130</y>
+      <width>85</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Re&amp;home</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="connectButton_2">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>10</y>
+      <width>51</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sim</string>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -499,7 +589,7 @@
      <x>0</x>
      <y>0</y>
      <width>614</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

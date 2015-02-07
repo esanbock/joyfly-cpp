@@ -147,6 +147,14 @@ void CJoyFlyController::OnThrottleChange(int newThrottle)
     }
 }
 
+void CJoyFlyController::OnAutoNav(bool isOn)
+{
+    for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
+    {
+        (*it)->OnAutoNav(isOn);
+    }
+}
+
 void CJoyFlyController::OnPing(float latency)
 {
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
@@ -160,7 +168,7 @@ int CJoyFlyController::Connect(const string serialDevice, int secondsUpdate)
     if( _pChopperControl != NULL )
         throw domain_error("controller already started");
 
-    if( serialDevice == "/simulator" )
+    if( serialDevice[0] != '\/' )
         _pChopperControl = ConnectToSimulator(secondsUpdate);
     else
         _pChopperControl = ConnectToChopper( serialDevice.c_str(), secondsUpdate );
@@ -179,9 +187,18 @@ void CJoyFlyController::RunJoystickTests()
     CSdlJoystick::RunTests();
 }
 
-void CJoyFlyController::SetAutoPilot(bool onOff)
+void CJoyFlyController::ToggleAutoPilot()
 {
-    _pChopperControl->SendCommand(":N", onOff ? 1 : 0);
+    _autoNav = !_autoNav;
+    _pChopperControl->SendCommand(":N", _autoNav ? 1 : 0);
+    this->OnAutoNav( _autoNav );
+}
+
+void CJoyFlyController::SetAutoPilot( bool isOn )
+{
+    _autoNav = isOn;
+    _pChopperControl->SendCommand(":N", _autoNav ? 1 : 0);
+    this->OnAutoNav( _autoNav );
 }
 
 void CJoyFlyController::SetHome()

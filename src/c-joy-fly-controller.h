@@ -41,7 +41,8 @@ public:
     void RunJoystickTests();
 
     // NAV
-    virtual void SetAutoPilot(bool onOff);
+    virtual void ToggleAutoPilot();
+    virtual void SetAutoPilot(bool isOn);
     virtual void SetHome();
     virtual void GetStatus();
     virtual void GetVoltage();
@@ -58,6 +59,7 @@ public:
     // message sink
     virtual void OnVoltageChange(float newVoltage);
     virtual void OnThrottleChange(int newThrottle);
+    virtual void OnAutoNav(bool isOn);
     virtual void OnMessage(const char* data);
     virtual void Sent(const char* data);
     virtual void OnPing(float latency);
@@ -77,6 +79,7 @@ private:
     AbstractChopper* _pChopperControl = NULL;
     CJoystickInputer* _pJoystickInputer = NULL;
     SerialStream* _pComPort = NULL;
+    bool _autoNav = false;
 };
 
 #endif // _C_JOY_FLY_CONTROLLER_H_

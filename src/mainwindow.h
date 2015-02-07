@@ -32,16 +32,26 @@ signals:
     void ChangeVoltage( float newVoltage );
     void Ping( float latency );
     virtual void OnThrottleChange( int newThrottle );
+    virtual void OnAutoNav( bool isOn );
     void Debug( QString log );
 
 protected slots:
     void onAppendLog(QString log);
+    void onSetAutoPilot(bool isOn);
     void onChangeVoltage( float newVoltage );
     void onPing( float latency );
 private slots:
     void on_throttleControl_sliderMoved(int position);
     void on_connectButton_clicked();
     void on_connectJoystick_clicked();
+
+    void on_statusButton_clicked();
+
+    void on_autoNavButton_clicked();
+
+    void on_rehomeButton_clicked();
+
+    void on_connectButton_2_clicked();
 
 private:
     Ui::MainWindow *ui;

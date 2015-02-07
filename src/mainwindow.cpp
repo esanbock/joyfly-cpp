@@ -18,7 +18,7 @@ MainWindow::MainWindow(IControllerInputer* pController, QWidget *parent) :
     connect(this,SIGNAL(Ping(float)), this,SLOT(onPing(float)));
     connect(this,SIGNAL(OnThrottleChange(int)), ui->throttleControl,SLOT(setValue(int)));
     connect(this,SIGNAL(Debug(QString)), ui->textDebug,SLOT(appendPlainText(QString)));
-
+    connect(this,SIGNAL(OnAutoNav(bool)), this,SLOT(onSetAutoPilot(bool)));
     populatejoysticks();
 
     show();
@@ -35,6 +35,11 @@ void MainWindow::onAppendLog(QString log)
     ui->textLog->ensureCursorVisible();
 }
 
+void MainWindow::onSetAutoPilot(bool isOn)
+{
+    ui->autoNavCheck->setChecked(isOn);
+}
+
 void MainWindow::onChangeVoltage(float newVoltage)
 {
     ui->voltage->setValue(newVoltage);
@@ -43,6 +48,8 @@ void MainWindow::onChangeVoltage(float newVoltage)
 void MainWindow::onPing(float latency)
 {
     ui->latency->display(latency);
+    if( ui->statusOnPingCheckBox->isChecked())
+        _pController->GetStatus();
 }
 
 void MainWindow::on_throttleControl_sliderMoved(int position)
@@ -106,4 +113,32 @@ void MainWindow::OnBank(float newAngle )
 void MainWindow::OnPitch(float newAngle )
 {
     ui->attitude->setGradient(newAngle);
+}
+
+void MainWindow::on_statusButton_clicked()
+{
+    _pController->GetStatus();
+}
+
+bool isToggling;
+void MainWindow::on_autoNavButton_clicked()
+{
+    if( !isToggling )
+    {
+        isToggling = true;
+        _pController->ToggleAutoPilot();
+    }
+    isToggling = false;
+
+}
+
+void MainWindow::on_rehomeButton_clicked()
+{
+    _pController->SetHome();
+}
+
+void MainWindow::on_connectButton_2_clicked()
+{
+    ui->serialDevice->clear();
+    on_connectButton_clicked();
 }
