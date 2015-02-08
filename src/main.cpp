@@ -33,7 +33,7 @@
 #include "c-joy-fly-view.h"
 #include "mainwindow.h"
 #include "abstractchopper.h"
-#include "choppercontrol.h"
+#include "teensychopper.h"
 #include "c-joy-fly-controller.h"
 #include "c-terminal-view.h"
 #include "joystickexception.h"
