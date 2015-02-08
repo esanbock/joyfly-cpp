@@ -15,6 +15,15 @@ using namespace std;
 class TeensyChopper : public AbstractChopper
 {
 private:
+    const int IMU_XMIN = 700;
+    const int IMU_XMAX = 800;
+
+    const int IMU_YMIN = 700;
+    const int IMU_YMAX = 800;
+
+    const int IMU_ZMIN = 500;
+    const int IMU_ZMAX = 800;
+
     SerialStream& _serialPort;
     int _secondsUpdate;
     IChopperMessages& _msgSink;

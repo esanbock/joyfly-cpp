@@ -25,7 +25,7 @@
 #include "serialstream.h"
 
 #include "abstractchopper.h"
-#include "choppercontrol.h"
+#include "teensychopper.h"
 #include "simulatedchopper.h"
 
 #ifdef __APPLE__
@@ -244,11 +244,16 @@ void CJoyFlyController::Lift(int val)
 
 void CJoyFlyController::OnIMUChanged( int x, int y, int z )
 {
+    const float MAXX = 771;
+    const float MINX = 700;
+    //771-700
+    float fAngle = 90 + ((float)x -700) * 2.53521126761;
+
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
     {
-        float fAngle = (float)x * (360.0 / 1024.0);
         (*it)->OnBank(fAngle);
-        (*it)->OnPitch(((float)y / 1024.0) * 2 - 1.0);
+        cout << "fAngle = " << fAngle << endl;
+        //(*it)->OnPitch(((float)y / 50.0) * 2 - 1.0);
     }
 
 }

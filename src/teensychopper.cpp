@@ -15,7 +15,7 @@
 
 #include "serialstream.h"
 #include "abstractchopper.h"
-#include "choppercontrol.h"
+#include "teensychopper.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -86,8 +86,45 @@ void TeensyChopper::ProcessCommandResponse( string& line )
 
 void TeensyChopper::ProcessStatusResponse( string& line)
 {
-    /*line.substr(0,)
-    _msgSink.OnIMUChanged()*/
+    int x=0;
+    int y=0;
+    int z=0;
+
+    stringstream ss(line);
+
+    ss.ignore(3);
+
+    while( ss.gcount() > 0 )
+    {
+        char field[3];
+        ss.get(field, 2);
+        field[2] = 0;
+        switch(field[0])
+        {
+        case 'x':
+            ss.ignore(1);
+            ss >> x >> skipws;
+            break;
+        case 'y':
+            ss.ignore(1);
+            ss >> y >> skipws;
+            break;
+        case 'z':
+            ss.ignore(1);
+            ss >> z >> skipws;
+            break;
+        }
+    }
+    if( x < IMU_XMIN || x > IMU_XMAX ||
+            y < IMU_YMIN || y > IMU_YMAX ||
+            z < IMU_ZMIN || z > IMU_ZMAX )
+    {
+        _msgSink.OnDebug("Parsing error");
+    }
+    else
+    {
+        _msgSink.OnIMUChanged(x, y , z);
+    }
 }
 
 

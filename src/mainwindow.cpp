@@ -107,7 +107,7 @@ void MainWindow::on_connectJoystick_clicked()
 
 void MainWindow::OnBank(float newAngle )
 {
-    //ui->attitude->setAngle(newAngle);
+    ui->attitude->setAngle(newAngle);
 }
 
 void MainWindow::OnPitch(float newAngle )
