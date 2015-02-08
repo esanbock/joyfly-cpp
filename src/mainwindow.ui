@@ -18,9 +18,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>310</y>
+      <y>370</y>
       <width>591</width>
-      <height>401</height>
+      <height>341</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -392,7 +392,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>200</y>
+      <y>260</y>
       <width>591</width>
       <height>101</height>
      </rect>
@@ -580,6 +580,32 @@
     </property>
     <property name="checkable">
      <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_RollAngle">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>190</y>
+      <width>56</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>roll angle</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_PitchAngle">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>220</y>
+      <width>56</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>pitch angle</string>
     </property>
    </widget>
   </widget>

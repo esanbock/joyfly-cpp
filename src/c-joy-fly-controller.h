@@ -64,7 +64,7 @@ public:
     virtual void Sent(const char* data);
     virtual void OnPing(float latency);
     virtual void OnDebug(const char* data);
-    virtual void OnIMUChanged( int x, int y, int z );
+    virtual void OnIMUChanged(float x, float y, float z );
 
 protected:
     void OnChopperMessage( const char* szMsg );

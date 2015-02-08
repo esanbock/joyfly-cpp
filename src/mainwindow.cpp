@@ -107,12 +107,14 @@ void MainWindow::on_connectJoystick_clicked()
 
 void MainWindow::OnBank(float newAngle )
 {
-    ui->attitude->setAngle(newAngle);
+    ui->attitude->setAngle(270 - newAngle);
+    //ui->label_RollAngle->setText(to_string(newAngle).c_str());
 }
 
 void MainWindow::OnPitch(float newAngle )
 {
-    ui->attitude->setGradient(newAngle);
+    ui->attitude->setGradient((90 - newAngle)/90);
+    //ui->label_PitchAngle->setText(to_string(newAngle).c_str());
 }
 
 void MainWindow::on_statusButton_clicked()

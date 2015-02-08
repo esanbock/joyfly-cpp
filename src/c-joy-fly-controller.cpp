@@ -168,7 +168,7 @@ int CJoyFlyController::Connect(const string serialDevice, int secondsUpdate)
     if( _pChopperControl != NULL )
         throw domain_error("controller already started");
 
-    if( serialDevice[0] != '\/' )
+    if( serialDevice[0] != '/' )
         _pChopperControl = ConnectToSimulator(secondsUpdate);
     else
         _pChopperControl = ConnectToChopper( serialDevice.c_str(), secondsUpdate );
@@ -242,18 +242,13 @@ void CJoyFlyController::Lift(int val)
     _pChopperControl->SendSimpleCommand(":L",  val);
 }
 
-void CJoyFlyController::OnIMUChanged( int x, int y, int z )
+void CJoyFlyController::OnIMUChanged( float x, float y, float z )
 {
-    const float MAXX = 771;
-    const float MINX = 700;
-    //771-700
-    float fAngle = 90 + ((float)x -700) * 2.53521126761;
-
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
     {
-        (*it)->OnBank(fAngle);
-        cout << "fAngle = " << fAngle << endl;
-        //(*it)->OnPitch(((float)y / 50.0) * 2 - 1.0);
+        (*it)->OnBank(x);
+        (*it)->OnPitch(y);
+        (*it)->OnYaw(z);
     }
 
 }

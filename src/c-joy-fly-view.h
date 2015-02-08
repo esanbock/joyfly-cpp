@@ -36,6 +36,7 @@ public:
     virtual void OnAutoNav( bool isOn ){}
     virtual void OnBank( float newAngle ){}
     virtual void OnPitch( float newAngle ){}
+    virtual void OnYaw( float newAngle ){}
 protected:
     IControllerInputer* _pController;
 };

@@ -9,7 +9,7 @@ public:
     virtual void OnVoltageChange(float newVoltage)=0;
     virtual void OnPing(float latency)=0;
     virtual void Sent(const char* szMsg)=0;
-    virtual void OnIMUChanged( int x, int y, int z )=0;
+    virtual void OnIMUChanged( float x, float y, float z )=0;
 };
 
 class AbstractChopper

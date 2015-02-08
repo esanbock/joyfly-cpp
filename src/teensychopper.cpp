@@ -115,18 +115,29 @@ void TeensyChopper::ProcessStatusResponse( string& line)
             break;
         }
     }
-    if( x < IMU_XMIN || x > IMU_XMAX ||
-            y < IMU_YMIN || y > IMU_YMAX ||
-            z < IMU_ZMIN || z > IMU_ZMAX )
+    if( x < IMU_MINXY || x > IMU_MAXXY ||
+            y < IMU_MINXY || y > IMU_MAXXY ||
+            z < IMU_MINZ || z > IMU_MAXZ )
     {
         _msgSink.OnDebug("Parsing error");
     }
     else
     {
-        _msgSink.OnIMUChanged(x, y , z);
+        _msgSink.OnIMUChanged(IMUVoltageToAngleXY(x), IMUVoltageToAngleXY(y) , IMUVoltageToAngleZ(z));
     }
 }
 
+float TeensyChopper::IMUVoltageToAngleXY(int volts)
+{
+    float fAngle = ((float)volts -IMU_MINXY) * (180/(IMU_MAXXY-IMU_MINXY));
+    return fAngle;
+}
+
+float TeensyChopper::IMUVoltageToAngleZ(int volts)
+{
+    float fAngle = ((float)volts -IMU_MINZ) * (180/(IMU_MAXZ-IMU_MINZ));
+    return fAngle;
+}
 
 
 static mutex g_write_mutex;
