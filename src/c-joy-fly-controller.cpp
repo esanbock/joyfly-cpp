@@ -89,7 +89,7 @@ AbstractChopper* CJoyFlyController::ConnectToChopper( const string serialDevice,
     _pComPort = new SerialStream(options);
     _pComPort->exceptions(ios::badbit | ios::failbit);
 
-    AbstractChopper* pTeensyChopper = new ChopperControl(*_pComPort, secondsUpdate, *this);
+    AbstractChopper* pTeensyChopper = new TeensyChopper(*_pComPort, secondsUpdate, *this);
     pTeensyChopper->Start();
     return pTeensyChopper;
 }

@@ -20,20 +20,20 @@
 using namespace std;
 using namespace std::chrono;
 
-ChopperControl::ChopperControl(SerialStream &serialPort, int secondsUpdate, IChopperMessages& msgSink)
+TeensyChopper::TeensyChopper(SerialStream &serialPort, int secondsUpdate, IChopperMessages& msgSink)
     :_serialPort(serialPort), _msgSink(msgSink), AbstractChopper(secondsUpdate)
 {
     _secondsUpdate = secondsUpdate;
 }
 
 
-ChopperControl::~ChopperControl()
+TeensyChopper::~TeensyChopper()
 {
     _quitting = true;
     _serialPort.close();
 }
 
-void ChopperControl::Start()
+void TeensyChopper::Start()
 {
     if( _pCommandLoopThread != NULL )
         throw logic_error("start already called");
@@ -42,7 +42,7 @@ void ChopperControl::Start()
 
 }
 
-void ChopperControl::ProcessPingResponse( string& line )
+void TeensyChopper::ProcessPingResponse( string& line )
 {
     int pingResponse = atoi( line.substr(3).c_str() );
     if( pingResponse != _lastPingNum )
@@ -59,7 +59,7 @@ void ChopperControl::ProcessPingResponse( string& line )
 }
 
 
-void ChopperControl::ProcessCommandResponse( string& line )
+void TeensyChopper::ProcessCommandResponse( string& line )
 {
     if( line.compare(0,3,":ER") == 0 )
     {
@@ -74,14 +74,26 @@ void ChopperControl::ProcessCommandResponse( string& line )
         _msgSink.OnVoltageChange(pctVoltage * 100);
     }
 
+    if( line.compare(0,3, ":S ") == 0)
+    {
+        ProcessStatusResponse(line);
+    }
+
     // otherwise, NAK
     //cout << "unrecognized command from chopper" << endl;
     _msgSink.OnMessage(line.c_str());
 }
 
+void TeensyChopper::ProcessStatusResponse( string& line)
+{
+    /*line.substr(0,)
+    _msgSink.OnIMUChanged()*/
+}
+
+
 
 static mutex g_write_mutex;
-void ChopperControl::SendCommand(const char* szCommand)
+void TeensyChopper::SendCommand(const char* szCommand)
 {
     lock_guard<std::mutex> lock(g_write_mutex); // unlocks when out of scope
     _serialPort << szCommand << endl;
@@ -90,7 +102,7 @@ void ChopperControl::SendCommand(const char* szCommand)
 
 
 
-void ChopperControl::ProcessData()
+void TeensyChopper::ProcessData()
 {
     while(!_quitting)
     {

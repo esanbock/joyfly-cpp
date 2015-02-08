@@ -12,7 +12,7 @@
 using namespace std;
 
 // this is the model class
-class ChopperControl : public AbstractChopper
+class TeensyChopper : public AbstractChopper
 {
 private:
     SerialStream& _serialPort;
@@ -20,14 +20,15 @@ private:
     IChopperMessages& _msgSink;
     thread* _pCommandLoopThread = NULL;
 public:
-    ChopperControl(SerialStream& serialPort, int secondsUpdate, IChopperMessages& msgSink);
-    virtual ~ChopperControl();
+    TeensyChopper(SerialStream& serialPort, int secondsUpdate, IChopperMessages& msgSink);
+    virtual ~TeensyChopper();
      virtual void SendCommand(const char* szCommand);
     virtual void Start();
 protected:
     void ProcessPingResponse( string& line );
     void ProcessCommandResponse( string& line );
     void ProcessData();
+    void ProcessStatusResponse( string& line );
 };
 
 #endif

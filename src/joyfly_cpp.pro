@@ -28,18 +28,17 @@ linux: INCLUDEPATH += /usr/local/qwt-6.1.0/include
 SOURCES += main.cpp\
         mainwindow.cpp \
     c-joy-fly-controller.cpp \
-    choppercontrol.cpp \
     c-terminal-view.cpp \
     joystickinputer.cpp \
     simulatedchopper.cpp \
     abstractchopper.cpp \
     sdljoystick.cpp \
     attitude_indicator.cpp \
-    serialstream.cpp
+    serialstream.cpp \
+    teensychopper.cpp
 
 HEADERS  += mainwindow.h \
     c-joy-fly-controller.h \
-    choppercontrol.h \
     c-joy-fly-view.h \
     c-terminal-view.h \
     joystickinputer.h \
@@ -49,7 +48,8 @@ HEADERS  += mainwindow.h \
     abstractchopper.h \
     sdljoystick.h \
     attitude_indicator.h \
-    serialstream.h
+    serialstream.h \
+    teensychopper.h
 
 FORMS += mainwindow.ui
 
