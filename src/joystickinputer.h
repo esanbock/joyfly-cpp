@@ -1,13 +1,8 @@
 #ifndef CJOYSTICKINPUTER_H
 #define CJOYSTICKINPUTER_H
 
-// apple junk
-#ifdef __APPLE__
-#include "SDL.h"
-#else
-#include "SDL2/SDL.h"
-#endif
 
+#include "SDL2/SDL.h"
 #include <thread>
 
 #include "controllerinputer.h"

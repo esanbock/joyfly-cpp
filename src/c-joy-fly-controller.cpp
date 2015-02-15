@@ -28,11 +28,7 @@
 #include "teensychopper.h"
 #include "simulatedchopper.h"
 
-#ifdef __APPLE__
-#include "SDL.h"
-#else
 #include "SDL2/SDL.h"
-#endif
 
 #include "controllerinputer.h"
 #include "c-joy-fly-view.h"
