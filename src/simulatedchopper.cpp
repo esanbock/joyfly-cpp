@@ -34,7 +34,7 @@ void CSimulatedChopper::ProcessData()
     while (!_quitting)
     {
         std::uniform_real_distribution<> dis(0, 100);
-        std::uniform_int_distribution<> imuRand(0,1023);
+        std::uniform_int_distribution<> imuRand(0,180);
         sleep(_secondsUpdate);
         SendPing();
 

@@ -23,9 +23,11 @@ public:
     virtual void Sent(const char* szMsg);
     virtual void OnBank( float newAngle );
     virtual void OnPitch( float newAngle );
+    virtual void OnYaw( float newAngle );
 
 protected:
     void populatejoysticks();
+    void initCompass();
 
 signals:
     void AppendLog(QString log);

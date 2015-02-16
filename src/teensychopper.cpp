@@ -12,6 +12,7 @@
 #include <thread>
 #include <chrono>
 #include <mutex>
+#include <algorithm>
 
 #include "serialstream.h"
 #include "abstractchopper.h"
@@ -129,7 +130,9 @@ void TeensyChopper::ProcessStatusResponse( string& line)
 
 float TeensyChopper::IMUVoltageToAngleXY(int volts)
 {
-    float fAngle = ((float)volts -IMU_MINXY) * (180/(IMU_MAXXY-IMU_MINXY));
+    _seenMinXYVolts = min(_seenMinXYVolts, volts);
+    _seenMaxXYVolts = max(_seenMaxXYVolts, volts);
+    float fAngle = ((float)volts - _seenMinXYVolts ) * (180/(_seenMaxXYVolts-_seenMinXYVolts));
     return fAngle;
 }
 

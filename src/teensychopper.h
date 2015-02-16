@@ -15,22 +15,12 @@ using namespace std;
 class TeensyChopper : public AbstractChopper
 {
 private:
-
-    /*const float IMU_MINXY = 0;
-    const float IMU_MAXXY = 1023;
-    const int IMU_MINZ = 0;
-    const int IMU_MAXZ = 1023;*/
-
-    const float IMU_MINXY = 400;
-    const float IMU_MAXXY = 624;
+    const float IMU_MINXY = 300;
+    const float IMU_MAXXY = 700;
     const int IMU_MINZ = IMU_MINXY;
     const int IMU_MAXZ = IMU_MAXXY;
-
-
-    /*const float IMU_MINXY = 280;
-    const float IMU_MAXXY = 375;
-    const int IMU_MINZ = 300;
-    const int IMU_MAXZ = 513;*/
+    int _seenMinXYVolts = 1;
+    int _seenMaxXYVolts = 1;
 
     SerialStream& _serialPort;
     int _secondsUpdate;
