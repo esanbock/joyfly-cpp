@@ -155,66 +155,21 @@ void MainWindow::on_connectButton_2_clicked()
 
 void MainWindow::initCompass()
 {
-    typedef QPalette Palette;
+    QwtCompassScaleDraw *scaleDraw = new QwtCompassScaleDraw();
+    scaleDraw->enableComponent( QwtAbstractScaleDraw::Ticks, true );
+    scaleDraw->enableComponent( QwtAbstractScaleDraw::Labels, false );
+    scaleDraw->enableComponent( QwtAbstractScaleDraw::Backbone, false );
+    scaleDraw->setTickLength( QwtScaleDiv::MinorTick, 5 );
+    scaleDraw->setTickLength( QwtScaleDiv::MajorTick, 10 );
 
-    int c;
+    ui->compass->setScaleDraw( scaleDraw );
 
-    Palette colorGroup;
-    for ( c = 0; c < Palette::NColorRoles; c++ )
-        colorGroup.setColor((Palette::ColorRole)c, QColor());
+    ui->compass->setScaleMaxMajor( 36 );
+    ui->compass->setScaleMaxMinor( 5 );
 
-    colorGroup.setColor(Palette::Base,
-                        palette().color(backgroundRole()).light(120));
-    colorGroup.setColor(Palette::Foreground,
-                        colorGroup.color(Palette::Base));
-
-    ui->compass->setLineWidth(4);
-    //ui->compass->setFrameShadow(QwtCompass::Sunken);
-    colorGroup.setColor(Palette::Base, Qt::darkBlue);
-    colorGroup.setColor(Palette::Foreground,
-                        QColor(Qt::darkBlue).dark(120));
-    colorGroup.setColor(Palette::Text, Qt::white);
-
-    /*ui->compass->setScaleOptions(QwtDial::ScaleTicks | QwtDial::ScaleLabel);
-            ui->compass->setScaleTicks(1, 1, 3);
-            ui->compass->setScale(36, 5, 0);*/
-    ui->compass->setScale(0,360);
-
-    ui->compass->setNeedle(
-                new QwtCompassMagnetNeedle(QwtCompassMagnetNeedle::ThinStyle));
-    ui->compass->setValue(220.0);
-
-
-    QPalette newPalette = ui->compass->palette();
-    for ( c = 0; c < Palette::NColorRoles; c++ )
-    {
-        if ( colorGroup.color((Palette::ColorRole)c).isValid() )
-        {
-            for ( int cg = 0; cg < QPalette::NColorGroups; cg++ )
-            {
-                newPalette.setColor(
-                            (QPalette::ColorGroup)cg,
-                            (Palette::ColorRole)c,
-                            colorGroup.color((Palette::ColorRole)c));
-            }
-        }
-    }
-
-    for ( int i = 0; i < QPalette::NColorGroups; i++ )
-    {
-        QPalette::ColorGroup cg = (QPalette::ColorGroup)i;
-
-        const QColor light =
-                newPalette.color(cg, Palette::Base).light(170);
-        const QColor dark = newPalette.color(cg, Palette::Base).dark(170);
-        const QColor mid = ui->compass->frameShadow() == QwtDial::Raised
-                ? newPalette.color(cg, Palette::Base).dark(110)
-                : newPalette.color(cg, Palette::Base).light(110);
-
-        newPalette.setColor(cg, Palette::Dark, dark);
-        newPalette.setColor(cg, Palette::Mid, mid);
-        newPalette.setColor(cg, Palette::Light, light);
-    }
-    ui->compass->setPalette(newPalette);
+    ui->compass->setNeedle(new QwtCompassMagnetNeedle( QwtCompassMagnetNeedle::TriangleStyle,
+                    Qt::white, Qt::gray));
+    ui->compass->setValue( 0 );
+\
 
 }

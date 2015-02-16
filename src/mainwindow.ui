@@ -18,9 +18,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>370</y>
+      <y>480</y>
       <width>591</width>
-      <height>341</height>
+      <height>231</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -392,7 +392,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>260</y>
+      <y>370</y>
       <width>591</width>
       <height>101</height>
      </rect>
@@ -478,10 +478,10 @@
    <widget class="AttitudeIndicator" name="attitude" native="true">
     <property name="geometry">
      <rect>
-      <x>209</x>
-      <y>99</y>
-      <width>81</width>
-      <height>81</height>
+      <x>19</x>
+      <y>199</y>
+      <width>141</width>
+      <height>131</height>
      </rect>
     </property>
     <property name="autoFillBackground">
@@ -491,10 +491,10 @@
    <widget class="QwtCompass" name="compass" native="true">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>100</y>
-      <width>81</width>
-      <height>81</height>
+      <x>170</x>
+      <y>200</y>
+      <width>141</width>
+      <height>131</height>
      </rect>
     </property>
    </widget>
@@ -585,8 +585,8 @@
    <widget class="QLabel" name="label_RollAngle">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>190</y>
+      <x>20</x>
+      <y>340</y>
       <width>56</width>
       <height>15</height>
      </rect>
@@ -598,8 +598,8 @@
    <widget class="QLabel" name="label_PitchAngle">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>220</y>
+      <x>90</x>
+      <y>340</y>
       <width>56</width>
       <height>15</height>
      </rect>
@@ -611,8 +611,8 @@
    <widget class="QLabel" name="label_Yaw">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>190</y>
+      <x>210</x>
+      <y>340</y>
       <width>59</width>
       <height>16</height>
      </rect>
