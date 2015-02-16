@@ -7,7 +7,7 @@
 using namespace std;
 
 CSimulatedChopper::CSimulatedChopper(int secondsUpdate, IChopperMessages &msgSink )
-    :_msgSink(msgSink), AbstractChopper(secondsUpdate)
+    :AbstractChopper(secondsUpdate), _msgSink(msgSink)
 {
     _secondsUpdate = secondsUpdate;
 }
@@ -35,12 +35,13 @@ void CSimulatedChopper::ProcessData()
     {
         std::uniform_real_distribution<> dis(0, 100);
         std::uniform_int_distribution<> imuRand(0,180);
+        std::uniform_int_distribution<> compassRand(0,360);
         sleep(_secondsUpdate);
         SendPing();
 
         _msgSink.OnVoltageChange( dis(_gen) );
         _msgSink.OnPing(dis(_gen));
         _msgSink.OnMessage("hi");
-        _msgSink.OnIMUChanged(imuRand(_gen), imuRand(_gen), imuRand(_gen));
+        _msgSink.OnIMUChanged(imuRand(_gen), imuRand(_gen), compassRand(_gen));
     }
 }

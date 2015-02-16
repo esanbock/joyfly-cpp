@@ -608,6 +608,19 @@
      <string>pitch angle</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_Yaw">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>190</y>
+      <width>59</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>yaw angle</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -615,7 +628,7 @@
      <x>0</x>
      <y>0</y>
      <width>614</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

@@ -110,18 +110,19 @@ void MainWindow::on_connectJoystick_clicked()
 void MainWindow::OnBank(float newAngle )
 {
     ui->attitude->setAngle(270 - newAngle);
-    //ui->label_RollAngle->setText(to_string(newAngle).c_str());
+    ui->label_RollAngle->setText(to_string(newAngle).c_str());
 }
 
 void MainWindow::OnPitch(float newAngle )
 {
     ui->attitude->setGradient((90 - newAngle)/90);
-    //ui->label_PitchAngle->setText(to_string(newAngle).c_str());
+    ui->label_PitchAngle->setText(to_string(newAngle).c_str());
 }
 
 void MainWindow::OnYaw(float newAngle)
 {
     ui->compass->setValue(newAngle);
+    ui->label_Yaw->setText(to_string(newAngle).c_str());
 }
 
 void MainWindow::on_statusButton_clicked()
@@ -163,31 +164,25 @@ void MainWindow::initCompass()
         colorGroup.setColor((Palette::ColorRole)c, QColor());
 
     colorGroup.setColor(Palette::Base,
-        palette().color(backgroundRole()).light(120));
+                        palette().color(backgroundRole()).light(120));
     colorGroup.setColor(Palette::Foreground,
-        colorGroup.color(Palette::Base));
+                        colorGroup.color(Palette::Base));
 
     ui->compass->setLineWidth(4);
     //ui->compass->setFrameShadow(QwtCompass::Sunken);
+    colorGroup.setColor(Palette::Base, Qt::darkBlue);
+    colorGroup.setColor(Palette::Foreground,
+                        QColor(Qt::darkBlue).dark(120));
+    colorGroup.setColor(Palette::Text, Qt::white);
 
-
-            /*
-              A compass with a rotating needle in darkBlue. Shows
-              a ticks for each degree.
-             */
-
-            colorGroup.setColor(Palette::Base, Qt::darkBlue);
-            colorGroup.setColor(Palette::Foreground,
-                QColor(Qt::darkBlue).dark(120));
-            colorGroup.setColor(Palette::Text, Qt::white);
-
-            /*ui->compass->setScaleOptions(QwtDial::ScaleTicks | QwtDial::ScaleLabel);
+    /*ui->compass->setScaleOptions(QwtDial::ScaleTicks | QwtDial::ScaleLabel);
             ui->compass->setScaleTicks(1, 1, 3);
             ui->compass->setScale(36, 5, 0);*/
+    ui->compass->setScale(0,360);
 
-            ui->compass->setNeedle(
+    ui->compass->setNeedle(
                 new QwtCompassMagnetNeedle(QwtCompassMagnetNeedle::ThinStyle));
-            ui->compass->setValue(220.0);
+    ui->compass->setValue(220.0);
 
 
     QPalette newPalette = ui->compass->palette();
@@ -198,9 +193,9 @@ void MainWindow::initCompass()
             for ( int cg = 0; cg < QPalette::NColorGroups; cg++ )
             {
                 newPalette.setColor(
-                    (QPalette::ColorGroup)cg,
-                    (Palette::ColorRole)c,
-                    colorGroup.color((Palette::ColorRole)c));
+                            (QPalette::ColorGroup)cg,
+                            (Palette::ColorRole)c,
+                            colorGroup.color((Palette::ColorRole)c));
             }
         }
     }
@@ -210,11 +205,11 @@ void MainWindow::initCompass()
         QPalette::ColorGroup cg = (QPalette::ColorGroup)i;
 
         const QColor light =
-            newPalette.color(cg, Palette::Base).light(170);
+                newPalette.color(cg, Palette::Base).light(170);
         const QColor dark = newPalette.color(cg, Palette::Base).dark(170);
         const QColor mid = ui->compass->frameShadow() == QwtDial::Raised
-            ? newPalette.color(cg, Palette::Base).dark(110)
-            : newPalette.color(cg, Palette::Base).light(110);
+                ? newPalette.color(cg, Palette::Base).dark(110)
+                : newPalette.color(cg, Palette::Base).light(110);
 
         newPalette.setColor(cg, Palette::Dark, dark);
         newPalette.setColor(cg, Palette::Mid, mid);
