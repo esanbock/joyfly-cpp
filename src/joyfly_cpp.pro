@@ -18,11 +18,14 @@ QMAKE_CXXFLAGS += -std=c++11
 
 mac: INCLUDEPATH += /Library/Frameworks/qwt.framework/Headers
 mac: QMAKE_LFLAGS += -F/Library/Frameworks
+mac: QMAKE_LFLAGS += -F/usr/local/lib
+mac: LIBS += -L/usr/local/lib
 mac: INCLUDEPATH += /usr/local/include
-mac: QMAKE_LFLAGS += -L /usr/local/lib
+mac: QMAKE_LFLAGxcodeS += -L /usr/local/lib
 mac: QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
 
 linux: INCLUDEPATH += /usr/local/qwt-6.1.0/include
+mac: INCLUDEPATH += /usr/local/Cellar/qwt/6.1.3_4/lib/qwt.framework/Versions/6/Headers
 
 SOURCES += main.cpp\
         mainwindow.cpp \
