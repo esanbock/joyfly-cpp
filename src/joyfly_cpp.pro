@@ -22,7 +22,7 @@ mac: INCLUDEPATH += /usr/local/include
 mac: QMAKE_LFLAGS += -L /usr/local/lib
 mac: QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
 
-linux: INCLUDEPATH += /usr/local/qwt-6.1.0/include
+linux: INCLUDEPATH += /usr/include/qwt
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -52,10 +52,8 @@ HEADERS  += mainwindow.h \
 
 FORMS += mainwindow.ui
 
-linux: LIBS += -L/usr/local/qwt-6.1.0/lib
-
 mac: LIBS += -framework qwt
-else: LIBS += -lqwt
+else: LIBS += -lqwt-qt5
 
 LIBS += -lboost_system -lSDL2
 
