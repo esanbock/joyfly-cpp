@@ -14,7 +14,13 @@ CSimulatedChopper::CSimulatedChopper(int secondsUpdate, IChopperMessages &msgSin
 
 CSimulatedChopper::~CSimulatedChopper()
 {
+    _quitting = true;
+    if( _pCommandLoopThread != NULL )
+    {
+        _pCommandLoopThread->join();
 
+        delete _pCommandLoopThread;
+    }
 }
 
 void CSimulatedChopper::SendCommand(const char* szCommand)
