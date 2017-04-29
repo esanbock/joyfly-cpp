@@ -17,6 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <iostream>
 #include <vector>
 #include <thread>
 #include <stdexcept>
@@ -35,6 +36,7 @@
 #include "c-joy-fly-controller.h"
 
 using namespace boost;
+using namespace std;
 
 CJoyFlyController::CJoyFlyController()
 {
@@ -240,6 +242,7 @@ void CJoyFlyController::Lift(int val)
 
 void CJoyFlyController::OnIMUChanged( float x, float y, float z )
 {
+    //cout << "new IMU (x,y,z) = (" << x << "," << y << "," << z << ")" << endl;
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
     {
         (*it)->OnBank(x);

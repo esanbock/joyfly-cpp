@@ -19,10 +19,10 @@ private:
     const float IMU_MAXXY = 700;
     const int IMU_MINZ = IMU_MINXY;
     const int IMU_MAXZ = IMU_MAXXY;
-    int _seenMinXYVolts = 1;
-    int _seenMaxXYVolts = 1;
-    int _seenMinZVolts = 1;
-    int _seenMaxZVolts = 1;
+    int _seenMinXYVolts = 400;
+    int _seenMaxXYVolts = 500;
+    int _seenMinZVolts = 400;
+    int _seenMaxZVolts = 500;
 
     SerialStream& _serialPort;
     int _secondsUpdate;

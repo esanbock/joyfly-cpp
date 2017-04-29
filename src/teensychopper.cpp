@@ -139,7 +139,8 @@ float TeensyChopper::IMUVoltageToAngleXY(int volts)
 float TeensyChopper::IMUVoltageToAngleZ(int volts)
 {
     _seenMinZVolts = min(_seenMinZVolts, volts);
-    _seenMaxZVolts = max(_seenMaxZVolts, volts);    float fAngle = ((float)volts - _seenMinZVolts) * (360/(_seenMaxZVolts-_seenMinZVolts));
+    _seenMaxZVolts = max(_seenMaxZVolts, volts);
+    float fAngle = ((float)volts - _seenMinZVolts) * (360/(_seenMaxZVolts-_seenMinZVolts));
     return fAngle;
 }
 
