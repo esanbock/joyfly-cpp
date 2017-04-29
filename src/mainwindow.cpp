@@ -19,6 +19,11 @@ MainWindow::MainWindow(IControllerInputer* pController, QWidget *parent) :
     connect(this,SIGNAL(OnThrottleChange(int)), ui->throttleControl,SLOT(setValue(int)));
     connect(this,SIGNAL(Debug(QString)), ui->textDebug,SLOT(appendPlainText(QString)));
     connect(this,SIGNAL(OnAutoNav(bool)), this,SLOT(onSetAutoPilot(bool)));
+
+    connect(this,SIGNAL(Bank(float)), this,SLOT(on_bank(float)));
+    connect(this,SIGNAL(Pitch(float)), this,SLOT(on_pitch(float)));
+    connect(this,SIGNAL(Yaw(float)), this,SLOT(on_yaw(float)));
+
     populatejoysticks();
 
     initCompass();
@@ -107,19 +112,35 @@ void MainWindow::on_connectJoystick_clicked()
     ui->connectJoystick->setEnabled(false);
 }
 
-void MainWindow::OnBank(float newAngle )
+void MainWindow:: OnBank( float newAngle )
+{
+    Bank(newAngle);
+}
+
+void MainWindow:: OnPitch( float newAngle )
+{
+    Pitch(newAngle);
+}
+
+void MainWindow:: OnYaw( float newAngle )
+{
+    Yaw(newAngle);
+}
+
+
+void MainWindow::on_bank(float newAngle )
 {
     ui->attitude->setAngle(270 - newAngle);
     ui->label_RollAngle->setText(to_string(newAngle).c_str());
 }
 
-void MainWindow::OnPitch(float newAngle )
+void MainWindow::on_pitch(float newAngle )
 {
     ui->attitude->setGradient((90 - newAngle)/90);
     ui->label_PitchAngle->setText(to_string(newAngle).c_str());
 }
 
-void MainWindow::OnYaw(float newAngle)
+void MainWindow::on_yaw(float newAngle)
 {
     ui->compass->setValue(newAngle);
     ui->label_Yaw->setText(to_string(newAngle).c_str());
