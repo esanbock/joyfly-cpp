@@ -488,7 +488,7 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QwtCompass" name="compass" native="true">
+   <widget class="QwtCompass" name="compass">
     <property name="geometry">
      <rect>
       <x>170</x>
@@ -621,6 +621,19 @@
      <string>yaw angle</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushGraph">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>10</y>
+      <width>85</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Graphs</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -628,7 +641,7 @@
      <x>0</x>
      <y>0</y>
      <width>614</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>
@@ -645,15 +658,20 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>AttitudeIndicator</class>
-   <extends>QWidget</extends>
-   <header>attitude_indicator.h</header>
+   <class>QwtCompass</class>
+   <extends>QwtDial</extends>
+   <header>qwt_compass.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>QwtCompass</class>
+   <class>QwtDial</class>
    <extends>QWidget</extends>
-   <header>qwt_compass.h</header>
+   <header>qwt_dial.h</header>
+  </customwidget>
+  <customwidget>
+   <class>AttitudeIndicator</class>
+   <extends>QWidget</extends>
+   <header>attitude_indicator.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

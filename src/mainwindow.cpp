@@ -1,17 +1,27 @@
 #include <string>
+#include <thread>
+#include <chrono>
+#include <vector>
+
 #include "controllerinputer.h"
 #include "c-joy-fly-view.h"
+#include "abstractchopper.h"
+#include "joystickinputer.h"
+
+#include "serialstream.h"
+#include "c-joy-fly-controller.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "joystickinputer.h"
+#include "plotwindow.h"
 
 using namespace std;
 
-MainWindow::MainWindow(IControllerInputer* pController, QWidget *parent) :
-    CJoyFlyView(pController),
+MainWindow::MainWindow(CJoyFlyController* pController, QWidget *parent) :
+    CMainView(pController),
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    _pController = pController;
     ui->setupUi(this);
     connect(this,SIGNAL(ChangeVoltage(float)), this,SLOT(onChangeVoltage(float)));
     connect(this,SIGNAL(AppendLog(QString)), this,SLOT(onAppendLog(QString)));
@@ -19,6 +29,11 @@ MainWindow::MainWindow(IControllerInputer* pController, QWidget *parent) :
     connect(this,SIGNAL(OnThrottleChange(int)), ui->throttleControl,SLOT(setValue(int)));
     connect(this,SIGNAL(Debug(QString)), ui->textDebug,SLOT(appendPlainText(QString)));
     connect(this,SIGNAL(OnAutoNav(bool)), this,SLOT(onSetAutoPilot(bool)));
+
+    connect(this,SIGNAL(Bank(float)), this,SLOT(on_bank(float)));
+    connect(this,SIGNAL(Pitch(float)), this,SLOT(on_pitch(float)));
+    connect(this,SIGNAL(Yaw(float)), this,SLOT(on_yaw(float)));
+
     populatejoysticks();
 
     initCompass();
@@ -107,19 +122,35 @@ void MainWindow::on_connectJoystick_clicked()
     ui->connectJoystick->setEnabled(false);
 }
 
-void MainWindow::OnBank(float newAngle )
+void MainWindow:: OnBank( float newAngle )
+{
+    Bank(newAngle);
+}
+
+void MainWindow:: OnPitch( float newAngle )
+{
+    Pitch(newAngle);
+}
+
+void MainWindow:: OnYaw( float newAngle )
+{
+    Yaw(newAngle);
+}
+
+
+void MainWindow::on_bank(float newAngle )
 {
     ui->attitude->setAngle(270 - newAngle);
     ui->label_RollAngle->setText(to_string(newAngle).c_str());
 }
 
-void MainWindow::OnPitch(float newAngle )
+void MainWindow::on_pitch(float newAngle )
 {
     ui->attitude->setGradient((90 - newAngle)/90);
     ui->label_PitchAngle->setText(to_string(newAngle).c_str());
 }
 
-void MainWindow::OnYaw(float newAngle)
+void MainWindow::on_yaw(float newAngle)
 {
     ui->compass->setValue(newAngle);
     ui->label_Yaw->setText(to_string(newAngle).c_str());
@@ -170,6 +201,12 @@ void MainWindow::initCompass()
     ui->compass->setNeedle(new QwtCompassMagnetNeedle( QwtCompassMagnetNeedle::TriangleStyle,
                     Qt::white, Qt::gray));
     ui->compass->setValue( 0 );
-\
 
+}
+
+void MainWindow::on_pushGraph_clicked()
+{
+    PlotWindow* pPlotWindow = new PlotWindow(_pController, this);
+    pPlotWindow->show();
+    _pController->AddView(pPlotWindow);
 }

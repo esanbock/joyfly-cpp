@@ -70,9 +70,16 @@ void TeensyChopper::ProcessCommandResponse( string& line )
     
     if( line.compare(0,2,"V=") == 0 )
     {
-        int rawVoltage = stoi(line.substr(2,4));
-        float pctVoltage = (float)rawVoltage / 1023.0;
-        _msgSink.OnVoltageChange(pctVoltage * 100);
+        try
+        {
+            int rawVoltage = stoi(line.substr(2,4));
+            float pctVoltage = (float)rawVoltage / 1023.0;
+            _msgSink.OnVoltageChange(pctVoltage * 100);
+        }
+        catch( invalid_argument& invalid_arg )
+        {
+            _msgSink.OnMessage( "unable to parse voltage" );
+        }
     }
 
     if( line.compare(0,3, ":S ") == 0)
@@ -133,13 +140,14 @@ float TeensyChopper::IMUVoltageToAngleXY(int volts)
     _seenMinXYVolts = min(_seenMinXYVolts, volts);
     _seenMaxXYVolts = max(_seenMaxXYVolts, volts);
     float fAngle = ((float)volts - _seenMinXYVolts ) * (180/(_seenMaxXYVolts-_seenMinXYVolts));
-    return fAngle;
+    return 180 - fAngle;
 }
 
 float TeensyChopper::IMUVoltageToAngleZ(int volts)
 {
     _seenMinZVolts = min(_seenMinZVolts, volts);
-    _seenMaxZVolts = max(_seenMaxZVolts, volts);    float fAngle = ((float)volts - _seenMinZVolts) * (360/(_seenMaxZVolts-_seenMinZVolts));
+    _seenMaxZVolts = max(_seenMaxZVolts, volts);
+    float fAngle = ((float)volts - _seenMinZVolts) * (360/(_seenMaxZVolts-_seenMinZVolts));
     return fAngle;
 }
 
