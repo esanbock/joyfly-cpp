@@ -20,10 +20,6 @@
 #ifndef _C_JOY_FLY_CONTROLLER_H_
 #define _C_JOY_FLY_CONTROLLER_H_
 
-#include "controllerinputer.h"
-#include "mainwindow.h"
-#include "c-joy-fly-view.h"
-#include "joystickinputer.h"
 
 using namespace std;
 
@@ -75,7 +71,7 @@ protected:
     void ProcessJoystickInput();
 
 private:
-	vector<CJoyFlyView*> _views;
+    vector<CJoyFlyView*> _views;
     AbstractChopper* _pChopperControl = NULL;
     CJoystickInputer* _pJoystickInputer = NULL;
     SerialStream* _pComPort = NULL;

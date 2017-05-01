@@ -31,10 +31,11 @@
 
 #include "controllerinputer.h"
 #include "c-joy-fly-view.h"
-#include "mainwindow.h"
 #include "abstractchopper.h"
 #include "teensychopper.h"
+#include "joystickinputer.h"
 #include "c-joy-fly-controller.h"
+#include "mainwindow.h"
 #include "c-terminal-view.h"
 #include "joystickexception.h"
 

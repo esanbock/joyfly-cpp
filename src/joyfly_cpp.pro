@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     sdljoystick.cpp \
     attitude_indicator.cpp \
     serialstream.cpp \
-    teensychopper.cpp
+    teensychopper.cpp \
+    plotwindow.cpp
 
 HEADERS  += mainwindow.h \
     c-joy-fly-controller.h \
@@ -48,9 +49,11 @@ HEADERS  += mainwindow.h \
     sdljoystick.h \
     attitude_indicator.h \
     serialstream.h \
-    teensychopper.h
+    teensychopper.h \
+    plotwindow.h
 
-FORMS += mainwindow.ui
+FORMS += mainwindow.ui \
+    plotwindow.ui
 
 mac: LIBS += -framework qwt
 else: LIBS += -lqwt-qt5

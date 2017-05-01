@@ -33,6 +33,7 @@
 
 #include "controllerinputer.h"
 #include "c-joy-fly-view.h"
+#include "joystickinputer.h"
 #include "c-joy-fly-controller.h"
 
 using namespace boost;
@@ -62,7 +63,9 @@ void CJoyFlyController::OnChopperMessage( const char* szMsg )
 {
 	for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
 	{
-		(*it)->OnChopperMessage(szMsg);
+        CMainView* pMainView = dynamic_cast<CMainView*>(*it);
+        if( pMainView != nullptr)
+            pMainView->OnChopperMessage(szMsg);
 	}
 }
 
@@ -70,7 +73,9 @@ void CJoyFlyController::DebugMessage( const char* szMsg )
 {
 	for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
 	{
-        (*it)->OnDebugMessage(szMsg);
+        CMainView* pMainView = dynamic_cast<CMainView*>(*it);
+        if( pMainView != nullptr)
+            pMainView->OnDebugMessage(szMsg);
 	}
 }
 
@@ -133,7 +138,9 @@ void CJoyFlyController::OnVoltageChange(float newVoltage)
 {
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
     {
-        (*it)->OnVoltageChange(newVoltage);
+        CMainView* pMainView = dynamic_cast<CMainView*>(*it);
+        if( pMainView != nullptr)
+            pMainView->OnVoltageChange(newVoltage);
     }
 }
 
@@ -141,7 +148,9 @@ void CJoyFlyController::OnThrottleChange(int newThrottle)
 {
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
     {
-        (*it)->OnThrottleChange(newThrottle);
+        CThrottleView* pMainView = dynamic_cast<CThrottleView*>(*it);
+        if( pMainView != nullptr)
+            pMainView->OnThrottleChange(newThrottle);
     }
 }
 
@@ -149,7 +158,9 @@ void CJoyFlyController::OnAutoNav(bool isOn)
 {
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
     {
-        (*it)->OnAutoNav(isOn);
+        CMainView* pMainView = dynamic_cast<CMainView*>(*it);
+        if( pMainView != nullptr)
+            pMainView->OnAutoNav(isOn);
     }
 }
 
@@ -157,7 +168,9 @@ void CJoyFlyController::OnPing(float latency)
 {
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
     {
-        (*it)->OnPing(latency);
+        CMainView* pMainView = dynamic_cast<CMainView*>(*it);
+        if( pMainView != nullptr)
+            pMainView->OnPing(latency);
     }
 }
 
@@ -207,6 +220,7 @@ void CJoyFlyController::SetHome()
 void CJoyFlyController::GetStatus()
 {
     _pChopperControl->SendCommand(":S");
+    _pChopperControl->SendCommand(":V");
 }
 
 void CJoyFlyController::GetVoltage()
@@ -245,10 +259,15 @@ void CJoyFlyController::OnIMUChanged( float x, float y, float z )
     //cout << "new IMU (x,y,z) = (" << x << "," << y << "," << z << ")" << endl;
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
     {
-        (*it)->OnBank(x);
-        (*it)->OnPitch(y);
-        (*it)->OnYaw(z);
+        CMainView* pMainView = dynamic_cast<CMainView*>(*it);
+        if( pMainView != nullptr)
+        {
+            pMainView->OnBank(x);
+            pMainView->OnPitch(y);
+            pMainView->OnYaw(z);
+        }
     }
 
 }
+
 

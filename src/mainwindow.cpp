@@ -1,17 +1,27 @@
 #include <string>
+#include <thread>
+#include <chrono>
+#include <vector>
+
 #include "controllerinputer.h"
 #include "c-joy-fly-view.h"
+#include "abstractchopper.h"
+#include "joystickinputer.h"
+
+#include "serialstream.h"
+#include "c-joy-fly-controller.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "joystickinputer.h"
+#include "plotwindow.h"
 
 using namespace std;
 
-MainWindow::MainWindow(IControllerInputer* pController, QWidget *parent) :
-    CJoyFlyView(pController),
+MainWindow::MainWindow(CJoyFlyController* pController, QWidget *parent) :
+    CMainView(pController),
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    _pController = pController;
     ui->setupUi(this);
     connect(this,SIGNAL(ChangeVoltage(float)), this,SLOT(onChangeVoltage(float)));
     connect(this,SIGNAL(AppendLog(QString)), this,SLOT(onAppendLog(QString)));
@@ -191,6 +201,12 @@ void MainWindow::initCompass()
     ui->compass->setNeedle(new QwtCompassMagnetNeedle( QwtCompassMagnetNeedle::TriangleStyle,
                     Qt::white, Qt::gray));
     ui->compass->setValue( 0 );
-\
 
+}
+
+void MainWindow::on_pushGraph_clicked()
+{
+    PlotWindow* pPlotWindow = new PlotWindow(_pController, this);
+    pPlotWindow->show();
+    _pController->AddView(pPlotWindow);
 }

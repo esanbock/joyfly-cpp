@@ -20,25 +20,43 @@
 #ifndef _C_JOY_FLY_VIEW_H_
 #define _C_JOY_FLY_VIEW_H_
 
+#include <string>
 #include "controllerinputer.h"
 
 class CJoyFlyView
 {
-public:
+private:
+protected:
     CJoyFlyView(IControllerInputer* pController){_pController = pController;}
+    IControllerInputer* _pController;
+
+    virtual const char* Name(){return "your mom";}
+};
+
+class CThrottleView : public CJoyFlyView
+{
+public:
+    CThrottleView(IControllerInputer* pController)
+        :CJoyFlyView(_pController){}
+    virtual void OnThrottleChange( int newThrottle )=0;
+};
+
+class CMainView : public CThrottleView
+{
+public:
+    CMainView(IControllerInputer* pController)
+        :CThrottleView(_pController){}
 
 	virtual void OnChopperMessage( const char* szMsg )=0;
 	virtual void OnDebugMessage( const char* szMsg )=0;
     virtual void OnVoltageChange( float newVoltage )=0;
     virtual void OnPing( float latency )=0;
     virtual void Sent(const char* szMsg)=0;
-    virtual void OnThrottleChange( int newThrottle ){}
     virtual void OnAutoNav( bool isOn ){}
     virtual void OnBank( float newAngle ){}
     virtual void OnPitch( float newAngle ){}
     virtual void OnYaw( float newAngle ){}
-protected:
-    IControllerInputer* _pController;
+
 };
 
 #endif // _C_JOY_FLY_VIEW_H_
