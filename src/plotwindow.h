@@ -4,6 +4,7 @@
 #include "c-joy-fly-view.h"
 
 #include <QDialog>
+#include <qwt_plot_curve.h>
 
 namespace Ui {
 class PlotWindow;
@@ -21,6 +22,8 @@ public:
 
 private:
     Ui::PlotWindow *ui;
+
+    QwtPlotCurve* _pTempCurve;
 };
 
 #endif // PLOTWINDOW_H
