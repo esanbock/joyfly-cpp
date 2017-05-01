@@ -13,9 +13,11 @@ PlotWindow::PlotWindow(IControllerInputer* pController,QWidget *parent) :
 {
     ui->setupUi(this);
 
+    connect(this,SIGNAL(OnVoltageChange(float)), this,SLOT(onChangeVoltage(float)));
+
+
     _pTempCurve = new QwtPlotCurve("Temperature");
-    //CurveData *data = static_cast<CurveData *>( d_curve->data() );
-    //data->append( point );
+    _pTempCurve->attach(ui->qwtPlot);
 }
 
 PlotWindow::~PlotWindow()
@@ -27,14 +29,14 @@ void PlotWindow::OnThrottleChange( int newThrottle )
 {
 }
 
-void PlotWindow::OnVoltageChange( float newVoltage )
+void PlotWindow::onChangeVoltage( float newVoltage )
 {
     _yVals.push_back((double)newVoltage);
     _xVals.push_back(clock());
 
     _pTempCurve->setSamples(&_xVals[0], &_yVals[0], _yVals.size() );
 
-    _pTempCurve->attach(ui->qwtPlot);
+//    _pTempCurve->attach(ui->qwtPlot);
     ui->qwtPlot->replot();
 
 }

@@ -20,7 +20,12 @@ public:
     ~PlotWindow();
 
     virtual void OnThrottleChange( int newThrottle );
+
+signals:
     virtual void OnVoltageChange( float newThrottle );
+
+protected slots:
+    virtual void onChangeVoltage( float newThrottle );
 
 private:
     Ui::PlotWindow *ui;
