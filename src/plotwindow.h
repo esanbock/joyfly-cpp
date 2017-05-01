@@ -1,6 +1,7 @@
 #ifndef PLOTWINDOW_H
 #define PLOTWINDOW_H
 
+#include <vector>
 #include "c-joy-fly-view.h"
 
 #include <QDialog>
@@ -10,7 +11,7 @@ namespace Ui {
 class PlotWindow;
 }
 
-class PlotWindow : public QDialog, public CThrottleView
+class PlotWindow : public QDialog, public CGraphView
 {
     Q_OBJECT
 
@@ -19,11 +20,14 @@ public:
     ~PlotWindow();
 
     virtual void OnThrottleChange( int newThrottle );
+    virtual void OnVoltageChange( float newThrottle );
 
 private:
     Ui::PlotWindow *ui;
 
     QwtPlotCurve* _pTempCurve;
+    std::vector<double> _xVals;
+    std::vector<double> _yVals;
 };
 
 #endif // PLOTWINDOW_H

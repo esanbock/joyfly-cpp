@@ -138,9 +138,9 @@ void CJoyFlyController::OnVoltageChange(float newVoltage)
 {
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
     {
-        CMainView* pMainView = dynamic_cast<CMainView*>(*it);
-        if( pMainView != nullptr)
-            pMainView->OnVoltageChange(newVoltage);
+        CGraphView* pView = dynamic_cast<CGraphView*>(*it);
+        if( pView != nullptr)
+            pView->OnVoltageChange(newVoltage);
     }
 }
 
@@ -148,9 +148,9 @@ void CJoyFlyController::OnThrottleChange(int newThrottle)
 {
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
     {
-        CThrottleView* pMainView = dynamic_cast<CThrottleView*>(*it);
-        if( pMainView != nullptr)
-            pMainView->OnThrottleChange(newThrottle);
+        CGraphView* pView = dynamic_cast<CGraphView*>(*it);
+        if( pView != nullptr)
+            pView->OnThrottleChange(newThrottle);
     }
 }
 

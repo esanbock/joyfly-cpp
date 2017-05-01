@@ -33,23 +33,23 @@ protected:
     virtual const char* Name(){return "your mom";}
 };
 
-class CThrottleView : public CJoyFlyView
+class CGraphView : public CJoyFlyView
 {
 public:
-    CThrottleView(IControllerInputer* pController)
+    CGraphView(IControllerInputer* pController)
         :CJoyFlyView(_pController){}
     virtual void OnThrottleChange( int newThrottle )=0;
+    virtual void OnVoltageChange( float newVoltage )=0;
 };
 
-class CMainView : public CThrottleView
+class CMainView : public CGraphView
 {
 public:
     CMainView(IControllerInputer* pController)
-        :CThrottleView(_pController){}
+        :CGraphView(_pController){}
 
 	virtual void OnChopperMessage( const char* szMsg )=0;
 	virtual void OnDebugMessage( const char* szMsg )=0;
-    virtual void OnVoltageChange( float newVoltage )=0;
     virtual void OnPing( float latency )=0;
     virtual void Sent(const char* szMsg)=0;
     virtual void OnAutoNav( bool isOn ){}
