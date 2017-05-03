@@ -10,6 +10,8 @@ public:
     virtual void OnPing(float latency)=0;
     virtual void Sent(const char* szMsg)=0;
     virtual void OnIMUChanged( float x, float y, float z )=0;
+    virtual void OnUnparsable(const char* data)=0;
+    virtual void OnCollective(double collective)=0;
 };
 
 class AbstractChopper

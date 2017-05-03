@@ -63,10 +63,12 @@ public:
     virtual void OnThrottleChange(int newThrottle);
     virtual void OnAutoNav(bool isOn);
     virtual void OnMessage(const char* data);
+    virtual void OnUnparsable(const char* data);
     virtual void Sent(const char* data);
     virtual void OnPing(float latency);
     virtual void OnDebug(const char* data);
     virtual void OnIMUChanged(float x, float y, float z );
+    virtual void OnCollective(double collective);
 
     // stats
     virtual TimeSeries<double,double>* GetVoltageHistory();

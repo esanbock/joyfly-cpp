@@ -34,6 +34,8 @@ MainWindow::MainWindow(CJoyFlyGuiController* pController, QWidget *parent) :
     connect(this,SIGNAL(Pitch(float)), this,SLOT(on_pitch(float)));
     connect(this,SIGNAL(Yaw(float)), this,SLOT(on_yaw(float)));
 
+    connect(this,SIGNAL(OnCollective(double)), this,SLOT(on_collective(double)));
+
     populatejoysticks();
 
     initCompass();
@@ -142,6 +144,11 @@ void MainWindow::on_bank(float newAngle )
 {
     ui->attitude->setAngle(270 - newAngle);
     ui->label_RollAngle->setText(to_string(newAngle).c_str());
+}
+
+void MainWindow::on_collective( double collective )
+{
+    ui->label_Collective->setText( to_string(collective).c_str() );
 }
 
 void MainWindow::on_pitch(float newAngle )

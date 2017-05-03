@@ -124,6 +124,13 @@ void CJoyFlyGuiController::OnMessage(const char *data)
     OnChopperMessage(data);
 }
 
+void CJoyFlyGuiController::OnUnparsable(const char *data)
+{
+    string errMsg = "Unable to parse message:  ";
+    errMsg += data;
+    OnChopperMessage(errMsg.c_str());
+}
+
 void CJoyFlyGuiController::OnDebug(const char *data)
 {
     DebugMessage(data);
@@ -153,6 +160,16 @@ void CJoyFlyGuiController::OnThrottleChange(int newThrottle)
         CGraphView* pView = dynamic_cast<CGraphView*>(*it);
         if( pView != nullptr)
             pView->OnThrottleChange(newThrottle);
+    }
+}
+
+void CJoyFlyGuiController::OnCollective(double collective)
+{
+    for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
+    {
+        CMainView* pMainView = dynamic_cast<CMainView*>(*it);
+        if( pMainView != nullptr)
+            pMainView->OnCollective(collective);
     }
 }
 

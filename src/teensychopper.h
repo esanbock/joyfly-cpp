@@ -36,6 +36,7 @@ public:
 protected:
     void ProcessPingResponse( string& line );
     void ProcessCommandResponse( string& line );
+    void ProcessCollective( string& line);
     void ProcessData();
     void ProcessStatusResponse( string& line );
     float IMUVoltageToAngleXY(int volts);

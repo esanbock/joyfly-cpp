@@ -46,6 +46,7 @@ signals:
     void Bank( float latency );
     void Pitch( float latency );
     void Yaw( float latency );
+    void OnCollective( double collective );
 
 protected slots:
     void onAppendLog(QString log);
@@ -70,6 +71,7 @@ private slots:
     void on_connectButton_2_clicked();
 
     void on_pushGraph_clicked();
+    void on_collective(double collective);
 
 private:
     Ui::MainWindow *ui;

@@ -80,16 +80,30 @@ void TeensyChopper::ProcessCommandResponse( string& line )
         {
             _msgSink.OnMessage( "unable to parse voltage" );
         }
+        return;
     }
 
     if( line.compare(0,3, ":S ") == 0)
     {
         ProcessStatusResponse(line);
+        return;
+    }
+    if( line.compare(0,2, ":C") == 0)
+    {
+        ProcessCollective(line);
+        return;
     }
 
     // otherwise, NAK
     //cout << "unrecognized command from chopper" << endl;
-    _msgSink.OnMessage(line.c_str());
+    _msgSink.OnUnparsable( line.c_str() );
+
+}
+
+void TeensyChopper::ProcessCollective( string& line)
+{
+    double collective = stod(line.substr(2));
+    _msgSink.OnCollective(collective);
 }
 
 void TeensyChopper::ProcessStatusResponse( string& line)

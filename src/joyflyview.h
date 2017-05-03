@@ -62,6 +62,7 @@ public:
     virtual void OnBank( float newAngle ){}
     virtual void OnPitch( float newAngle ){}
     virtual void OnYaw( float newAngle ){}
+    virtual void OnCollective( double newCollective ){}
 
 };
 
