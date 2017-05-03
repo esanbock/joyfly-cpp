@@ -1,8 +1,9 @@
 #ifndef CONTROLLERINPUTER
 #define CONTROLLERINPUTER
 
+#include "timeseries.h"
 
-class IControllerInputer
+class IJoyflyController
 {
 public:
     virtual void DebugMessage( const char* szMsg )=0;
@@ -18,6 +19,7 @@ public:
     virtual void Lift(int val)=0;
     virtual int Connect(const std::string serialDevice, int secondsUpdate)=0;
     virtual void AddJoyStick(int joyNum)=0;
+    virtual TimeSeries<double,double>* GetVoltageHistory()=0;
 };
 
 #endif // CONTROLLERINPUTER

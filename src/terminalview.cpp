@@ -18,12 +18,12 @@
  */
 
 #include <iostream>
-#include "controllerinputer.h"
-#include "c-terminal-view.h"
+#include "joyflycontroller.h"
+#include "terminalview.h"
 
 using namespace std;
 
-CTerminalView::CTerminalView( IControllerInputer* pController )
+CTerminalView::CTerminalView( IJoyflyController* pController )
     :CJoyFlyView(pController)
 {
 

@@ -5,7 +5,7 @@
 #include "SDL2/SDL.h"
 #include <thread>
 
-#include "controllerinputer.h"
+#include "joyflycontroller.h"
 #include "sdljoystick.h"
 
 using namespace std;
@@ -13,7 +13,7 @@ using namespace std;
 class CJoystickInputer
 {
 public:
-    CJoystickInputer(int joyNum, IControllerInputer& controller);
+    CJoystickInputer(int joyNum, IJoyflyController& controller);
     ~CJoystickInputer();
     void Start();
     void Stop();
@@ -28,7 +28,7 @@ protected:
     void OpenJoystick(int joystickNum);
 
 private:
-    IControllerInputer& _controller;
+    IJoyflyController& _controller;
     thread* pSdlLoopThread;
     static const int JOYSTICK_X = 0;
     static const int JOYSTICK_Y = 1;

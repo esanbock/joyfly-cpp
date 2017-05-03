@@ -29,14 +29,14 @@
 #include <boost/asio/serial_port.hpp>
 #include "serialstream.h"
 
-#include "controllerinputer.h"
-#include "c-joy-fly-view.h"
+#include "joyflycontroller.h"
+#include "joyflyview.h"
 #include "abstractchopper.h"
 #include "teensychopper.h"
 #include "joystickinputer.h"
-#include "c-joy-fly-controller.h"
+#include "joyflyguicontroller.h"
 #include "mainwindow.h"
-#include "c-terminal-view.h"
+#include "terminalview.h"
 #include "joystickexception.h"
 
 using namespace std;
@@ -50,7 +50,7 @@ int main (int argc, char * argv[])
 
     try
     {
-        CJoyFlyController controller;
+        CJoyFlyGuiController controller;
 
         if( argc > 1 )
         {

@@ -3,20 +3,20 @@
 #include <chrono>
 #include <vector>
 
-#include "controllerinputer.h"
-#include "c-joy-fly-view.h"
+#include "joyflycontroller.h"
+#include "joyflyview.h"
 #include "abstractchopper.h"
 #include "joystickinputer.h"
 
 #include "serialstream.h"
-#include "c-joy-fly-controller.h"
+#include "joyflyguicontroller.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "plotwindow.h"
 
 using namespace std;
 
-MainWindow::MainWindow(CJoyFlyController* pController, QWidget *parent) :
+MainWindow::MainWindow(CJoyFlyGuiController* pController, QWidget *parent) :
     CMainView(pController),
     QMainWindow(parent),
     ui(new Ui::MainWindow)

@@ -1,12 +1,13 @@
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>
 
-#include "c-joy-fly-view.h"
+#include "timeseries.h"
+#include "joyflyview.h"
 #include "plotwindow.h"
 #include "ui_plotwindow.h"
 
 
-PlotWindow::PlotWindow(IControllerInputer* pController,QWidget *parent) :
+PlotWindow::PlotWindow(CJoyFlyGuiController* pController,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PlotWindow),
     CGraphView(pController)
@@ -31,10 +32,9 @@ void PlotWindow::OnThrottleChange( int newThrottle )
 
 void PlotWindow::onChangeVoltage( float newVoltage )
 {
-    _yVals.push_back((double)newVoltage);
-    _xVals.push_back(clock());
-
-    _pTempCurve->setSamples(&_xVals[0], &_yVals[0], _yVals.size() );
+    _pTempCurve->setSamples(Controller().GetVoltageHistory()->GetTimes(),
+                            Controller().GetVoltageHistory()->GetVals(),
+                            Controller().GetVoltageHistory()->GetSize() );
 
 //    _pTempCurve->attach(ui->qwtPlot);
     ui->qwtPlot->replot();

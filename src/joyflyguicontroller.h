@@ -20,14 +20,20 @@
 #ifndef _C_JOY_FLY_CONTROLLER_H_
 #define _C_JOY_FLY_CONTROLLER_H_
 
+#include "serialstream.h"
+#include "joyflycontroller.h"
+#include "joyflyview.h"
+#include "joystickinputer.h"
+#include "abstractchopper.h"
+
 
 using namespace std;
 
-class CJoyFlyController : public IControllerInputer, public IChopperMessages
+class CJoyFlyGuiController : public IJoyflyController, public IChopperMessages
 {
 public:
-	CJoyFlyController();
-    virtual ~CJoyFlyController();
+    CJoyFlyGuiController();
+    virtual ~CJoyFlyGuiController();
 
     // GUI
     void AddView(CJoyFlyView* pView);
@@ -62,6 +68,10 @@ public:
     virtual void OnDebug(const char* data);
     virtual void OnIMUChanged(float x, float y, float z );
 
+    // stats
+    virtual TimeSeries<double,double>* GetVoltageHistory();
+
+
 protected:
     void OnChopperMessage( const char* szMsg );
     void DebugMessage( const char* szMsg );
@@ -76,6 +86,8 @@ private:
     CJoystickInputer* _pJoystickInputer = NULL;
     SerialStream* _pComPort = NULL;
     bool _autoNav = false;
+    TimeSeries<double,double> _voltageHistory;
+
 };
 
 #endif // _C_JOY_FLY_CONTROLLER_H_

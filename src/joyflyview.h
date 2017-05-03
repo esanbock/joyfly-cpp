@@ -21,23 +21,29 @@
 #define _C_JOY_FLY_VIEW_H_
 
 #include <string>
-#include "controllerinputer.h"
+#include "joyflycontroller.h"
 
 class CJoyFlyView
 {
 private:
+    IJoyflyController* _pController;
 protected:
-    CJoyFlyView(IControllerInputer* pController){_pController = pController;}
-    IControllerInputer* _pController;
+    CJoyFlyView(IJoyflyController* pController){_pController = pController;}
 
     virtual const char* Name(){return "your mom";}
+
+    IJoyflyController& Controller()
+    {
+        return *_pController;
+    }
+
 };
 
 class CGraphView : public CJoyFlyView
 {
 public:
-    CGraphView(IControllerInputer* pController)
-        :CJoyFlyView(_pController){}
+    CGraphView(IJoyflyController* pController)
+        :CJoyFlyView(pController){}
     virtual void OnThrottleChange( int newThrottle )=0;
     virtual void OnVoltageChange( float newVoltage )=0;
 };
@@ -45,8 +51,8 @@ public:
 class CMainView : public CGraphView
 {
 public:
-    CMainView(IControllerInputer* pController)
-        :CGraphView(_pController){}
+    CMainView(IJoyflyController* pController)
+        :CGraphView(pController){}
 
 	virtual void OnChopperMessage( const char* szMsg )=0;
 	virtual void OnDebugMessage( const char* szMsg )=0;

@@ -8,8 +8,8 @@
 #include "abstractchopper.h"
 #include "joystickinputer.h"
 #include "serialstream.h"
-#include "c-joy-fly-view.h"
-#include "c-joy-fly-controller.h"
+#include "joyflyview.h"
+#include "joyflyguicontroller.h"
 
 namespace Ui {
 class MainWindow;
@@ -20,7 +20,7 @@ class MainWindow : public QMainWindow, public CMainView
     Q_OBJECT
 
 public:
-    explicit MainWindow(CJoyFlyController* pController, QWidget *parent=0);
+    explicit MainWindow(CJoyFlyGuiController* pController, QWidget *parent=0);
     ~MainWindow();
     virtual void OnChopperMessage( const char* szMsg );
     virtual void OnDebugMessage( const char* szMsg );
@@ -73,7 +73,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    CJoyFlyController* _pController;
+    CJoyFlyGuiController* _pController;
 };
 
 #endif // MAINWINDOW_H

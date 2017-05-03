@@ -29,8 +29,6 @@ linux: INCLUDEPATH += /usr/include/qwt
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    c-joy-fly-controller.cpp \
-    c-terminal-view.cpp \
     joystickinputer.cpp \
     simulatedchopper.cpp \
     abstractchopper.cpp \
@@ -38,14 +36,12 @@ SOURCES += main.cpp\
     attitude_indicator.cpp \
     serialstream.cpp \
     teensychopper.cpp \
-    plotwindow.cpp
+    plotwindow.cpp \
+    joyflyguicontroller.cpp \
+    terminalview.cpp
 
 HEADERS  += mainwindow.h \
-    c-joy-fly-controller.h \
-    c-joy-fly-view.h \
-    c-terminal-view.h \
     joystickinputer.h \
-    controllerinputer.h \
     joystickexception.h \
     simulatedchopper.h \
     abstractchopper.h \
@@ -53,7 +49,12 @@ HEADERS  += mainwindow.h \
     attitude_indicator.h \
     serialstream.h \
     teensychopper.h \
-    plotwindow.h
+    plotwindow.h \
+    joyflycontroller.h \
+    joyflyguicontroller.h \
+    joyflyview.h \
+    terminalview.h \
+    timeseries.h
 
 FORMS += mainwindow.ui \
     plotwindow.ui

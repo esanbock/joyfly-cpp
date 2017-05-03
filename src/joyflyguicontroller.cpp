@@ -31,24 +31,24 @@
 
 #include "SDL2/SDL.h"
 
-#include "controllerinputer.h"
-#include "c-joy-fly-view.h"
+#include "joyflycontroller.h"
+#include "joyflyview.h"
 #include "joystickinputer.h"
-#include "c-joy-fly-controller.h"
+#include "joyflyguicontroller.h"
 
 using namespace boost;
 using namespace std;
 
-CJoyFlyController::CJoyFlyController()
+CJoyFlyGuiController::CJoyFlyGuiController()
 {
 }
 
-void CJoyFlyController::AddView(CJoyFlyView* pView)
+void CJoyFlyGuiController::AddView(CJoyFlyView* pView)
 {
 	_views.push_back( pView );
 }
 
-CJoyFlyController::~CJoyFlyController()
+CJoyFlyGuiController::~CJoyFlyGuiController()
 {
     delete _pChopperControl;
 
@@ -59,7 +59,7 @@ CJoyFlyController::~CJoyFlyController()
     }
 }
 
-void CJoyFlyController::OnChopperMessage( const char* szMsg )
+void CJoyFlyGuiController::OnChopperMessage( const char* szMsg )
 {
 	for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
 	{
@@ -69,7 +69,7 @@ void CJoyFlyController::OnChopperMessage( const char* szMsg )
 	}
 }
 
-void CJoyFlyController::DebugMessage( const char* szMsg )
+void CJoyFlyGuiController::DebugMessage( const char* szMsg )
 {
 	for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
 	{
@@ -79,7 +79,7 @@ void CJoyFlyController::DebugMessage( const char* szMsg )
 	}
 }
 
-AbstractChopper* CJoyFlyController::ConnectToChopper( const string serialDevice, int secondsUpdate )
+AbstractChopper* CJoyFlyGuiController::ConnectToChopper( const string serialDevice, int secondsUpdate )
 {
     DebugMessage( (string("Opening serial port ") + serialDevice).c_str() );
 
@@ -97,7 +97,7 @@ AbstractChopper* CJoyFlyController::ConnectToChopper( const string serialDevice,
     return pTeensyChopper;
 }
 
-AbstractChopper* CJoyFlyController::ConnectToSimulator( int secondsUpdate )
+AbstractChopper* CJoyFlyGuiController::ConnectToSimulator( int secondsUpdate )
 {
     DebugMessage ("simulator");
     AbstractChopper* pSimulatedChopper = new CSimulatedChopper(secondsUpdate, *this);
@@ -105,7 +105,7 @@ AbstractChopper* CJoyFlyController::ConnectToSimulator( int secondsUpdate )
     return pSimulatedChopper;
 }
 
-void CJoyFlyController::Quit()
+void CJoyFlyGuiController::Quit()
 {
     // stop all updates
     _views.clear();
@@ -119,23 +119,25 @@ void CJoyFlyController::Quit()
 }
 
 
-void CJoyFlyController::OnMessage(const char *data)
+void CJoyFlyGuiController::OnMessage(const char *data)
 {
     OnChopperMessage(data);
 }
 
-void CJoyFlyController::OnDebug(const char *data)
+void CJoyFlyGuiController::OnDebug(const char *data)
 {
     DebugMessage(data);
 }
 
-void CJoyFlyController::Sent(const char *data)
+void CJoyFlyGuiController::Sent(const char *data)
 {
     DebugMessage(data);
 }
 
-void CJoyFlyController::OnVoltageChange(float newVoltage)
+void CJoyFlyGuiController::OnVoltageChange(float newVoltage)
 {
+    _voltageHistory.Add(clock(),(double)newVoltage);
+
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
     {
         CGraphView* pView = dynamic_cast<CGraphView*>(*it);
@@ -144,7 +146,7 @@ void CJoyFlyController::OnVoltageChange(float newVoltage)
     }
 }
 
-void CJoyFlyController::OnThrottleChange(int newThrottle)
+void CJoyFlyGuiController::OnThrottleChange(int newThrottle)
 {
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
     {
@@ -154,7 +156,7 @@ void CJoyFlyController::OnThrottleChange(int newThrottle)
     }
 }
 
-void CJoyFlyController::OnAutoNav(bool isOn)
+void CJoyFlyGuiController::OnAutoNav(bool isOn)
 {
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
     {
@@ -164,7 +166,7 @@ void CJoyFlyController::OnAutoNav(bool isOn)
     }
 }
 
-void CJoyFlyController::OnPing(float latency)
+void CJoyFlyGuiController::OnPing(float latency)
 {
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
     {
@@ -174,7 +176,7 @@ void CJoyFlyController::OnPing(float latency)
     }
 }
 
-int CJoyFlyController::Connect(const string serialDevice, int secondsUpdate)
+int CJoyFlyGuiController::Connect(const string serialDevice, int secondsUpdate)
 {
     if( _pChopperControl != NULL )
         throw domain_error("controller already started");
@@ -187,74 +189,74 @@ int CJoyFlyController::Connect(const string serialDevice, int secondsUpdate)
     return 0;
 }
 
-void CJoyFlyController::AddJoyStick(int joyNum)
+void CJoyFlyGuiController::AddJoyStick(int joyNum)
 {
     _pJoystickInputer = new CJoystickInputer(joyNum, *this);
     _pJoystickInputer->Start();
 }
 
-void CJoyFlyController::RunJoystickTests()
+void CJoyFlyGuiController::RunJoystickTests()
 {
     CSdlJoystick::RunTests();
 }
 
-void CJoyFlyController::ToggleAutoPilot()
+void CJoyFlyGuiController::ToggleAutoPilot()
 {
     _autoNav = !_autoNav;
     _pChopperControl->SendCommand(":N", _autoNav ? 1 : 0);
     this->OnAutoNav( _autoNav );
 }
 
-void CJoyFlyController::SetAutoPilot( bool isOn )
+void CJoyFlyGuiController::SetAutoPilot( bool isOn )
 {
     _autoNav = isOn;
     _pChopperControl->SendCommand(":N", _autoNav ? 1 : 0);
     this->OnAutoNav( _autoNav );
 }
 
-void CJoyFlyController::SetHome()
+void CJoyFlyGuiController::SetHome()
 {
     _pChopperControl->SendCommand(":H");
 }
 
-void CJoyFlyController::GetStatus()
+void CJoyFlyGuiController::GetStatus()
 {
     _pChopperControl->SendCommand(":S");
     _pChopperControl->SendCommand(":V");
 }
 
-void CJoyFlyController::GetVoltage()
+void CJoyFlyGuiController::GetVoltage()
 {
     _pChopperControl->SendCommand(":V");
 }
 
-void CJoyFlyController::Bank(int val)
+void CJoyFlyGuiController::Bank(int val)
 {
     _pChopperControl->SendSimpleCommand(":B",  val);
 }
 
-void CJoyFlyController::Pitch(int val)
+void CJoyFlyGuiController::Pitch(int val)
 {
     _pChopperControl->SendSimpleCommand(":P",  val);
 }
 
-void CJoyFlyController::Yaw(int val)
+void CJoyFlyGuiController::Yaw(int val)
 {
     _pChopperControl->SendSimpleCommand(":Y",  val);
 }
 
-void CJoyFlyController::SetThrottle(int val)
+void CJoyFlyGuiController::SetThrottle(int val)
 {
     _pChopperControl->SendSimpleCommand(":T",  val);
     OnThrottleChange(val);
 }
 
-void CJoyFlyController::Lift(int val)
+void CJoyFlyGuiController::Lift(int val)
 {
     _pChopperControl->SendSimpleCommand(":L",  val);
 }
 
-void CJoyFlyController::OnIMUChanged( float x, float y, float z )
+void CJoyFlyGuiController::OnIMUChanged( float x, float y, float z )
 {
     //cout << "new IMU (x,y,z) = (" << x << "," << y << "," << z << ")" << endl;
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
@@ -268,6 +270,11 @@ void CJoyFlyController::OnIMUChanged( float x, float y, float z )
         }
     }
 
+}
+
+TimeSeries<double,double>* CJoyFlyGuiController::GetVoltageHistory()
+{
+    return &_voltageHistory;
 }
 
 

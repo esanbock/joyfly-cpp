@@ -19,12 +19,12 @@
 
 #ifndef _C_TERMINAL_VIEW_H_
 #define _C_TERMINAL_VIEW_H_
-#include "c-joy-fly-view.h"
+#include "joyflyview.h"
 
 class CTerminalView: public CJoyFlyView 
 {
 public:
-    CTerminalView( IControllerInputer* pController );
+    CTerminalView( IJoyflyController* pController );
 
 	virtual void OnChopperMessage( const char* szMsg );
 	virtual void OnDebugMessage( const char* szMsg );
