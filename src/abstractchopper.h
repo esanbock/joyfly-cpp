@@ -28,7 +28,6 @@ protected:
     bool _quitting = false;
     std::chrono::system_clock::time_point _sentPingClock;
 
-
 public:
     virtual ~AbstractChopper();
     virtual void Start();

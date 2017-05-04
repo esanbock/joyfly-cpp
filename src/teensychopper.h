@@ -8,6 +8,7 @@
 
 #ifndef joyfly_cpp_choppercontrol_h
 #define joyfly_cpp_choppercontrol_h
+#include <mutex>
 
 using namespace std;
 
@@ -28,6 +29,8 @@ private:
     int _secondsUpdate;
     IChopperMessages& _msgSink;
     thread* _pCommandLoopThread = NULL;
+    mutex _mtxComm;
+
 public:
     TeensyChopper(SerialStream& serialPort, int secondsUpdate, IChopperMessages& msgSink);
     virtual ~TeensyChopper();

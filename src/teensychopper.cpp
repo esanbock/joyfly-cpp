@@ -73,6 +73,11 @@ void TeensyChopper::ProcessCommandResponse( string& line )
         try
         {
             int rawVoltage = stoi(line.substr(2,4));
+            if( rawVoltage < 0 || rawVoltage > 1023 )
+            {
+                _msgSink.OnUnparsable(line.c_str());
+                return;
+            }
             float pctVoltage = (float)rawVoltage / 1023.0;
             _msgSink.OnVoltageChange(pctVoltage * 100);
         }
@@ -166,14 +171,15 @@ float TeensyChopper::IMUVoltageToAngleZ(int volts)
 }
 
 
-static mutex g_write_mutex;
 void TeensyChopper::SendCommand(const char* szCommand)
 {
-    lock_guard<std::mutex> lock(g_write_mutex); // unlocks when out of scope
+    _mtxComm.lock();
+
     _serialPort << szCommand << endl;
     _msgSink.Sent(szCommand);
-}
 
+    _mtxComm.unlock();
+}
 
 
 void TeensyChopper::ProcessData()
@@ -184,7 +190,6 @@ void TeensyChopper::ProcessData()
         try
         {
             std::getline( _serialPort, line );
-            //_serialPort >> line;
         }
         catch(exception& err)
         {
