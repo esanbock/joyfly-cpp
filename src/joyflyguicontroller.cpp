@@ -183,6 +183,11 @@ void CJoyFlyGuiController::OnAutoNav(bool isOn)
     }
 }
 
+void CJoyFlyGuiController::OnNewHeading( const float x, const float y, const float z)
+{
+
+}
+
 void CJoyFlyGuiController::OnPing(float latency)
 {
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )

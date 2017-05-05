@@ -69,6 +69,7 @@ public:
     virtual void OnDebug(const char* data);
     virtual void OnIMUChanged(float x, float y, float z );
     virtual void OnCollective(double collective);
+    virtual void OnNewHeading( const float x, const float y, const float z);
 
     // stats
     virtual TimeSeries<double,double>* GetVoltageHistory();

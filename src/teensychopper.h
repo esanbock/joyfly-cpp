@@ -37,13 +37,15 @@ public:
      virtual void SendCommand(const char* szCommand);
     virtual void Start();
 protected:
-    void ProcessPingResponse( string& line );
-    void ProcessCommandResponse( string& line );
-    void ProcessCollective( string& line);
+    void ProcessPingResponse( const string line );
+    void ProcessCommandResponse( const string line );
+    void ProcessCollective( const string line);
     void ProcessData();
-    void ProcessStatusResponse( string& line );
-    float IMUVoltageToAngleXY(int volts);
-    float IMUVoltageToAngleZ(int volts);
+    void ProcessStatusResponse( const string line );
+    void ProcessNewHeading( const string line );
+    float IMUVoltageToAngleXY(const int volts);
+    float IMUVoltageToAngleZ(const int volts);
+    bool ExtractXYZ( const string line, int& x, int& y, int& z);
 };
 
 #endif

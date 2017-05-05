@@ -12,6 +12,7 @@ public:
     virtual void OnIMUChanged( float x, float y, float z )=0;
     virtual void OnUnparsable(const char* data)=0;
     virtual void OnCollective(double collective)=0;
+    virtual void OnNewHeading( const float x, const float y, const float z)=0;
 };
 
 class AbstractChopper

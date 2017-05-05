@@ -43,7 +43,7 @@ void TeensyChopper::Start()
 
 }
 
-void TeensyChopper::ProcessPingResponse( string& line )
+void TeensyChopper::ProcessPingResponse( const string line )
 {
     int pingResponse = atoi( line.substr(3).c_str() );
     if( pingResponse != _lastPingNum )
@@ -60,7 +60,7 @@ void TeensyChopper::ProcessPingResponse( string& line )
 }
 
 
-void TeensyChopper::ProcessCommandResponse( string& line )
+void TeensyChopper::ProcessCommandResponse( const string line )
 {
     if( line.compare(0,3,":ER") == 0 )
     {
@@ -99,27 +99,41 @@ void TeensyChopper::ProcessCommandResponse( string& line )
         return;
     }
 
+    if( line.compare(0,3, ":NH") == 0)
+    {
+        ProcessNewHeading(line);
+        return;
+    }
+
     // otherwise, NAK
     //cout << "unrecognized command from chopper" << endl;
     _msgSink.OnUnparsable( line.c_str() );
 
 }
 
-void TeensyChopper::ProcessCollective( string& line)
+void TeensyChopper::ProcessCollective( const string line)
 {
     double collective = stod(line.substr(2));
     _msgSink.OnCollective(collective);
 }
 
-void TeensyChopper::ProcessStatusResponse( string& line)
+
+
+void TeensyChopper::ProcessStatusResponse( const string line)
 {
     int x=0;
     int y=0;
     int z=0;
 
-    stringstream ss(line);
+    if( ExtractXYZ(line.substr(3), x, y, z) )
+    {
+         _msgSink.OnIMUChanged(IMUVoltageToAngleXY(x), IMUVoltageToAngleXY(y) , IMUVoltageToAngleZ(z));
+    }
+}
 
-    ss.ignore(3);
+bool TeensyChopper::ExtractXYZ( const string line, int& x, int& y, int& z)
+{
+    stringstream ss(line);
 
     while( ss.gcount() > 0 )
     {
@@ -147,14 +161,20 @@ void TeensyChopper::ProcessStatusResponse( string& line)
             z < IMU_MINZ || z > IMU_MAXZ )
     {
         _msgSink.OnDebug("Parsing error");
+        return false;
     }
     else
     {
-        _msgSink.OnIMUChanged(IMUVoltageToAngleXY(x), IMUVoltageToAngleXY(y) , IMUVoltageToAngleZ(z));
+        return true;
     }
 }
 
-float TeensyChopper::IMUVoltageToAngleXY(int volts)
+void TeensyChopper::ProcessNewHeading( const string line )
+{
+
+}
+
+float TeensyChopper::IMUVoltageToAngleXY(const int volts)
 {
     _seenMinXYVolts = min(_seenMinXYVolts, volts);
     _seenMaxXYVolts = max(_seenMaxXYVolts, volts);
@@ -162,7 +182,7 @@ float TeensyChopper::IMUVoltageToAngleXY(int volts)
     return 180 - fAngle;
 }
 
-float TeensyChopper::IMUVoltageToAngleZ(int volts)
+float TeensyChopper::IMUVoltageToAngleZ(const int volts)
 {
     _seenMinZVolts = min(_seenMinZVolts, volts);
     _seenMaxZVolts = max(_seenMaxZVolts, volts);
