@@ -1,3 +1,4 @@
+#include <QColor>
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>
 
@@ -23,6 +24,9 @@ PlotWindow::PlotWindow(CJoyFlyGuiController* pController,QWidget *parent) :
     _pCurve_imu_x->attach(ui->qwtPlot_PIDx);
     _pCurve_heading_x = new QwtPlotCurve("HEADING X");
     _pCurve_heading_x->attach(ui->qwtPlot_PIDx);
+
+    _pCurve_imu_x->setPen(QColor().red());
+    _pCurve_heading_x->setPen(QColor().green());
 }
 
 PlotWindow::~PlotWindow()
