@@ -226,3 +226,43 @@ void TeensyChopper::SetHome()
 {
     SendCommand(":H");
 }
+
+void TeensyChopper::Bank(int val)
+{
+    SendSimpleCommand(":B",  val);
+}
+
+void TeensyChopper::EnableAutopilot(bool enabled)
+{
+    AbstractChopper::SendCommand(":N", enabled);
+}
+
+void TeensyChopper::GetStatus()
+{
+    SendCommand(":S");
+}
+void TeensyChopper::GetVoltage()
+{
+    SendCommand(":V");
+}
+
+void TeensyChopper::Pitch(int val)
+{
+    SendSimpleCommand(":P",  val);
+}
+
+void TeensyChopper::Yaw(int val)
+{
+    SendSimpleCommand(":Y",  val);
+}
+
+
+void TeensyChopper::Lift(int val)
+{
+    SendSimpleCommand(":L",  val);
+}
+
+void TeensyChopper::SetThrottle(int val)
+{
+    SendSimpleCommand(":T",  val);
+}

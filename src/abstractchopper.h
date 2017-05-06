@@ -1,6 +1,9 @@
 #ifndef ABSTRACTCHOPPER_H
 #define ABSTRACTCHOPPER_H
 
+#include <chrono>
+#include <thread>
+
 class IChopperMessages
 {
 public:
@@ -28,16 +31,25 @@ protected:
     virtual void PingThread();
     bool _quitting = false;
     std::chrono::system_clock::time_point _sentPingClock;
+    virtual void SendSimpleCommand(const char* szCommand, int value);
+    virtual void SendCommand(const char* szCommand)=0;
+    virtual void SendCommand(const char* szCommand, bool toggle);
 
 public:
     virtual ~AbstractChopper();
     virtual void Start();
     virtual void SendPing();
-    virtual void SendSimpleCommand(const char* szCommand, int value);
-    virtual void SendCommand(const char* szCommand)=0;
-    virtual void SendCommand(const char* szCommand, bool toggle);
 
     virtual void SetHome()=0;
+    virtual void Bank(int val)=0;
+    virtual void EnableAutopilot(bool enable)=0;
+    virtual void GetStatus()=0;
+    virtual void GetVoltage()=0;
+    virtual void SetThrottle(int val)=0;
+    virtual void Lift(int val)=0;
+    virtual void Yaw(int val)=0;
+    virtual void Pitch(int val)=0;
+
 };
 
 #endif // ABSTRACTCHOPPER_H

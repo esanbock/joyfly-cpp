@@ -68,7 +68,7 @@ void MainWindow::onPing(float latency)
 {
     ui->latency->display(latency);
     if( ui->statusOnPingCheckBox->isChecked())
-        _pController->GetStatus();
+        _pController->GetChopper().GetStatus();
 }
 
 void MainWindow::on_throttleControl_sliderMoved(int position)
@@ -165,7 +165,7 @@ void MainWindow::on_yaw(float newAngle)
 
 void MainWindow::on_statusButton_clicked()
 {
-    _pController->GetStatus();
+    _pController->GetChopper().GetStatus();
 }
 
 bool isToggling;
@@ -182,7 +182,7 @@ void MainWindow::on_autoNavButton_clicked()
 
 void MainWindow::on_rehomeButton_clicked()
 {
-    _pController->SetHome();
+    _pController->GetChopper().SetHome();
 }
 
 void MainWindow::on_connectButton_2_clicked()

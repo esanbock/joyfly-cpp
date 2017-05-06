@@ -121,14 +121,14 @@ void CJoystickInputer::OpenJoystick(int joystickNum)
 void CJoystickInputer::ProcessJoystickInput()
 {
     AxisCommandSimple( *_sidewinder, [&](int val) {_controller.SetThrottle(val);}, JOYSTICK_THROTTLE, 255, 0);
-    AxisCommandSimple( *_sidewinder, [&](int val) {_controller.Bank(val);}, JOYSTICK_X, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
-    AxisCommandSimple( *_sidewinder, [&](int val) {_controller.Pitch(val);}, JOYSTICK_Y, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
-    AxisCommandSimple( *_sidewinder, [&](int val) {_controller.Yaw(val);}, JOYSTICK_Z, -255, 255);
+    AxisCommandSimple( *_sidewinder, [&](int val) {_controller.GetChopper().Bank(val);}, JOYSTICK_X, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
+    AxisCommandSimple( *_sidewinder, [&](int val) {_controller.GetChopper().Pitch(val);}, JOYSTICK_Y, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
+    AxisCommandSimple( *_sidewinder, [&](int val) {_controller.GetChopper().Yaw(val);}, JOYSTICK_Z, -255, 255);
 
     ButtonCommandToggle( *_sidewinder, [&] (bool result) {_controller.SetAutoPilot( result );}, JOYSTICK_AUTOPILOT );
-    ButtonCommandToggle( *_sidewinder, [&] (bool) {_controller.SetHome();}, JOYSTICK_HOME);
-    ButtonCommandToggle( *_sidewinder, [&] (bool) {_controller.GetStatus();}, JOYSTICK_STATUS);
-    ButtonCommandToggle( *_sidewinder, [&] (bool) {_controller.GetVoltage();}, JOYSTICK_VOLTAGE);
+    ButtonCommandToggle( *_sidewinder, [&] (bool) {_controller.GetChopper().SetHome();}, JOYSTICK_HOME);
+    ButtonCommandToggle( *_sidewinder, [&] (bool) {_controller.GetChopper().GetStatus();}, JOYSTICK_STATUS);
+    ButtonCommandToggle( *_sidewinder, [&] (bool) {_controller.GetChopper().GetVoltage();}, JOYSTICK_VOLTAGE);
 
-    HatCommandIncrement( *_sidewinder, SDL_HAT_DOWN, SDL_HAT_UP, [&](int val) {_controller.Lift(val);}, -20, 20 );
+    HatCommandIncrement( *_sidewinder, SDL_HAT_DOWN, SDL_HAT_UP, [&](int val) {_controller.GetChopper().Lift(val);}, -20, 20 );
 }

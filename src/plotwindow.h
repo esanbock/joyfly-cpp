@@ -23,8 +23,8 @@ public:
     virtual void OnThrottleChange( int newThrottle );
 
 signals:
-    virtual void OnVoltageChange( float newThrottle );
-    virtual void OnIMU( const int x, const int y, const int z );
+    void OnVoltageChange( float newThrottle );
+    void OnIMU( const int x, const int y, const int z );
 
 protected slots:
     virtual void onChangeVoltage( float newThrottle );

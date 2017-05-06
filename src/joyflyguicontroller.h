@@ -43,16 +43,10 @@ public:
     void RunJoystickTests();
 
     // NAV
+    virtual AbstractChopper& GetChopper();
     virtual void ToggleAutoPilot();
     virtual void SetAutoPilot(bool isOn);
-    virtual void SetHome();
-    virtual void GetStatus();
-    virtual void GetVoltage();
-    virtual void Bank(int val);
-    virtual void Pitch(int val);
-    virtual void Yaw(int val);
     virtual void SetThrottle(int val);
-    virtual void Lift(int val);
     virtual void GetHeading( int&x, int& y, int &z);
 
     // go
@@ -92,7 +86,7 @@ private:
     SerialStream* _pComPort = NULL;
     bool _autoNav = false;
     TimeSeries<double,double> _voltageHistory;
-    int _heading_x, _heading_y, _heading_z;
+    int _heading_x=0, _heading_y=0, _heading_z=0;
     TimeSeries<double,double> _imuHistory[3];
     TimeSeries<double,double> _headingHistory[3];
 };

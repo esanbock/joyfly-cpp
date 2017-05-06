@@ -41,6 +41,7 @@ using namespace std;
 
 CJoyFlyGuiController::CJoyFlyGuiController()
 {
+
 }
 
 void CJoyFlyGuiController::AddView(CJoyFlyView* pView)
@@ -57,6 +58,11 @@ CJoyFlyGuiController::~CJoyFlyGuiController()
         _pComPort->close();
         delete _pComPort;
     }
+}
+
+AbstractChopper& CJoyFlyGuiController::GetChopper()
+{
+    return *_pChopperControl;
 }
 
 void CJoyFlyGuiController::OnChopperMessage( const char* szMsg )
@@ -234,57 +240,21 @@ void CJoyFlyGuiController::RunJoystickTests()
 void CJoyFlyGuiController::ToggleAutoPilot()
 {
     _autoNav = !_autoNav;
-    _pChopperControl->SendCommand(":N", _autoNav ? 1 : 0);
+    _pChopperControl->EnableAutopilot(_autoNav);
     this->OnAutoNav( _autoNav );
 }
 
 void CJoyFlyGuiController::SetAutoPilot( bool isOn )
 {
     _autoNav = isOn;
-    _pChopperControl->SendCommand(":N", _autoNav ? 1 : 0);
+    _pChopperControl->EnableAutopilot(_autoNav);
     this->OnAutoNav( _autoNav );
-}
-
-void CJoyFlyGuiController::SetHome()
-{
-    _pChopperControl->SetHome();
-}
-
-void CJoyFlyGuiController::GetStatus()
-{
-    _pChopperControl->SendCommand(":S");
-    _pChopperControl->SendCommand(":V");
-}
-
-void CJoyFlyGuiController::GetVoltage()
-{
-    _pChopperControl->SendCommand(":V");
-}
-
-void CJoyFlyGuiController::Bank(int val)
-{
-    _pChopperControl->SendSimpleCommand(":B",  val);
-}
-
-void CJoyFlyGuiController::Pitch(int val)
-{
-    _pChopperControl->SendSimpleCommand(":P",  val);
-}
-
-void CJoyFlyGuiController::Yaw(int val)
-{
-    _pChopperControl->SendSimpleCommand(":Y",  val);
 }
 
 void CJoyFlyGuiController::SetThrottle(int val)
 {
-    _pChopperControl->SendSimpleCommand(":T",  val);
+    _pChopperControl->SetThrottle(val);
     OnThrottleChange(val);
-}
-
-void CJoyFlyGuiController::Lift(int val)
-{
-    _pChopperControl->SendSimpleCommand(":L",  val);
 }
 
 void CJoyFlyGuiController::OnIMUChanged( const int x, const int y, const int z )

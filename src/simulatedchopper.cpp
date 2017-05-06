@@ -58,3 +58,43 @@ void CSimulatedChopper::SetHome()
     std::uniform_int_distribution<> compassRand(0,360);
     _msgSink.OnNewHeading(imuRand(_gen), imuRand(_gen), compassRand(_gen));
 }
+
+void CSimulatedChopper::Bank(int val)
+{
+
+}
+
+void CSimulatedChopper::GetStatus()
+{
+
+}
+
+void CSimulatedChopper::GetVoltage()
+{
+
+}
+
+void CSimulatedChopper::SetThrottle(int val)
+{
+
+}
+
+void CSimulatedChopper::Lift(int val)
+{
+
+}
+
+void CSimulatedChopper::Yaw(int val)
+{
+
+}
+
+void CSimulatedChopper::Pitch(int val)
+{
+
+}
+
+void CSimulatedChopper::EnableAutopilot(bool enable)
+{
+
+}

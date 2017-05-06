@@ -34,10 +34,19 @@ private:
 public:
     TeensyChopper(SerialStream& serialPort, int secondsUpdate, IChopperMessages& msgSink);
     virtual ~TeensyChopper();
-     virtual void SendCommand(const char* szCommand);
     virtual void Start();
     virtual void SetHome();
+    virtual void Bank(int val);
+    virtual void EnableAutopilot(bool enable);
+    virtual void GetStatus();
+    virtual void GetVoltage();
+    virtual void SetThrottle(int val);
+    virtual void Lift(int val);
+    virtual void Yaw(int val);
+    virtual void Pitch(int val);
+
 protected:
+    virtual void SendCommand(const char* szCommand);
     void ProcessPingResponse( const string line );
     void ProcessCommandResponse( const string line );
     void ProcessCollective( const string line);
