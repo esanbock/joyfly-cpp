@@ -53,6 +53,7 @@ public:
     virtual void Yaw(int val);
     virtual void SetThrottle(int val);
     virtual void Lift(int val);
+    virtual void GetHeading( int&x, int& y, int &z);
 
     // go
     virtual int Connect(const string serialDevice, int secondsUpdate);
@@ -90,6 +91,7 @@ private:
     SerialStream* _pComPort = NULL;
     bool _autoNav = false;
     TimeSeries<double,double> _voltageHistory;
+    int _heading_x, _heading_y, _heading_z;
 
 };
 

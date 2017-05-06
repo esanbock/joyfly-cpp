@@ -49,5 +49,6 @@ void CSimulatedChopper::ProcessData()
         _msgSink.OnPing(dis(_gen));
         _msgSink.OnMessage("hi");
         _msgSink.OnIMUChanged(imuRand(_gen), imuRand(_gen), compassRand(_gen));
+        _msgSink.OnNewHeading(imuRand(_gen), imuRand(_gen), compassRand(_gen));
     }
 }

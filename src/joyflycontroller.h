@@ -20,6 +20,7 @@ public:
     virtual int Connect(const std::string serialDevice, int secondsUpdate)=0;
     virtual void AddJoyStick(int joyNum)=0;
     virtual TimeSeries<double,double>* GetVoltageHistory()=0;
+    virtual void GetHeading( int&x, int& y, int &z)=0;
 };
 
 #endif // CONTROLLERINPUTER

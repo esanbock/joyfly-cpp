@@ -185,7 +185,16 @@ void CJoyFlyGuiController::OnAutoNav(bool isOn)
 
 void CJoyFlyGuiController::OnNewHeading( const float x, const float y, const float z)
 {
+    _heading_x = x;
+    _heading_y = y;
+    _heading_z = z;
+}
 
+void CJoyFlyGuiController::GetHeading( int& x, int& y, int &z)
+{
+    x = _heading_x;
+    y = _heading_y;
+    z = _heading_z;
 }
 
 void CJoyFlyGuiController::OnPing(float latency)
