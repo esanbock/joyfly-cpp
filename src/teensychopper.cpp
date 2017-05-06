@@ -131,11 +131,23 @@ void TeensyChopper::ProcessStatusResponse( const string line)
     }
 }
 
+void TeensyChopper::ProcessNewHeading( const string line )
+{
+    int x=0;
+    int y=0;
+    int z=0;
+    if( ExtractXYZ(line.substr(4), x, y, z) )
+    {
+        _msgSink.OnNewHeading(x,y,z);
+    }
+}
+
+
 bool TeensyChopper::ExtractXYZ( const string line, int& x, int& y, int& z)
 {
     stringstream ss(line);
 
-    while( ss.gcount() > 0 )
+    while( !ss.eof() )
     {
         char field[3];
         ss.get(field, 2);
@@ -167,11 +179,6 @@ bool TeensyChopper::ExtractXYZ( const string line, int& x, int& y, int& z)
     {
         return true;
     }
-}
-
-void TeensyChopper::ProcessNewHeading( const string line )
-{
-
 }
 
 float TeensyChopper::IMUVoltageToAngleXY(const int volts)
