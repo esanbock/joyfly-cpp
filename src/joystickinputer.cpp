@@ -121,7 +121,7 @@ void CJoystickInputer::OpenJoystick(int joystickNum)
 void CJoystickInputer::ProcessJoystickInput()
 {
     AxisCommandSimple( *_sidewinder, [&](int val) {_controller.SetThrottle(val);}, JOYSTICK_THROTTLE, 255, 0);
-    AxisCommandSimple( *_sidewinder, [&](int val) {_controller.GetChopper().Bank(val);}, JOYSTICK_X, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
+    AxisCommandSimple( *_sidewinder, [&](int val) {_controller.GetChopper().Roll(val);}, JOYSTICK_X, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
     AxisCommandSimple( *_sidewinder, [&](int val) {_controller.GetChopper().Pitch(val);}, JOYSTICK_Y, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
     AxisCommandSimple( *_sidewinder, [&](int val) {_controller.GetChopper().Yaw(val);}, JOYSTICK_Z, -255, 255);
 
