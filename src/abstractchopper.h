@@ -9,10 +9,10 @@ public:
     virtual void OnVoltageChange(float newVoltage)=0;
     virtual void OnPing(float latency)=0;
     virtual void Sent(const char* szMsg)=0;
-    virtual void OnIMUChanged( float x, float y, float z )=0;
+    virtual void OnIMUChanged( const int x, const int y, const int z )=0;
     virtual void OnUnparsable(const char* data)=0;
     virtual void OnCollective(double collective)=0;
-    virtual void OnNewHeading( const float x, const float y, const float z)=0;
+    virtual void OnNewHeading( const int x, const int y, const int z)=0;
 };
 
 class AbstractChopper
@@ -36,6 +36,8 @@ public:
     virtual void SendSimpleCommand(const char* szCommand, int value);
     virtual void SendCommand(const char* szCommand)=0;
     virtual void SendCommand(const char* szCommand, bool toggle);
+
+    virtual void SetHome()=0;
 };
 
 #endif // ABSTRACTCHOPPER_H

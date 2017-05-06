@@ -222,4 +222,7 @@ void TeensyChopper::ProcessData()
     }
 }
 
-
+void TeensyChopper::SetHome()
+{
+    SendCommand(":H");
+}

@@ -36,6 +36,11 @@ protected:
     {
         return *_pController;
     }
+public:
+    virtual void OnIMU( const int x, const int y, const int z ){};
+    virtual void OnBank( float newAngle ){}
+    virtual void OnPitch( float newAngle ){}
+    virtual void OnYaw( float newAngle ){}
 
 };
 
@@ -48,20 +53,17 @@ public:
     virtual void OnVoltageChange( float newVoltage )=0;
 };
 
-class CMainView : public CGraphView
+class CMainView : public CJoyFlyView
 {
 public:
     CMainView(IJoyflyController* pController)
-        :CGraphView(pController){}
+        :CJoyFlyView(pController){}
 
 	virtual void OnChopperMessage( const char* szMsg )=0;
 	virtual void OnDebugMessage( const char* szMsg )=0;
     virtual void OnPing( float latency )=0;
     virtual void Sent(const char* szMsg)=0;
     virtual void OnAutoNav( bool isOn ){}
-    virtual void OnBank( float newAngle ){}
-    virtual void OnPitch( float newAngle ){}
-    virtual void OnYaw( float newAngle ){}
     virtual void OnCollective( double newCollective ){}
 
 };

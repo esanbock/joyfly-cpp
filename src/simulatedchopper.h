@@ -12,6 +12,7 @@ public:
     virtual void SendCommand(const char* szCommand);
     virtual void ProcessData();
     virtual void Start();
+    virtual void SetHome();
 
 private:
     std::thread* _pCommandLoopThread = NULL;

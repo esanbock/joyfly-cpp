@@ -36,6 +36,7 @@ public:
     virtual ~TeensyChopper();
      virtual void SendCommand(const char* szCommand);
     virtual void Start();
+    virtual void SetHome();
 protected:
     void ProcessPingResponse( const string line );
     void ProcessCommandResponse( const string line );

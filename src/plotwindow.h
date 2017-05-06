@@ -24,14 +24,17 @@ public:
 
 signals:
     virtual void OnVoltageChange( float newThrottle );
+    virtual void OnIMU( const int x, const int y, const int z );
 
 protected slots:
     virtual void onChangeVoltage( float newThrottle );
+    virtual void onIMU( const int x, const int y, const int z );
 
 private:
     Ui::PlotWindow *ui;
 
     QwtPlotCurve* _pTempCurve;
+    QwtPlotCurve* _pCurve_imu_x;
 };
 
 #endif // PLOTWINDOW_H

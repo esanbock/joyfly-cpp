@@ -183,7 +183,7 @@ void CJoyFlyGuiController::OnAutoNav(bool isOn)
     }
 }
 
-void CJoyFlyGuiController::OnNewHeading( const float x, const float y, const float z)
+void CJoyFlyGuiController::OnNewHeading( const int x, const int y, const int z)
 {
     _heading_x = x;
     _heading_y = y;
@@ -247,7 +247,7 @@ void CJoyFlyGuiController::SetAutoPilot( bool isOn )
 
 void CJoyFlyGuiController::SetHome()
 {
-    _pChopperControl->SendCommand(":H");
+    _pChopperControl->SetHome();
 }
 
 void CJoyFlyGuiController::GetStatus()
@@ -287,17 +287,23 @@ void CJoyFlyGuiController::Lift(int val)
     _pChopperControl->SendSimpleCommand(":L",  val);
 }
 
-void CJoyFlyGuiController::OnIMUChanged( float x, float y, float z )
+void CJoyFlyGuiController::OnIMUChanged( const int x, const int y, const int z )
 {
+    _imuHistory[0].Add(clock(),x);
+    _imuHistory[1].Add(clock(),y);
+    _imuHistory[2].Add(clock(),z);
+
     //cout << "new IMU (x,y,z) = (" << x << "," << y << "," << z << ")" << endl;
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
     {
-        CMainView* pMainView = dynamic_cast<CMainView*>(*it);
-        if( pMainView != nullptr)
+        CJoyFlyView* pView = *it;
+        if( pView != nullptr)
         {
-            pMainView->OnBank(x);
-            pMainView->OnPitch(y);
-            pMainView->OnYaw(z);
+            pView->OnIMU(x,y,z);
+            pView->OnBank(x);
+            pView->OnPitch(y);
+            pView->OnYaw(z);
+
         }
     }
 
@@ -308,4 +314,8 @@ TimeSeries<double,double>* CJoyFlyGuiController::GetVoltageHistory()
     return &_voltageHistory;
 }
 
+TimeSeries<double,double>* CJoyFlyGuiController::GetIMUHistory()
+{
+    return _imuHistory;
+}
 

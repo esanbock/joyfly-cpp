@@ -68,13 +68,13 @@ public:
     virtual void Sent(const char* data);
     virtual void OnPing(float latency);
     virtual void OnDebug(const char* data);
-    virtual void OnIMUChanged(float x, float y, float z );
+    virtual void OnIMUChanged(const int x, const int y, const int z );
+    virtual void OnNewHeading(const int x, const int y, const int z );
     virtual void OnCollective(double collective);
-    virtual void OnNewHeading( const float x, const float y, const float z);
 
     // stats
     virtual TimeSeries<double,double>* GetVoltageHistory();
-
+    virtual TimeSeries<double,double>* GetIMUHistory();
 
 protected:
     void OnChopperMessage( const char* szMsg );
@@ -92,6 +92,7 @@ private:
     bool _autoNav = false;
     TimeSeries<double,double> _voltageHistory;
     int _heading_x, _heading_y, _heading_z;
+    TimeSeries<double,double> _imuHistory[3];
 
 };
 
