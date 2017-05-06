@@ -147,7 +147,7 @@ bool TeensyChopper::ExtractXYZ( const string line, int& x, int& y, int& z)
 {
     stringstream ss(line);
 
-    while( !ss.eof() )
+   do
     {
         char field[3];
         ss.get(field, 2);
@@ -167,7 +167,8 @@ bool TeensyChopper::ExtractXYZ( const string line, int& x, int& y, int& z)
             ss >> z >> skipws;
             break;
         }
-    }
+    }  while (ss.gcount() > 0);
+
     if( x < IMU_MINXY || x > IMU_MAXXY ||
             y < IMU_MINXY || y > IMU_MAXXY ||
             z < IMU_MINZ || z > IMU_MAXZ )
@@ -234,7 +235,7 @@ void TeensyChopper::SetHome()
     SendCommand(":H");
 }
 
-void TeensyChopper::Bank(int val)
+void TeensyChopper::Roll(int val)
 {
     SendSimpleCommand(":B",  val);
 }
