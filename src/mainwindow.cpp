@@ -23,16 +23,17 @@ MainWindow::MainWindow(CJoyFlyGuiController* pController, QWidget *parent) :
 {
     _pController = pController;
     ui->setupUi(this);
-    connect(this,SIGNAL(ChangeVoltage(float)), this,SLOT(onChangeVoltage(float)));
+    connect(this,SIGNAL(OnVoltageChange(float)), this,SLOT(onChangeVoltage(float)));
     connect(this,SIGNAL(AppendLog(QString)), this,SLOT(onAppendLog(QString)));
-    connect(this,SIGNAL(Ping(float)), this,SLOT(onPing(float)));
+    connect(this,SIGNAL(OnPing(float)), this,SLOT(onPing(float)));
     connect(this,SIGNAL(OnThrottleChange(int)), ui->throttleControl,SLOT(setValue(int)));
-    connect(this,SIGNAL(Debug(QString)), ui->textDebug,SLOT(appendPlainText(QString)));
+    connect(this,SIGNAL(SendDebugMessage(QString)), ui->textDebug,SLOT(appendPlainText(QString)));
+    connect(this,SIGNAL(SendChopperMessage(QString)), this,SLOT(onAppendLog(QString)));
     connect(this,SIGNAL(OnAutoNav(bool)), this,SLOT(onSetAutoPilot(bool)));
 
-    connect(this,SIGNAL(Bank(float)), this,SLOT(on_bank(float)));
-    connect(this,SIGNAL(Pitch(float)), this,SLOT(on_pitch(float)));
-    connect(this,SIGNAL(Yaw(float)), this,SLOT(on_yaw(float)));
+    connect(this,SIGNAL(OnBank(float)), this,SLOT(on_bank(float)));
+    connect(this,SIGNAL(OnPitch(float)), this,SLOT(on_pitch(float)));
+    connect(this,SIGNAL(OnYaw(float)), this,SLOT(on_yaw(float)));
 
     connect(this,SIGNAL(OnCollective(double)), this,SLOT(on_collective(double)));
 
@@ -46,6 +47,16 @@ MainWindow::MainWindow(CJoyFlyGuiController* pController, QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::OnChopperMessage( const char* szMsg )
+{
+    AppendLog(szMsg);
+}
+
+void MainWindow::OnDebugMessage(const char* szMsg )
+{
+    SendDebugMessage(szMsg);
 }
 
 void MainWindow::onAppendLog(QString log)
@@ -76,31 +87,6 @@ void MainWindow::on_throttleControl_sliderMoved(int position)
     _pController->SetThrottle(position);
 }
 
-void MainWindow::OnChopperMessage( const char* szMsg )
-{
-    AppendLog(szMsg);
-}
-
-void MainWindow::OnDebugMessage(const char* szMsg )
-{
-    Debug(szMsg);
-}
-
-void MainWindow::Sent(const char* szMsg )
-{
-    OnDebugMessage(szMsg);
-}
-
-void MainWindow::OnVoltageChange( float newVoltage )
-{
-    ChangeVoltage(newVoltage);
-}
-
-
-void MainWindow::OnPing( float latency )
-{
-    Ping(latency);
-}
 
 void MainWindow::on_connectButton_clicked()
 {
@@ -123,22 +109,6 @@ void MainWindow::on_connectJoystick_clicked()
     _pController->AddJoyStick( ui->joystickList->currentIndex());
     ui->connectJoystick->setEnabled(false);
 }
-
-void MainWindow:: OnBank( float newAngle )
-{
-    Bank(newAngle);
-}
-
-void MainWindow:: OnPitch( float newAngle )
-{
-    Pitch(newAngle);
-}
-
-void MainWindow:: OnYaw( float newAngle )
-{
-    Yaw(newAngle);
-}
-
 
 void MainWindow::on_bank(float newAngle )
 {

@@ -153,9 +153,7 @@ void CJoyFlyGuiController::OnVoltageChange(float newVoltage)
 
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
     {
-        CGraphView* pView = dynamic_cast<CGraphView*>(*it);
-        if( pView != nullptr)
-            pView->OnVoltageChange(newVoltage);
+        (*it)->OnVoltageChange(newVoltage);
     }
 }
 

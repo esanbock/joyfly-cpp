@@ -34,10 +34,6 @@ PlotWindow::~PlotWindow()
     delete ui;
 }
 
-void PlotWindow::OnThrottleChange( int newThrottle )
-{
-}
-
 void PlotWindow::onChangeVoltage( float newVoltage )
 {
     _pTempCurve->setSamples(Controller().GetVoltageHistory()->GetTimes(),

@@ -20,11 +20,11 @@ public:
     explicit PlotWindow(CJoyFlyGuiController* pController, QWidget *parent = 0);
     ~PlotWindow();
 
-    virtual void OnThrottleChange( int newThrottle );
 
 signals:
     void OnVoltageChange( float newThrottle );
     void OnIMU( const int x, const int y, const int z );
+    void OnThrottleChange( int newThrottle );
 
 protected slots:
     virtual void onChangeVoltage( float newThrottle );

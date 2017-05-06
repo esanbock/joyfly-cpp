@@ -22,31 +22,24 @@ class MainWindow : public QMainWindow, public CMainView
 public:
     explicit MainWindow(CJoyFlyGuiController* pController, QWidget *parent=0);
     ~MainWindow();
-    virtual void OnChopperMessage( const char* szMsg );
-    virtual void OnDebugMessage( const char* szMsg );
-    virtual void OnVoltageChange( float newVoltage );
+    void OnChopperMessage( const char* szMsg );
+    void OnDebugMessage( const char* szMsg );
 
-    virtual void OnPing( float latency );
-    virtual void Sent(const char* szMsg);
-    virtual void OnBank( float newAngle );
-    virtual void OnPitch( float newAngle );
-    virtual void OnYaw( float newAngle );
+signals:
+    void OnVoltageChange( float newVoltage );
+    void AppendLog(QString log);
+    void OnPing( float latency );
+    void OnThrottleChange( int newThrottle );
+    void OnAutoNav( bool isOn );
+    void SendDebugMessage( QString log );
+    void OnBank( float latency );
+    void OnPitch( float latency );
+    void OnYaw( float latency );
+    void OnCollective( double collective );
 
 protected:
     void populatejoysticks();
     void initCompass();
-
-signals:
-    void AppendLog(QString log);
-    void ChangeVoltage( float newVoltage );
-    void Ping( float latency );
-    void OnThrottleChange( int newThrottle );
-    void OnAutoNav( bool isOn );
-    void Debug( QString log );
-    void Bank( float latency );
-    void Pitch( float latency );
-    void Yaw( float latency );
-    void OnCollective( double collective );
 
 protected slots:
     void onAppendLog(QString log);
