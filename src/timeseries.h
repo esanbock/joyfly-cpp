@@ -31,6 +31,18 @@ public:
         _time.push_back(x);
         _val.push_back(y);
     }
+
+    void AddOrUpdate(TX x,TY y)
+    {
+        if( _val.size() > 1 && _val.back() == y  && _val.at(_val.size()-2) == y )
+        {
+            _time.back() = x;
+        }
+        else
+        {
+            Add(x,y);
+        }
+    }
 };
 
 #endif // TIMESERIES_H

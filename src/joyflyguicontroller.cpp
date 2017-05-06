@@ -293,9 +293,9 @@ void CJoyFlyGuiController::OnIMUChanged( const int x, const int y, const int z )
     _imuHistory[1].Add(clock(),y);
     _imuHistory[2].Add(clock(),z);
 
-    _headingHistory[0].Add(clock(),_heading_x);
-    _headingHistory[1].Add(clock(),_heading_y);
-    _headingHistory[2].Add(clock(),_heading_z);
+    _headingHistory[0].AddOrUpdate(clock(),_heading_x);
+    _headingHistory[1].AddOrUpdate(clock(),_heading_y);
+    _headingHistory[2].AddOrUpdate(clock(),_heading_z);
 
     //cout << "new IMU (x,y,z) = (" << x << "," << y << "," << z << ")" << endl;
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
