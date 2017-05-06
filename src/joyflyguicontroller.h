@@ -75,6 +75,7 @@ public:
     // stats
     virtual TimeSeries<double,double>* GetVoltageHistory();
     virtual TimeSeries<double,double>* GetIMUHistory();
+    virtual TimeSeries<double,double>* GetHeadingHistory();
 
 protected:
     void OnChopperMessage( const char* szMsg );
@@ -93,7 +94,7 @@ private:
     TimeSeries<double,double> _voltageHistory;
     int _heading_x, _heading_y, _heading_z;
     TimeSeries<double,double> _imuHistory[3];
-
+    TimeSeries<double,double> _headingHistory[3];
 };
 
 #endif // _C_JOY_FLY_CONTROLLER_H_

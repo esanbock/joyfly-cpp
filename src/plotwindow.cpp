@@ -21,6 +21,8 @@ PlotWindow::PlotWindow(CJoyFlyGuiController* pController,QWidget *parent) :
     _pTempCurve->attach(ui->qwtPlot);
     _pCurve_imu_x = new QwtPlotCurve("IMU X");
     _pCurve_imu_x->attach(ui->qwtPlot_PIDx);
+    _pCurve_heading_x = new QwtPlotCurve("HEADING X");
+    _pCurve_heading_x->attach(ui->qwtPlot_PIDx);
 }
 
 PlotWindow::~PlotWindow()
@@ -45,5 +47,6 @@ void PlotWindow::onChangeVoltage( float newVoltage )
 void PlotWindow::onIMU( const int x, const int y, const int z )
 {
     _pCurve_imu_x->setSamples(Controller().GetIMUHistory()[0].GetTimes(), Controller().GetIMUHistory()[0].GetVals(), Controller().GetIMUHistory()[0].GetSize());
+    _pCurve_heading_x->setSamples(Controller().GetHeadingHistory()[0].GetTimes(), Controller().GetHeadingHistory()[0].GetVals(), Controller().GetHeadingHistory()[0].GetSize());
     ui->qwtPlot_PIDx->replot();
 }
