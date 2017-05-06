@@ -89,6 +89,7 @@ private:
     int _heading_x=0, _heading_y=0, _heading_z=0;
     TimeSeries<double,double> _imuHistory[3];
     TimeSeries<double,double> _headingHistory[3];
+    clock_t _startClock;
 };
 
 #endif // _C_JOY_FLY_CONTROLLER_H_
