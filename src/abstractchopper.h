@@ -41,7 +41,7 @@ public:
     virtual void SendPing();
 
     virtual void SetHome()=0;
-    virtual void Bank(int val)=0;
+    virtual void Roll(int val)=0;
     virtual void EnableAutopilot(bool enable)=0;
     virtual void GetStatus()=0;
     virtual void GetVoltage()=0;

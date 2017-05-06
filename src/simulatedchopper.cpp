@@ -59,7 +59,7 @@ void CSimulatedChopper::SetHome()
     _msgSink.OnNewHeading(imuRand(_gen), imuRand(_gen), compassRand(_gen));
 }
 
-void CSimulatedChopper::Bank(int val)
+void CSimulatedChopper::Roll(int val)
 {
 
 }

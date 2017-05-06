@@ -36,7 +36,7 @@ public:
     virtual ~TeensyChopper();
     virtual void Start();
     virtual void SetHome();
-    virtual void Bank(int val);
+    virtual void Roll(int val);
     virtual void EnableAutopilot(bool enable);
     virtual void GetStatus();
     virtual void GetVoltage();
