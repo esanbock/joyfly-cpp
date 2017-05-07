@@ -17,6 +17,7 @@ public:
     virtual void GetHeading( int&x, int& y, int &z)=0;
     virtual TimeSeries<double,double>* GetIMUHistory()=0;
     virtual TimeSeries<double,double>* GetHeadingHistory()=0;
+    virtual TimeSeries<double,double>* GetMotorHistory()=0;
     virtual AbstractChopper& GetChopper()=0;
 };
 

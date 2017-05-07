@@ -36,6 +36,7 @@ private:
     QwtPlotCurve* _pTempCurve;
     QwtPlotCurve* _pCurve_imu_x;
     QwtPlotCurve* _pCurve_heading_x;
+    QwtPlotCurve* _pCurve_motor_x;
 };
 
 #endif // PLOTWINDOW_H

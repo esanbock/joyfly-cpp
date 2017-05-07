@@ -195,6 +195,14 @@ void CJoyFlyGuiController::OnNewHeading( const int x, const int y, const int z)
     _heading_z = z;
 }
 
+void CJoyFlyGuiController::OnNewMotors( const int x, const int y, const int z)
+{
+    double elapsed = (clock() - _startClock);
+    _motorHistory[0].Add(elapsed,x);
+    _motorHistory[1].Add(elapsed,y);
+    _motorHistory[2].Add(elapsed,z);
+}
+
 void CJoyFlyGuiController::GetHeading( int& x, int& y, int &z)
 {
     x = _heading_x;
@@ -258,7 +266,7 @@ void CJoyFlyGuiController::SetThrottle(int val)
 
 void CJoyFlyGuiController::OnIMUChanged( const int x, const int y, const int z )
 {
-    double elapsed = (clock() - _startClock) ;
+    double elapsed = (clock() - _startClock);
 
     _imuHistory[0].Add(elapsed,x);
     _imuHistory[1].Add(elapsed,y);
@@ -299,3 +307,7 @@ TimeSeries<double,double>* CJoyFlyGuiController::GetHeadingHistory()
     return _headingHistory;
 }
 
+TimeSeries<double,double>* CJoyFlyGuiController::GetMotorHistory()
+{
+    return _motorHistory;
+}

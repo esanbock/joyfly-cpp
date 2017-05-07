@@ -16,6 +16,7 @@ public:
     virtual void OnUnparsable(const char* data)=0;
     virtual void OnCollective(double collective)=0;
     virtual void OnNewHeading( const int x, const int y, const int z)=0;
+    virtual void OnNewMotors( const int x, const int y, const int z)=0;
 };
 
 class AbstractChopper

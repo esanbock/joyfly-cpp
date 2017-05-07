@@ -42,6 +42,7 @@ void CSimulatedChopper::ProcessData()
         std::uniform_real_distribution<> dis(0, 100);
         std::uniform_int_distribution<> imuRand(0,180);
         std::uniform_int_distribution<> compassRand(0,360);
+        std::uniform_int_distribution<> motorRand(70,110);
         sleep(_secondsUpdate);
         SendPing();
 
@@ -49,6 +50,7 @@ void CSimulatedChopper::ProcessData()
         _msgSink.OnPing(dis(_gen));
         _msgSink.OnMessage("hi");
         _msgSink.OnIMUChanged(imuRand(_gen), imuRand(_gen), compassRand(_gen));
+        _msgSink.OnNewMotors(motorRand(_gen),motorRand(_gen),motorRand(_gen));
     }
 }
 

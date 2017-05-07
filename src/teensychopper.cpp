@@ -105,6 +105,12 @@ void TeensyChopper::ProcessCommandResponse( const string line )
         return;
     }
 
+    if( line.compare(0,3, ":M ") == 0)
+    {
+        ProcessMotorChange(line);
+        return;
+    }
+
     // otherwise, NAK
     //cout << "unrecognized command from chopper" << endl;
     _msgSink.OnUnparsable( line.c_str() );
@@ -140,6 +146,18 @@ void TeensyChopper::ProcessNewHeading( const string line )
     {
         _msgSink.OnNewHeading(x,y,z);
     }
+}
+
+void TeensyChopper::ProcessMotorChange( const string line )
+{
+    int x=0;
+    int y=0;
+    int z=0;
+    if( ExtractXYZ(line.substr(4), x, y, z) )
+    {
+        _msgSink.OnNewMotors(x,y,z);
+    }
+
 }
 
 

@@ -20,13 +20,21 @@ PlotWindow::PlotWindow(CJoyFlyGuiController* pController,QWidget *parent) :
 
     _pTempCurve = new QwtPlotCurve("Temperature");
     _pTempCurve->attach(ui->qwtPlot);
+
+    // IMU
     _pCurve_imu_x = new QwtPlotCurve("IMU X");
     _pCurve_imu_x->attach(ui->qwtPlot_PIDx);
+    _pCurve_imu_x->setPen(Qt::red);
+
+    // HEADING
     _pCurve_heading_x = new QwtPlotCurve("HEADING X");
     _pCurve_heading_x->attach(ui->qwtPlot_PIDx);
-
-    _pCurve_imu_x->setPen(Qt::red);
     _pCurve_heading_x->setPen(Qt::green);
+
+    // Motors
+    _pCurve_motor_x = new QwtPlotCurve("MOTOR X");
+    _pCurve_motor_x->attach(ui->qwtPlot_PIDx);
+    _pCurve_motor_x->setPen(Qt::blue);
 }
 
 PlotWindow::~PlotWindow()
@@ -48,5 +56,6 @@ void PlotWindow::onIMU( const int x, const int y, const int z )
 {
     _pCurve_imu_x->setSamples(Controller().GetIMUHistory()[0].GetTimes(), Controller().GetIMUHistory()[0].GetVals(), Controller().GetIMUHistory()[0].GetSize());
     _pCurve_heading_x->setSamples(Controller().GetHeadingHistory()[0].GetTimes(), Controller().GetHeadingHistory()[0].GetVals(), Controller().GetHeadingHistory()[0].GetSize());
+    _pCurve_motor_x->setSamples(Controller().GetMotorHistory()[0].GetTimes(), Controller().GetMotorHistory()[0].GetVals(), Controller().GetMotorHistory()[0].GetSize());
     ui->qwtPlot_PIDx->replot();
 }

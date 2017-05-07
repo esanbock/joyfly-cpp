@@ -56,6 +56,7 @@ protected:
     float IMUVoltageToAngleXY(const int volts);
     float IMUVoltageToAngleZ(const int volts);
     bool ExtractXYZ( const string line, int& x, int& y, int& z);
+    void ProcessMotorChange( const string line );
 };
 
 #endif
