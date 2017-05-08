@@ -43,7 +43,9 @@ void CSimulatedChopper::ProcessData()
         std::uniform_int_distribution<> imuRand(0,180);
         std::uniform_int_distribution<> compassRand(0,360);
         std::uniform_int_distribution<> motorRand(70,110);
-        sleep(_secondsUpdate);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(_secondsUpdate));
+
         SendPing();
 
         _msgSink.OnVoltageChange( dis(_gen) );

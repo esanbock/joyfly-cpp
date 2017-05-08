@@ -90,7 +90,7 @@ void MainWindow::on_throttleControl_sliderMoved(int position)
 
 void MainWindow::on_connectButton_clicked()
 {
-    _pController->Connect( ui->serialDevice->text().toStdString(), ui->secondsUpdate->value());
+    _pController->Connect( ui->serialDevice->text().toStdString(), ui->millisecondsUpdate->value());
     ui->connectButton->setEnabled(false);
 }
 
