@@ -50,7 +50,7 @@ public:
     virtual void Lift(int val)=0;
     virtual void Yaw(int val)=0;
     virtual void Pitch(int val)=0;
-    virtual void ChangePid( double kP, double kI, double kD)=0;
+    virtual void ChangePid( int pidNum, float kP, float kI, float kD){};
 
 };
 

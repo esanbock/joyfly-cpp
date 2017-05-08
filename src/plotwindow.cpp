@@ -62,5 +62,5 @@ void PlotWindow::onIMU( const int x, const int y, const int z )
 
 void PlotWindow::on_counterPidXkP_valueChanged(double value)
 {
-    Controller().GetChopper().ChangePid(value, 10, 10);
+    Controller().GetChopper().ChangePid(0,value, 10, 10);
 }

@@ -293,7 +293,10 @@ void TeensyChopper::SetThrottle(int val)
     SendSimpleCommand(":T",  val);
 }
 
-void TeensyChopper::ChangePid( double kP, double kI, double kD )
+void TeensyChopper::ChangePid( int pidNum, float kP, float kI, float kD )
 {
+    stringstream sstream;
+    sstream << ":Q" << pidNum << kP << "," << kI << "," << kD;
 
+    SendCommand(sstream.str().c_str());
 }
