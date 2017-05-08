@@ -11,7 +11,8 @@ public:
     virtual void ToggleAutoPilot()=0;
     virtual void SetAutoPilot( bool isOn )=0;
     virtual void SetThrottle(int val)=0;
-    virtual int Connect(const std::string serialDevice, int secondsUpdate)=0;
+    virtual int Connect(const std::string serialDevice)=0;
+    virtual int Connect(const int secondsUpdate)=0;
     virtual void AddJoyStick(int joyNum)=0;
     virtual TimeSeries<double,double>* GetVoltageHistory()=0;
     virtual void GetHeading( int&x, int& y, int &z)=0;

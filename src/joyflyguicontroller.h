@@ -50,7 +50,8 @@ public:
     virtual void GetHeading( int&x, int& y, int &z);
 
     // go
-    virtual int Connect(const string serialDevice, int secondsUpdate);
+    virtual int Connect(const string serialDevice);
+    virtual int Connect(const int secondsUpdate);
     void Quit();
 
     // message sink

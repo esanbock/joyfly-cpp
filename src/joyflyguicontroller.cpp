@@ -220,15 +220,22 @@ void CJoyFlyGuiController::OnPing(float latency)
     }
 }
 
-int CJoyFlyGuiController::Connect(const string serialDevice, int secondsUpdate)
+int CJoyFlyGuiController::Connect( const int secondsUpdate )
 {
     if( _pChopperControl != NULL )
         throw domain_error("controller already started");
 
-    if( serialDevice[0] != '/' )
-        _pChopperControl = ConnectToSimulator(secondsUpdate);
-    else
-        _pChopperControl = ConnectToChopper( serialDevice.c_str(), secondsUpdate );
+    _pChopperControl = ConnectToSimulator(secondsUpdate);
+
+    return 0;
+}
+
+int CJoyFlyGuiController::Connect(const string serialDevice)
+{
+    if( _pChopperControl != NULL )
+        throw domain_error("controller already started");
+
+    _pChopperControl = ConnectToChopper( serialDevice.c_str(), 1 ); // ping every second
 
     return 0;
 }
@@ -283,10 +290,10 @@ void CJoyFlyGuiController::OnIMUChanged( const int x, const int y, const int z )
         if( pView != nullptr)
         {
             pView->OnIMU(x,y,z);
-            pView->OnBank(x);
-            pView->OnPitch(y);
-            pView->OnYaw(z);
 
+            pView->OnBank( GetChopper().IMUVoltageToAngleXY(x) );
+            pView->OnPitch( GetChopper().IMUVoltageToAngleXY(y) );
+            pView->OnYaw( GetChopper().IMUVoltageToAngleZ(z) );
         }
     }
 

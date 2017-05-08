@@ -22,6 +22,8 @@ public:
     virtual void Yaw(int val);
     virtual void Pitch(int val);
     virtual void ChangePid( double kP, double kI, double kD );
+    float IMUVoltageToAngleXY(const int volts);
+    float IMUVoltageToAngleZ(const int volts);
 
 private:
     std::thread* _pCommandLoopThread = NULL;

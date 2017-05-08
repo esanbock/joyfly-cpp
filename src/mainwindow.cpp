@@ -28,7 +28,6 @@ MainWindow::MainWindow(CJoyFlyGuiController* pController, QWidget *parent) :
     connect(this,SIGNAL(OnPing(float)), this,SLOT(onPing(float)));
     connect(this,SIGNAL(OnThrottleChange(int)), ui->throttleControl,SLOT(setValue(int)));
     connect(this,SIGNAL(SendDebugMessage(QString)), ui->textDebug,SLOT(appendPlainText(QString)));
-    connect(this,SIGNAL(SendChopperMessage(QString)), this,SLOT(onAppendLog(QString)));
     connect(this,SIGNAL(OnAutoNav(bool)), this,SLOT(onSetAutoPilot(bool)));
 
     connect(this,SIGNAL(OnBank(float)), this,SLOT(on_bank(float)));
@@ -90,8 +89,9 @@ void MainWindow::on_throttleControl_sliderMoved(int position)
 
 void MainWindow::on_connectButton_clicked()
 {
-    _pController->Connect( ui->serialDevice->text().toStdString(), ui->millisecondsUpdate->value());
+    _pController->Connect( ui->serialDevice->text().toStdString());
     ui->connectButton->setEnabled(false);
+    ui->simulateButton->setEnabled(false);
 }
 
 void MainWindow::populatejoysticks()
@@ -155,12 +155,6 @@ void MainWindow::on_rehomeButton_clicked()
     _pController->GetChopper().SetHome();
 }
 
-void MainWindow::on_connectButton_2_clicked()
-{
-    ui->serialDevice->clear();
-    on_connectButton_clicked();
-}
-
 void MainWindow::initCompass()
 {
     QwtCompassScaleDraw *scaleDraw = new QwtCompassScaleDraw();
@@ -186,4 +180,11 @@ void MainWindow::on_pushGraph_clicked()
     PlotWindow* pPlotWindow = new PlotWindow(_pController, this);
     pPlotWindow->show();
     _pController->AddView(pPlotWindow);
+}
+
+void MainWindow::on_simulateButton_clicked()
+{
+    _pController->Connect( ui->millisecondsUpdate->value() );
+    ui->connectButton->setEnabled(false);
+    ui->simulateButton->setEnabled(false);
 }

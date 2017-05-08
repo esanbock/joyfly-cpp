@@ -52,6 +52,8 @@ public:
     virtual void Yaw(int val)=0;
     virtual void Pitch(int val)=0;
     virtual void ChangePid( int , float , float , float ){}
+    virtual float IMUVoltageToAngleXY(const int)=0;
+    virtual float IMUVoltageToAngleZ(const int)=0;
 
 };
 

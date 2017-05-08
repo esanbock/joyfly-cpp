@@ -40,7 +40,7 @@ void CSimulatedChopper::ProcessData()
     while (!_quitting)
     {
         std::uniform_real_distribution<> dis(0, 100);
-        std::uniform_int_distribution<> imuRand(0,180);
+        std::uniform_int_distribution<> imuRand(400,500);
         std::uniform_int_distribution<> compassRand(0,360);
         std::uniform_int_distribution<> motorRand(70,110);
 
@@ -55,6 +55,19 @@ void CSimulatedChopper::ProcessData()
         _msgSink.OnNewMotors(motorRand(_gen),motorRand(_gen),motorRand(_gen));
     }
 }
+
+float CSimulatedChopper::IMUVoltageToAngleXY(const int )
+{
+    std::uniform_real_distribution<> angleRand(0,360);
+    return angleRand(_gen);
+}
+
+float CSimulatedChopper::IMUVoltageToAngleZ(const int )
+{
+    std::uniform_real_distribution<> angleRand(0,360);
+    return angleRand(_gen);
+}
+
 
 void CSimulatedChopper::SetHome()
 {

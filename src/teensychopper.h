@@ -44,6 +44,8 @@ public:
     virtual void Yaw(int val);
     virtual void Pitch(int val);
     virtual void ChangePid( int pidNum, float kP, float kI, float kD );
+    float IMUVoltageToAngleXY(const int volts);
+    float IMUVoltageToAngleZ(const int volts);
 
 protected:
     virtual void SendCommand(const char* szCommand);
@@ -53,8 +55,6 @@ protected:
     void ProcessData();
     void ProcessStatusResponse( const string line );
     void ProcessNewHeading( const string line );
-    float IMUVoltageToAngleXY(const int volts);
-    float IMUVoltageToAngleZ(const int volts);
     bool ExtractXYZ( const string line, int& x, int& y, int& z);
     void ProcessMotorChange( const string line );
 };

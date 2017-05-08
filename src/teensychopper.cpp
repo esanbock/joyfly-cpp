@@ -139,7 +139,7 @@ void TeensyChopper::ProcessStatusResponse( const string line)
 
     if( ExtractXYZ(line.substr(3), x, y, z) )
     {
-         _msgSink.OnIMUChanged(IMUVoltageToAngleXY(x), IMUVoltageToAngleXY(y) , IMUVoltageToAngleZ(z));
+         _msgSink.OnIMUChanged(x, y , z);
     }
 }
 
@@ -174,7 +174,8 @@ bool TeensyChopper::ExtractXYZ( const string line, int& x, int& y, int& z)
 
     if( result.size() < 3 )
     {
-        _msgSink.OnDebug("Parsing error.  Too many vals in XYZ");
+        string err = "Parsing error.  Not enough vals in XYZ.  Received:  ";
+        _msgSink.OnDebug( (err + line).c_str() );
         return false;
     }
 

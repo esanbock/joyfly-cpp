@@ -60,10 +60,10 @@ private slots:
     void on_statusButton_clicked();
     void on_autoNavButton_clicked();
     void on_rehomeButton_clicked();
-    void on_connectButton_2_clicked();
     void on_pushGraph_clicked();
     void on_collective(double collective);
 
+    void on_simulateButton_clicked();
 };
 
 #endif // MAINWINDOW_H
