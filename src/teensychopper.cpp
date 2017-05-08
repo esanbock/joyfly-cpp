@@ -166,6 +166,12 @@ bool TeensyChopper::ExtractXYZ( const string line, int& x, int& y, int& z)
             ss.ignore(1);
             ss >> z >> skipws;
             break;
+        case 't':
+            ss.ignore(4);
+            break;
+        default:
+             _msgSink.OnDebug("error parsing xyz");
+             return false;
         }
     }
     if( x < IMU_MINXY || x > IMU_MAXXY ||
