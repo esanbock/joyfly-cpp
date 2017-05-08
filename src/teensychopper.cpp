@@ -13,6 +13,10 @@
 #include <chrono>
 #include <mutex>
 #include <algorithm>
+#include <string>
+#include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/split.hpp>
+
 
 #include "serialstream.h"
 #include "abstractchopper.h"
@@ -165,35 +169,27 @@ void TeensyChopper::ProcessMotorChange( const string line )
 
 bool TeensyChopper::ExtractXYZ( const string line, int& x, int& y, int& z)
 {
-    stringstream ss(line);
+    vector<string> result;
+    boost::split( result, line, boost::is_any_of(string(",")) );
 
-   do
+    if( result.size() < 3 )
     {
-        char field[3];
-        ss.get(field, 2);
-        field[2] = 0;
-        switch(field[0])
-        {
-        case 'x':
-            ss.ignore(1);
-            ss >> x >> skipws;
-            break;
-        case 'y':
-            ss.ignore(1);
-            ss >> y >> skipws;
-            break;
-        case 'z':
-            ss.ignore(1);
-            ss >> z >> skipws;
-            break;
-        case 't':
-            ss.ignore(4);
-            break;
-        default:
-             _msgSink.OnDebug("error parsing xyz");
-             return false;
-        }
-    }  while (ss.gcount() > 0);
+        _msgSink.OnDebug("Parsing error.  Too many vals in XYZ");
+        return false;
+    }
+
+    try
+    {
+        x = stoi(result[0]);
+        y = stoi(result[1]);
+        z = stoi(result[2]);
+    }
+    catch( std::invalid_argument& err )
+    {
+        // mucho error
+        _msgSink.OnDebug("Parsing error. Bad data in XYZ");
+        return false;
+    }
 
     if( x < IMU_MINXY || x > IMU_MAXXY ||
             y < IMU_MINXY || y > IMU_MAXXY ||
