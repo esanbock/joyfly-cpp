@@ -37,10 +37,10 @@ protected:
         return *_pController;
     }
 public:
-    virtual void OnIMU( const int x, const int y, const int z ){}
-    virtual void OnBank( float newAngle ){}
-    virtual void OnPitch( float newAngle ){}
-    virtual void OnYaw( float newAngle ){}
+    virtual void OnIMU( const int , const int , const int ){}
+    virtual void OnBank( float ){}
+    virtual void OnPitch( float ){}
+    virtual void OnYaw( float ){}
     virtual void OnVoltageChange( float newVoltage )=0;
 };
 
@@ -61,8 +61,8 @@ public:
 	virtual void OnChopperMessage( const char* szMsg )=0;
 	virtual void OnDebugMessage( const char* szMsg )=0;
     virtual void OnPing( float latency )=0;
-    virtual void OnAutoNav( bool isOn ){}
-    virtual void OnCollective( double newCollective ){}
+    virtual void OnAutoNav( bool ){}
+    virtual void OnCollective( double ){}
 
 };
 

@@ -4,10 +4,10 @@
 #include "joystickinputer.h"
 using namespace std;
 
-CJoystickInputer::CJoystickInputer(int joyNum, IJoyflyController& controller)
-    :_controller(controller),
+CJoystickInputer::CJoystickInputer(int joyNum, IJoyflyController& controller) :
     _joyNum(joyNum),
-    _prevVals {0,0,0,127} ,_curVals{0,0,0,127}
+    _prevVals {0,0,0,127} ,_curVals{0,0,0,127},
+    _controller(controller)
 {
 
 }

@@ -61,7 +61,7 @@ void CSimulatedChopper::SetHome()
     _msgSink.OnNewHeading(imuRand(_gen), imuRand(_gen), compassRand(_gen));
 }
 
-void CSimulatedChopper::Roll(int val)
+void CSimulatedChopper::Roll(int )
 {
 
 }
@@ -76,31 +76,31 @@ void CSimulatedChopper::GetVoltage()
 
 }
 
-void CSimulatedChopper::SetThrottle(int val)
+void CSimulatedChopper::SetThrottle(int )
 {
 
 }
 
-void CSimulatedChopper::Lift(int val)
+void CSimulatedChopper::Lift(int)
 {
 
 }
 
-void CSimulatedChopper::Yaw(int val)
+void CSimulatedChopper::Yaw(int)
 {
 
 }
 
-void CSimulatedChopper::Pitch(int val)
+void CSimulatedChopper::Pitch(int)
 {
 
 }
 
-void CSimulatedChopper::EnableAutopilot(bool enable)
+void CSimulatedChopper::EnableAutopilot(bool )
 {
 
 }
-void CSimulatedChopper::ChangePid( double kP, double kI, double kD )
+void CSimulatedChopper::ChangePid( double , double , double  )
 {
 
 }

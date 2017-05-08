@@ -17,8 +17,8 @@
 using namespace std;
 
 MainWindow::MainWindow(CJoyFlyGuiController* pController, QWidget *parent) :
-    CMainView(pController),
     QMainWindow(parent),
+    CMainView(pController),
     ui(new Ui::MainWindow)
 {
     _pController = pController;

@@ -10,8 +10,8 @@
 
 PlotWindow::PlotWindow(CJoyFlyGuiController* pController,QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::PlotWindow),
-    CGraphView(pController)
+    CGraphView(pController),
+   ui(new Ui::PlotWindow)
 {
     ui->setupUi(this);
 
@@ -42,7 +42,7 @@ PlotWindow::~PlotWindow()
     delete ui;
 }
 
-void PlotWindow::onChangeVoltage( float newVoltage )
+void PlotWindow::onChangeVoltage( float  )
 {
     _pTempCurve->setSamples(Controller().GetVoltageHistory()->GetTimes(),
                             Controller().GetVoltageHistory()->GetVals(),
@@ -52,7 +52,7 @@ void PlotWindow::onChangeVoltage( float newVoltage )
 
 }
 
-void PlotWindow::onIMU( const int x, const int y, const int z )
+void PlotWindow::onIMU( const int , const int , const int  )
 {
     _pCurve_imu_x->setSamples(Controller().GetIMUHistory()[0].GetTimes(), Controller().GetIMUHistory()[0].GetVals(), Controller().GetIMUHistory()[0].GetSize());
     _pCurve_heading_x->setSamples(Controller().GetHeadingHistory()[0].GetTimes(), Controller().GetHeadingHistory()[0].GetVals(), Controller().GetHeadingHistory()[0].GetSize());

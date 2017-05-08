@@ -26,12 +26,13 @@ private:
     std::chrono::seconds _pingerSeconds;
 
 protected:
-    AbstractChopper( int pingerSeconds );
     int _lastPingNum;
     std::thread* _pPingThread = NULL;
-    virtual void PingThread();
     bool _quitting = false;
     std::chrono::system_clock::time_point _sentPingClock;
+
+    AbstractChopper( int pingerSeconds );
+    virtual void PingThread();
     virtual void SendSimpleCommand(const char* szCommand, int value);
     virtual void SendCommand(const char* szCommand)=0;
     virtual void SendCommand(const char* szCommand, bool toggle);
@@ -50,7 +51,7 @@ public:
     virtual void Lift(int val)=0;
     virtual void Yaw(int val)=0;
     virtual void Pitch(int val)=0;
-    virtual void ChangePid( int pidNum, float kP, float kI, float kD){};
+    virtual void ChangePid( int , float , float , float ){}
 
 };
 

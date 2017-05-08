@@ -21,8 +21,10 @@
 using namespace std;
 using namespace std::chrono;
 
-TeensyChopper::TeensyChopper(SerialStream &serialPort, int secondsUpdate, IChopperMessages& msgSink)
-    :_serialPort(serialPort), _msgSink(msgSink), AbstractChopper(secondsUpdate)
+TeensyChopper::TeensyChopper(SerialStream &serialPort, int secondsUpdate, IChopperMessages& msgSink) :
+    AbstractChopper(secondsUpdate),
+    _serialPort(serialPort),
+    _msgSink(msgSink)
 {
     _secondsUpdate = secondsUpdate;
 }

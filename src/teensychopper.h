@@ -16,6 +16,9 @@ using namespace std;
 class TeensyChopper : public AbstractChopper
 {
 private:
+    int _secondsUpdate;
+    thread* _pCommandLoopThread = NULL;
+    mutex _mtxComm;
     const float IMU_MINXY = 300;
     const float IMU_MAXXY = 700;
     const int IMU_MINZ = IMU_MINXY;
@@ -24,12 +27,8 @@ private:
     int _seenMaxXYVolts = 500;
     int _seenMinZVolts = 400;
     int _seenMaxZVolts = 500;
-
     SerialStream& _serialPort;
-    int _secondsUpdate;
     IChopperMessages& _msgSink;
-    thread* _pCommandLoopThread = NULL;
-    mutex _mtxComm;
 
 public:
     TeensyChopper(SerialStream& serialPort, int secondsUpdate, IChopperMessages& msgSink);
