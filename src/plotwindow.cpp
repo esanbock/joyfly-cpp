@@ -59,3 +59,8 @@ void PlotWindow::onIMU( const int x, const int y, const int z )
     _pCurve_motor_x->setSamples(Controller().GetMotorHistory()[0].GetTimes(), Controller().GetMotorHistory()[0].GetVals(), Controller().GetMotorHistory()[0].GetSize());
     ui->qwtPlot_PIDx->replot();
 }
+
+void PlotWindow::on_counterPidXkP_valueChanged(double value)
+{
+    Controller().GetChopper().ChangePid(value, 10, 10);
+}

@@ -21,6 +21,7 @@ public:
     virtual void Lift(int val);
     virtual void Yaw(int val);
     virtual void Pitch(int val);
+    virtual void ChangePid( double kP, double kI, double kD );
 
 private:
     std::thread* _pCommandLoopThread = NULL;

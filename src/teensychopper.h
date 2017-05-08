@@ -44,6 +44,7 @@ public:
     virtual void Lift(int val);
     virtual void Yaw(int val);
     virtual void Pitch(int val);
+    virtual void ChangePid( double kP, double kI, double kD );
 
 protected:
     virtual void SendCommand(const char* szCommand);

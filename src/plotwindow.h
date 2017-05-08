@@ -30,6 +30,9 @@ protected slots:
     virtual void onChangeVoltage( float newThrottle );
     virtual void onIMU( const int x, const int y, const int z );
 
+private slots:
+    void on_counterPidXkP_valueChanged(double value);
+
 private:
     Ui::PlotWindow *ui;
 

@@ -100,3 +100,7 @@ void CSimulatedChopper::EnableAutopilot(bool enable)
 {
 
 }
+void CSimulatedChopper::ChangePid( double kP, double kI, double kD )
+{
+
+}

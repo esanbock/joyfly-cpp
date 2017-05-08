@@ -292,3 +292,8 @@ void TeensyChopper::SetThrottle(int val)
 {
     SendSimpleCommand(":T",  val);
 }
+
+void TeensyChopper::ChangePid( double kP, double kI, double kD )
+{
+
+}
