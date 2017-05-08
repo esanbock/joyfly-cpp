@@ -4,10 +4,10 @@
 #include "joystickinputer.h"
 using namespace std;
 
-CJoystickInputer::CJoystickInputer(int joyNum, IJoyflyController& controller)
-    :_controller(controller),
+CJoystickInputer::CJoystickInputer(int joyNum, IJoyflyController& controller) :
     _joyNum(joyNum),
-    _prevVals {0,0,0,127} ,_curVals{0,0,0,127}
+    _prevVals {0,0,0,127} ,_curVals{0,0,0,127},
+    _controller(controller)
 {
 
 }
@@ -121,7 +121,7 @@ void CJoystickInputer::OpenJoystick(int joystickNum)
 void CJoystickInputer::ProcessJoystickInput()
 {
     AxisCommandSimple( *_sidewinder, [&](int val) {_controller.SetThrottle(val);}, JOYSTICK_THROTTLE, 255, 0);
-    AxisCommandSimple( *_sidewinder, [&](int val) {_controller.GetChopper().Bank(val);}, JOYSTICK_X, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
+    AxisCommandSimple( *_sidewinder, [&](int val) {_controller.GetChopper().Roll(val);}, JOYSTICK_X, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
     AxisCommandSimple( *_sidewinder, [&](int val) {_controller.GetChopper().Pitch(val);}, JOYSTICK_Y, 70, 110);  // 90 needs to be middle.  Robot won't let servo kick up at 110 degrees
     AxisCommandSimple( *_sidewinder, [&](int val) {_controller.GetChopper().Yaw(val);}, JOYSTICK_Z, -255, 255);
 

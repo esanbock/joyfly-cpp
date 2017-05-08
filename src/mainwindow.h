@@ -18,6 +18,9 @@ class MainWindow;
 class MainWindow : public QMainWindow, public CMainView
 {
     Q_OBJECT
+private:
+    Ui::MainWindow *ui;
+    CJoyFlyGuiController* _pController;
 
 public:
     explicit MainWindow(CJoyFlyGuiController* pController, QWidget *parent=0);
@@ -46,29 +49,21 @@ protected slots:
     void onSetAutoPilot(bool isOn);
     void onChangeVoltage( float newVoltage );
     void onPing( float latency );
-
     void on_bank( float latency );
     void on_pitch( float latency );
     void on_yaw( float latency );
+
 private slots:
     void on_throttleControl_sliderMoved(int position);
     void on_connectButton_clicked();
     void on_connectJoystick_clicked();
-
     void on_statusButton_clicked();
-
     void on_autoNavButton_clicked();
-
     void on_rehomeButton_clicked();
-
     void on_connectButton_2_clicked();
-
     void on_pushGraph_clicked();
     void on_collective(double collective);
 
-private:
-    Ui::MainWindow *ui;
-    CJoyFlyGuiController* _pController;
 };
 
 #endif // MAINWINDOW_H

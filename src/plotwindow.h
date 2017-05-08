@@ -16,6 +16,15 @@ class PlotWindow : public QDialog, public CGraphView
 {
     Q_OBJECT
 
+
+private:
+    Ui::PlotWindow *ui;
+
+    QwtPlotCurve* _pTempCurve;
+    QwtPlotCurve* _pCurve_imu_x;
+    QwtPlotCurve* _pCurve_heading_x;
+    QwtPlotCurve* _pCurve_motor_x;
+
 public:
     explicit PlotWindow(CJoyFlyGuiController* pController, QWidget *parent = 0);
     ~PlotWindow();
@@ -30,12 +39,8 @@ protected slots:
     virtual void onChangeVoltage( float newThrottle );
     virtual void onIMU( const int x, const int y, const int z );
 
-private:
-    Ui::PlotWindow *ui;
-
-    QwtPlotCurve* _pTempCurve;
-    QwtPlotCurve* _pCurve_imu_x;
-    QwtPlotCurve* _pCurve_heading_x;
+private slots:
+    void on_counterPidXkP_valueChanged(double value);
 };
 
 #endif // PLOTWINDOW_H

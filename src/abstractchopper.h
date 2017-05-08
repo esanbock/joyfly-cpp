@@ -16,6 +16,7 @@ public:
     virtual void OnUnparsable(const char* data)=0;
     virtual void OnCollective(double collective)=0;
     virtual void OnNewHeading( const int x, const int y, const int z)=0;
+    virtual void OnNewMotors( const int x, const int y, const int z)=0;
 };
 
 class AbstractChopper
@@ -25,12 +26,13 @@ private:
     std::chrono::seconds _pingerSeconds;
 
 protected:
-    AbstractChopper( int pingerSeconds );
     int _lastPingNum;
     std::thread* _pPingThread = NULL;
-    virtual void PingThread();
     bool _quitting = false;
     std::chrono::system_clock::time_point _sentPingClock;
+
+    AbstractChopper( int pingerSeconds );
+    virtual void PingThread();
     virtual void SendSimpleCommand(const char* szCommand, int value);
     virtual void SendCommand(const char* szCommand)=0;
     virtual void SendCommand(const char* szCommand, bool toggle);
@@ -41,7 +43,7 @@ public:
     virtual void SendPing();
 
     virtual void SetHome()=0;
-    virtual void Bank(int val)=0;
+    virtual void Roll(int val)=0;
     virtual void EnableAutopilot(bool enable)=0;
     virtual void GetStatus()=0;
     virtual void GetVoltage()=0;
@@ -49,6 +51,7 @@ public:
     virtual void Lift(int val)=0;
     virtual void Yaw(int val)=0;
     virtual void Pitch(int val)=0;
+    virtual void ChangePid( int , float , float , float ){}
 
 };
 

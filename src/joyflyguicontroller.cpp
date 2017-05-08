@@ -41,7 +41,7 @@ using namespace std;
 
 CJoyFlyGuiController::CJoyFlyGuiController()
 {
-
+    _startClock = clock();
 }
 
 void CJoyFlyGuiController::AddView(CJoyFlyView* pView)
@@ -149,7 +149,8 @@ void CJoyFlyGuiController::Sent(const char *data)
 
 void CJoyFlyGuiController::OnVoltageChange(float newVoltage)
 {
-    _voltageHistory.Add(clock(),(double)newVoltage);
+    double elapsed = (clock() - _startClock) / (double)CLOCKS_PER_SEC;
+    _voltageHistory.Add(elapsed,(double)newVoltage);
 
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
     {
@@ -192,6 +193,14 @@ void CJoyFlyGuiController::OnNewHeading( const int x, const int y, const int z)
     _heading_x = x;
     _heading_y = y;
     _heading_z = z;
+}
+
+void CJoyFlyGuiController::OnNewMotors( const int x, const int y, const int z)
+{
+    double elapsed = (clock() - _startClock);
+    _motorHistory[0].Add(elapsed,x);
+    _motorHistory[1].Add(elapsed,y);
+    _motorHistory[2].Add(elapsed,z);
 }
 
 void CJoyFlyGuiController::GetHeading( int& x, int& y, int &z)
@@ -257,13 +266,15 @@ void CJoyFlyGuiController::SetThrottle(int val)
 
 void CJoyFlyGuiController::OnIMUChanged( const int x, const int y, const int z )
 {
-    _imuHistory[0].Add(clock(),x);
-    _imuHistory[1].Add(clock(),y);
-    _imuHistory[2].Add(clock(),z);
+    double elapsed = (clock() - _startClock);
 
-    _headingHistory[0].AddOrUpdate(clock(),_heading_x);
-    _headingHistory[1].AddOrUpdate(clock(),_heading_y);
-    _headingHistory[2].AddOrUpdate(clock(),_heading_z);
+    _imuHistory[0].Add(elapsed,x);
+    _imuHistory[1].Add(elapsed,y);
+    _imuHistory[2].Add(elapsed,z);
+
+    _headingHistory[0].AddOrUpdate(elapsed,_heading_x);
+    _headingHistory[1].AddOrUpdate(elapsed,_heading_y);
+    _headingHistory[2].AddOrUpdate(elapsed,_heading_z);
 
     //cout << "new IMU (x,y,z) = (" << x << "," << y << "," << z << ")" << endl;
     for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
@@ -296,3 +307,7 @@ TimeSeries<double,double>* CJoyFlyGuiController::GetHeadingHistory()
     return _headingHistory;
 }
 
+TimeSeries<double,double>* CJoyFlyGuiController::GetMotorHistory()
+{
+    return _motorHistory;
+}

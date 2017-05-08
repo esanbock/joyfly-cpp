@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>672</width>
+    <width>764</width>
     <height>435</height>
    </rect>
   </property>
@@ -21,7 +21,7 @@
     <rect>
      <x>20</x>
      <y>30</y>
-     <width>351</width>
+     <width>451</width>
      <height>151</height>
     </rect>
    </property>
@@ -33,6 +33,18 @@
    </property>
    <property name="frameShape">
     <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="canvasBackground">
+    <brush brushstyle="SolidPattern">
+     <color alpha="255">
+      <red>170</red>
+      <green>255</green>
+      <blue>127</blue>
+     </color>
+    </brush>
+   </property>
+   <property name="autoReplot">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -66,7 +78,7 @@
     <rect>
      <x>20</x>
      <y>220</y>
-     <width>351</width>
+     <width>541</width>
      <height>151</height>
     </rect>
    </property>
@@ -76,8 +88,64 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
    <property name="frameShape">
     <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="canvasBackground">
+    <brush brushstyle="SolidPattern">
+     <color alpha="255">
+      <red>170</red>
+      <green>255</green>
+      <blue>255</blue>
+     </color>
+    </brush>
+   </property>
+  </widget>
+  <widget class="QwtCounter" name="counterPidXkP">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>220</y>
+     <width>141</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="value">
+    <double>1.000000000000000</double>
+   </property>
+   <property name="minimum">
+    <double>0.100000000000000</double>
+   </property>
+   <property name="maximum">
+    <double>25.000000000000000</double>
+   </property>
+   <property name="singleStep">
+    <double>0.100000000000000</double>
+   </property>
+   <property name="stepButton1">
+    <number>1</number>
+   </property>
+   <property name="stepButton2">
+    <number>10</number>
+   </property>
+   <property name="stepButton3">
+    <number>100</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>220</y>
+     <width>31</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>kP</string>
    </property>
   </widget>
  </widget>
@@ -87,6 +155,11 @@
    <extends>QFrame</extends>
    <header>qwt_plot.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QwtCounter</class>
+   <extends>QWidget</extends>
+   <header>qwt_counter.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

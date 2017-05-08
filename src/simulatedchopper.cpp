@@ -42,13 +42,17 @@ void CSimulatedChopper::ProcessData()
         std::uniform_real_distribution<> dis(0, 100);
         std::uniform_int_distribution<> imuRand(0,180);
         std::uniform_int_distribution<> compassRand(0,360);
-        sleep(_secondsUpdate);
+        std::uniform_int_distribution<> motorRand(70,110);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(_secondsUpdate));
+
         SendPing();
 
         _msgSink.OnVoltageChange( dis(_gen) );
         _msgSink.OnPing(dis(_gen));
         _msgSink.OnMessage("hi");
         _msgSink.OnIMUChanged(imuRand(_gen), imuRand(_gen), compassRand(_gen));
+        _msgSink.OnNewMotors(motorRand(_gen),motorRand(_gen),motorRand(_gen));
     }
 }
 
@@ -59,7 +63,7 @@ void CSimulatedChopper::SetHome()
     _msgSink.OnNewHeading(imuRand(_gen), imuRand(_gen), compassRand(_gen));
 }
 
-void CSimulatedChopper::Bank(int val)
+void CSimulatedChopper::Roll(int )
 {
 
 }
@@ -74,27 +78,31 @@ void CSimulatedChopper::GetVoltage()
 
 }
 
-void CSimulatedChopper::SetThrottle(int val)
+void CSimulatedChopper::SetThrottle(int )
 {
 
 }
 
-void CSimulatedChopper::Lift(int val)
+void CSimulatedChopper::Lift(int)
 {
 
 }
 
-void CSimulatedChopper::Yaw(int val)
+void CSimulatedChopper::Yaw(int)
 {
 
 }
 
-void CSimulatedChopper::Pitch(int val)
+void CSimulatedChopper::Pitch(int)
 {
 
 }
 
-void CSimulatedChopper::EnableAutopilot(bool enable)
+void CSimulatedChopper::EnableAutopilot(bool )
+{
+
+}
+void CSimulatedChopper::ChangePid( double , double , double  )
 {
 
 }

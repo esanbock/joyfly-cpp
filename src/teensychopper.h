@@ -16,6 +16,9 @@ using namespace std;
 class TeensyChopper : public AbstractChopper
 {
 private:
+    int _secondsUpdate;
+    thread* _pCommandLoopThread = NULL;
+    mutex _mtxComm;
     const float IMU_MINXY = 300;
     const float IMU_MAXXY = 700;
     const int IMU_MINZ = IMU_MINXY;
@@ -24,19 +27,15 @@ private:
     int _seenMaxXYVolts = 500;
     int _seenMinZVolts = 400;
     int _seenMaxZVolts = 500;
-
     SerialStream& _serialPort;
-    int _secondsUpdate;
     IChopperMessages& _msgSink;
-    thread* _pCommandLoopThread = NULL;
-    mutex _mtxComm;
 
 public:
     TeensyChopper(SerialStream& serialPort, int secondsUpdate, IChopperMessages& msgSink);
     virtual ~TeensyChopper();
     virtual void Start();
     virtual void SetHome();
-    virtual void Bank(int val);
+    virtual void Roll(int val);
     virtual void EnableAutopilot(bool enable);
     virtual void GetStatus();
     virtual void GetVoltage();
@@ -44,6 +43,7 @@ public:
     virtual void Lift(int val);
     virtual void Yaw(int val);
     virtual void Pitch(int val);
+    virtual void ChangePid( int pidNum, float kP, float kI, float kD );
 
 protected:
     virtual void SendCommand(const char* szCommand);
@@ -56,6 +56,7 @@ protected:
     float IMUVoltageToAngleXY(const int volts);
     float IMUVoltageToAngleZ(const int volts);
     bool ExtractXYZ( const string line, int& x, int& y, int& z);
+    void ProcessMotorChange( const string line );
 };
 
 #endif

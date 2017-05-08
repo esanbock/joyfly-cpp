@@ -21,8 +21,10 @@
 using namespace std;
 using namespace std::chrono;
 
-TeensyChopper::TeensyChopper(SerialStream &serialPort, int secondsUpdate, IChopperMessages& msgSink)
-    :_serialPort(serialPort), _msgSink(msgSink), AbstractChopper(secondsUpdate)
+TeensyChopper::TeensyChopper(SerialStream &serialPort, int secondsUpdate, IChopperMessages& msgSink) :
+    AbstractChopper(secondsUpdate),
+    _serialPort(serialPort),
+    _msgSink(msgSink)
 {
     _secondsUpdate = secondsUpdate;
 }
@@ -105,6 +107,12 @@ void TeensyChopper::ProcessCommandResponse( const string line )
         return;
     }
 
+    if( line.compare(0,3, ":M ") == 0)
+    {
+        ProcessMotorChange(line);
+        return;
+    }
+
     // otherwise, NAK
     //cout << "unrecognized command from chopper" << endl;
     _msgSink.OnUnparsable( line.c_str() );
@@ -142,12 +150,24 @@ void TeensyChopper::ProcessNewHeading( const string line )
     }
 }
 
+void TeensyChopper::ProcessMotorChange( const string line )
+{
+    int x=0;
+    int y=0;
+    int z=0;
+    if( ExtractXYZ(line.substr(4), x, y, z) )
+    {
+        _msgSink.OnNewMotors(x,y,z);
+    }
+
+}
+
 
 bool TeensyChopper::ExtractXYZ( const string line, int& x, int& y, int& z)
 {
     stringstream ss(line);
 
-    while( !ss.eof() )
+   do
     {
         char field[3];
         ss.get(field, 2);
@@ -173,7 +193,8 @@ bool TeensyChopper::ExtractXYZ( const string line, int& x, int& y, int& z)
              _msgSink.OnDebug("error parsing xyz");
              return false;
         }
-    }
+    }  while (ss.gcount() > 0);
+
     if( x < IMU_MINXY || x > IMU_MAXXY ||
             y < IMU_MINXY || y > IMU_MAXXY ||
             z < IMU_MINZ || z > IMU_MAXZ )
@@ -240,7 +261,7 @@ void TeensyChopper::SetHome()
     SendCommand(":H");
 }
 
-void TeensyChopper::Bank(int val)
+void TeensyChopper::Roll(int val)
 {
     SendSimpleCommand(":B",  val);
 }
@@ -278,4 +299,12 @@ void TeensyChopper::Lift(int val)
 void TeensyChopper::SetThrottle(int val)
 {
     SendSimpleCommand(":T",  val);
+}
+
+void TeensyChopper::ChangePid( int pidNum, float kP, float kI, float kD )
+{
+    stringstream sstream;
+    sstream << ":Q" << pidNum << kP << "," << kI << "," << kD;
+
+    SendCommand(sstream.str().c_str());
 }

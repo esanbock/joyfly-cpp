@@ -21,7 +21,7 @@ public:
         return &_val[0];
     }
 
-    const size_t GetSize()
+    size_t GetSize()
     {
         return _time.size();
     }

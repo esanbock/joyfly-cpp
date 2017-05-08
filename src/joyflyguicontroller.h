@@ -65,11 +65,13 @@ public:
     virtual void OnIMUChanged(const int x, const int y, const int z );
     virtual void OnNewHeading(const int x, const int y, const int z );
     virtual void OnCollective(double collective);
+    virtual void OnNewMotors( const int x, const int y, const int z);
 
     // stats
     virtual TimeSeries<double,double>* GetVoltageHistory();
     virtual TimeSeries<double,double>* GetIMUHistory();
     virtual TimeSeries<double,double>* GetHeadingHistory();
+    virtual TimeSeries<double,double>* GetMotorHistory();
 
 protected:
     void OnChopperMessage( const char* szMsg );
@@ -89,6 +91,8 @@ private:
     int _heading_x=0, _heading_y=0, _heading_z=0;
     TimeSeries<double,double> _imuHistory[3];
     TimeSeries<double,double> _headingHistory[3];
+    TimeSeries<double,double> _motorHistory[3];
+    clock_t _startClock;
 };
 
 #endif // _C_JOY_FLY_CONTROLLER_H_
