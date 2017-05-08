@@ -133,6 +133,12 @@ void TeensyChopper::ProcessCollective( const string line)
 
 void TeensyChopper::ProcessStatusResponse( const string line)
 {
+    if( line.length() < 9 )
+    {
+        _msgSink.OnUnparsable(line.c_str());
+        return;
+    }
+
     int x=0;
     int y=0;
     int z=0;
@@ -145,6 +151,12 @@ void TeensyChopper::ProcessStatusResponse( const string line)
 
 void TeensyChopper::ProcessNewHeading( const string line )
 {
+    if( line.length() < 9 )
+    {
+        _msgSink.OnUnparsable(line.c_str());
+        return;
+    }
+
     int x=0;
     int y=0;
     int z=0;
@@ -156,6 +168,12 @@ void TeensyChopper::ProcessNewHeading( const string line )
 
 void TeensyChopper::ProcessMotorChange( const string line )
 {
+    if( line.length() < 8 )
+    {
+        _msgSink.OnUnparsable(line.c_str());
+        return;
+    }
+
     int x=0;
     int y=0;
     int z=0;
