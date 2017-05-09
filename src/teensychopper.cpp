@@ -122,8 +122,15 @@ void TeensyChopper::ProcessCommandResponse( const string line )
 
 void TeensyChopper::ProcessCollective( const string line)
 {
-    double collective = stod(line.substr(2));
-    _msgSink.OnCollective(collective);
+    try
+    {
+        double collective = stod(line.substr(2));
+        _msgSink.OnCollective(collective);
+    }
+    catch( invalid_argument& err )
+    {
+        _msgSink.OnUnparsable(line.c_str());
+    }
 }
 
 
