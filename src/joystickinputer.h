@@ -25,13 +25,13 @@ private:
     static const int JOYSTICK_VOLTAGE = 5;
     bool _quitting=false;
     int _currentHatY;
-    bool _buttonToggle[5];
+    bool _buttonToggle[10];
     CSdlJoystick* _sidewinder = NULL;
     int _joyNum = -1;
-    int _prevVals[4];
-    int _curVals[4];
-    int _prevButtonVals[5];
-    int _curButtonVals[5];
+    int _prevVals[10];
+    int _curVals[10];
+    int _prevButtonVals[10];
+    int _curButtonVals[10];
     IJoyflyController& _controller;
 
 protected:
