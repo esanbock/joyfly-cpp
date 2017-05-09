@@ -20,7 +20,8 @@
 #ifndef _C_JOY_FLY_CONTROLLER_H_
 #define _C_JOY_FLY_CONTROLLER_H_
 
-#include "serialstream.h"
+#include "SerialStream.h"
+
 #include "joyflycontroller.h"
 #include "joyflyview.h"
 #include "joystickinputer.h"
@@ -86,7 +87,7 @@ private:
     vector<CJoyFlyView*> _views;
     AbstractChopper* _pChopperControl = NULL;
     CJoystickInputer* _pJoystickInputer = NULL;
-    SerialStream* _pComPort = NULL;
+    LibSerial::SerialStream* _pComPort = NULL;
     bool _autoNav = false;
     TimeSeries<double,double> _voltageHistory;
     int _heading_x=0, _heading_y=0, _heading_z=0;
