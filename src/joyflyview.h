@@ -63,6 +63,7 @@ public:
     virtual void OnPing( float latency )=0;
     virtual void OnAutoNav( bool ){}
     virtual void OnCollective( double ){}
+    virtual void OnBankControl(double)=0;
 
 };
 

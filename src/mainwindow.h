@@ -26,7 +26,6 @@ public:
     ~MainWindow();
     void OnChopperMessage( const char* szMsg );
     void OnDebugMessage( const char* szMsg );
-
 signals:
     void OnVoltageChange( float newVoltage );
     void AppendLog(QString log);
@@ -38,6 +37,7 @@ signals:
     void OnPitch( float latency );
     void OnYaw( float latency );
     void OnCollective( double collective );
+    void OnBankControl( double val );
 
 protected:
     void populatejoysticks();

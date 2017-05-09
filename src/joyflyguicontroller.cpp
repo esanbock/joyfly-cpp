@@ -196,6 +196,14 @@ void CJoyFlyGuiController::OnNewMotors( const int x, const int y, const int z)
     _motorHistory[0].Add(elapsed,x);
     _motorHistory[1].Add(elapsed,y);
     _motorHistory[2].Add(elapsed,z);
+
+    for( vector<CJoyFlyView*>::iterator it = _views.begin(); it != _views.end(); ++ it )
+    {
+        CMainView* pMainView = dynamic_cast<CMainView*>(*it);
+        if( pMainView != nullptr)
+            pMainView->OnBankControl(x);
+    }
+
 }
 
 void CJoyFlyGuiController::GetHeading( int& x, int& y, int &z)

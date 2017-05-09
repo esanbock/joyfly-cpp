@@ -28,12 +28,11 @@ MainWindow::MainWindow(CJoyFlyGuiController* pController, QWidget *parent) :
     connect(this,SIGNAL(OnThrottleChange(int)), ui->throttleControl,SLOT(setValue(int)));
     connect(this,SIGNAL(SendDebugMessage(QString)), ui->textDebug,SLOT(appendPlainText(QString)));
     connect(this,SIGNAL(OnAutoNav(bool)), this,SLOT(onSetAutoPilot(bool)));
-
     connect(this,SIGNAL(OnBank(float)), this,SLOT(on_bank(float)));
     connect(this,SIGNAL(OnPitch(float)), this,SLOT(on_pitch(float)));
     connect(this,SIGNAL(OnYaw(float)), this,SLOT(on_yaw(float)));
-
     connect(this,SIGNAL(OnCollective(double)), this,SLOT(on_collective(double)));
+    connect(this,SIGNAL(OnBankControl(double)), ui->sliderRollControl,SLOT(setValue(double)));
 
     populatejoysticks();
 
@@ -189,3 +188,4 @@ void MainWindow::on_simulateButton_clicked()
     ui->simulateButton->setEnabled(false);
     ui->connectJoystick->setEnabled(true);
 }
+
