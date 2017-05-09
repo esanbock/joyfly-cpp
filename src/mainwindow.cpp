@@ -59,7 +59,7 @@ void MainWindow::OnDebugMessage(const char* szMsg )
 
 void MainWindow::onAppendLog(QString log)
 {
-    ui->textLog->appendPlainText(log);
+    ui->textLog->appendPlainText(log.trimmed());
     ui->textLog->ensureCursorVisible();
 }
 
@@ -91,6 +91,7 @@ void MainWindow::on_connectButton_clicked()
     _pController->Connect( ui->serialDevice->text().toStdString());
     ui->connectButton->setEnabled(false);
     ui->simulateButton->setEnabled(false);
+    ui->connectJoystick->setEnabled(true);
 }
 
 void MainWindow::populatejoysticks()
@@ -186,4 +187,5 @@ void MainWindow::on_simulateButton_clicked()
     _pController->Connect( ui->millisecondsUpdate->value() );
     ui->connectButton->setEnabled(false);
     ui->simulateButton->setEnabled(false);
+    ui->connectJoystick->setEnabled(true);
 }

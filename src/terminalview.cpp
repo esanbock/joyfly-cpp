@@ -39,9 +39,9 @@ void CTerminalView::OnDebugMessage(const char* szMsg )
 	cout << szMsg << endl;
 }
 
-void CTerminalView::OnVoltageChange( float newVoltage )
+void CTerminalView::OnVoltageChange( float  )
 {
-    cout << "new voltage:" << newVoltage << endl;
+    //cout << "new voltage:" << newVoltage << endl;
 }
 
 void CTerminalView::OnPing( float latency )
