@@ -14,6 +14,7 @@
 #include <mutex>
 #include <algorithm>
 #include <string>
+#include <iostream>
 #include <boost/algorithm/string.hpp>
 
 #include "abstractchopper.h"
@@ -158,6 +159,14 @@ void TeensyChopper::ProcessNewHeading( const string line )
     int z=0;
     if( ExtractXYZ(line.substr(4), x, y, z) )
     {
+        if( x < IMU_MINXY || x > IMU_MAXXY ||
+                y < IMU_MINXY || y > IMU_MAXXY ||
+                z < IMU_MINZ || z > IMU_MAXZ )
+        {
+            _msgSink.OnDebug("Parsing error");
+            return;
+        }
+
         _msgSink.OnNewHeading(x,y,z);
     }
 }
@@ -173,8 +182,9 @@ void TeensyChopper::ProcessMotorChange( const string line )
     int x=0;
     int y=0;
     int z=0;
-    if( ExtractXYZ(line.substr(4), x, y, z) )
+    if( ExtractXYZ(line.substr(3), x, y, z) )
     {
+
         _msgSink.OnNewMotors(x,y,z);
     }
 
@@ -206,17 +216,7 @@ bool TeensyChopper::ExtractXYZ( const string line, int& x, int& y, int& z)
         return false;
     }
 
-    if( x < IMU_MINXY || x > IMU_MAXXY ||
-            y < IMU_MINXY || y > IMU_MAXXY ||
-            z < IMU_MINZ || z > IMU_MAXZ )
-    {
-        _msgSink.OnDebug("Parsing error");
-        return false;
-    }
-    else
-    {
-        return true;
-    }
+    return true;
 }
 
 float TeensyChopper::IMUVoltageToAngleXY(const int volts)
@@ -241,6 +241,9 @@ void TeensyChopper::SendCommand(const char* szCommand)
     _mtxComm.lock();
 
     _serialPort << szCommand << endl;
+    _serialPort.flush();
+    cout << szCommand << endl;
+
     _msgSink.Sent(szCommand);
 
     _mtxComm.unlock();
@@ -255,6 +258,7 @@ void TeensyChopper::ProcessData()
         try
         {
             std::getline( _serialPort, line );
+            //cout << line;
         }
         catch(exception& err)
         {
