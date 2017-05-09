@@ -67,7 +67,9 @@ int CSdlJoystick::GetAxisNormalized( int axis, int min, int max )
 	int axisVal = GetAxisVal( axis );
 	float axisPct = ((float)axisVal + (float)32767) / ((float)65534);
 
-	return min + (( max - min ) * axisPct);
+    float result = min + (( max - min ) * axisPct);
+
+    return round(result);
 }
 
 int CSdlJoystick::GetAxisCount( )
