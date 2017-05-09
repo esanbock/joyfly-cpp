@@ -85,12 +85,6 @@ AbstractChopper* CJoyFlyGuiController::ConnectToChopper( const string serialDevi
 {
     DebugMessage( (string("Opening serial port ") + serialDevice).c_str() );
 
-    /*SerialOptions options;
-    options.setDevice(serialDevice);
-    options.setFlowControl(SerialOptions::FlowControl::noflow);
-    options.setParity(SerialOptions::Parity::noparity);
-    options.setStopBits(SerialOptions::StopBits::one);
-    options.setBaudrate(38400);*/
     _pComPort = new LibSerial::SerialStream();
     _pComPort->Open(serialDevice);
     _pComPort->SetBaudRate(LibSerial::SerialStreamBuf::BAUD_38400);
