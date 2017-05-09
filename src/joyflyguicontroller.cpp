@@ -21,9 +21,6 @@
 #include <vector>
 #include <thread>
 #include <stdexcept>
-#include <boost/asio.hpp>
-#include <boost/asio/serial_port.hpp>
-#include "serialstream.h"
 
 #include "abstractchopper.h"
 #include "teensychopper.h"
@@ -36,7 +33,6 @@
 #include "joystickinputer.h"
 #include "joyflyguicontroller.h"
 
-using namespace boost;
 using namespace std;
 
 CJoyFlyGuiController::CJoyFlyGuiController()
@@ -55,7 +51,7 @@ CJoyFlyGuiController::~CJoyFlyGuiController()
 
     if( _pComPort != NULL )
     {
-        _pComPort->close();
+        //_pComPort->close();
         delete _pComPort;
     }
 }
@@ -89,14 +85,19 @@ AbstractChopper* CJoyFlyGuiController::ConnectToChopper( const string serialDevi
 {
     DebugMessage( (string("Opening serial port ") + serialDevice).c_str() );
 
-    SerialOptions options;
+    /*SerialOptions options;
     options.setDevice(serialDevice);
     options.setFlowControl(SerialOptions::FlowControl::noflow);
     options.setParity(SerialOptions::Parity::noparity);
     options.setStopBits(SerialOptions::StopBits::one);
-    options.setBaudrate(38400);
-    _pComPort = new SerialStream(options);
+    options.setBaudrate(38400);*/
+    _pComPort = new LibSerial::SerialStream();
     _pComPort->exceptions(ios::badbit | ios::failbit);
+    _pComPort->Open(serialDevice);
+    _pComPort->SetBaudRate(LibSerial::SerialStreamBuf::BAUD_38400);
+    _pComPort->SetCharSize( LibSerial::SerialStreamBuf::CHAR_SIZE_8 );
+    _pComPort->SetParity(LibSerial::SerialStreamBuf::PARITY_NONE);
+    _pComPort->SetNumOfStopBits(1);
 
     AbstractChopper* pTeensyChopper = new TeensyChopper(*_pComPort, secondsUpdate, *this);
     pTeensyChopper->Start();

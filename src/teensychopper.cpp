@@ -15,17 +15,14 @@
 #include <algorithm>
 #include <string>
 #include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string/split.hpp>
 
-
-#include "serialstream.h"
 #include "abstractchopper.h"
 #include "teensychopper.h"
 
 using namespace std;
 using namespace std::chrono;
 
-TeensyChopper::TeensyChopper(SerialStream &serialPort, int secondsUpdate, IChopperMessages& msgSink) :
+TeensyChopper::TeensyChopper(iostream &serialPort, int secondsUpdate, IChopperMessages& msgSink) :
     AbstractChopper(secondsUpdate),
     _serialPort(serialPort),
     _msgSink(msgSink)
@@ -37,7 +34,6 @@ TeensyChopper::TeensyChopper(SerialStream &serialPort, int secondsUpdate, IChopp
 TeensyChopper::~TeensyChopper()
 {
     _quitting = true;
-    _serialPort.close();
 }
 
 void TeensyChopper::Start()

@@ -27,11 +27,11 @@ private:
     int _seenMaxXYVolts = 500;
     int _seenMinZVolts = 400;
     int _seenMaxZVolts = 500;
-    SerialStream& _serialPort;
+    iostream& _serialPort;
     IChopperMessages& _msgSink;
 
 public:
-    TeensyChopper(SerialStream& serialPort, int secondsUpdate, IChopperMessages& msgSink);
+    TeensyChopper(iostream& serialPort, int secondsUpdate, IChopperMessages& msgSink);
     virtual ~TeensyChopper();
     virtual void Start();
     virtual void SetHome();

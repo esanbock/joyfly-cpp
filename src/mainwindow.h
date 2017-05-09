@@ -7,7 +7,6 @@
 #include <QMainWindow>
 #include "abstractchopper.h"
 #include "joystickinputer.h"
-#include "serialstream.h"
 #include "joyflyview.h"
 #include "joyflyguicontroller.h"
 

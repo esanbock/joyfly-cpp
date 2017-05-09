@@ -25,9 +25,6 @@
 #include <chrono>
 
 #include <QApplication>
-#include <boost/asio.hpp>
-#include <boost/asio/serial_port.hpp>
-#include "serialstream.h"
 
 #include "joyflycontroller.h"
 #include "joyflyview.h"

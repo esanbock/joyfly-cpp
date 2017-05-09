@@ -8,7 +8,6 @@
 #include "abstractchopper.h"
 #include "joystickinputer.h"
 
-#include "serialstream.h"
 #include "joyflyguicontroller.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"

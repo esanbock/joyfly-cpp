@@ -34,7 +34,6 @@ SOURCES += main.cpp\
     abstractchopper.cpp \
     sdljoystick.cpp \
     attitude_indicator.cpp \
-    serialstream.cpp \
     teensychopper.cpp \
     plotwindow.cpp \
     joyflyguicontroller.cpp \
@@ -47,7 +46,6 @@ HEADERS  += mainwindow.h \
     abstractchopper.h \
     sdljoystick.h \
     attitude_indicator.h \
-    serialstream.h \
     teensychopper.h \
     plotwindow.h \
     joyflycontroller.h \
@@ -62,5 +60,5 @@ FORMS += mainwindow.ui \
 mac: LIBS += -framework qwt
 else: LIBS += -lqwt-qt5
 
-LIBS += -lboost_system -lSDL2
+LIBS += -lboost_system -lSDL2 -lserial
 
