@@ -75,14 +75,15 @@ void TeensyChopper::ProcessCommandResponse( const string line )
     {
         try
         {
+            // 785 = 12v
             int rawVoltage = stoi(line.substr(2,4));
             if( rawVoltage < 0 || rawVoltage > 1023 )
             {
                 _msgSink.OnUnparsable(line.c_str());
                 return;
             }
-            float pctVoltage = (float)rawVoltage / 1023.0;
-            _msgSink.OnVoltageChange(pctVoltage * 100);
+            float calculatedVoltage = (float)rawVoltage / 65.4167;
+            _msgSink.OnVoltageChange(calculatedVoltage);
         }
         catch( invalid_argument& invalid_arg )
         {
