@@ -64,3 +64,10 @@ void PlotWindow::on_counterPidXkP_valueChanged(double value)
 {
     Controller().GetChopper().ChangePid(0,value, 10, 10);
 }
+
+void PlotWindow::on_pushClearX_clicked()
+{
+     Controller().GetIMUHistory()[0].Clear();
+     Controller().GetHeadingHistory()[0].Clear();
+     Controller().GetMotorHistory()[0].Clear();
+}

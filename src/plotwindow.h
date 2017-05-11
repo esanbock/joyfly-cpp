@@ -41,6 +41,7 @@ protected slots:
 
 private slots:
     void on_counterPidXkP_valueChanged(double value);
+    void on_pushClearX_clicked();
 };
 
 #endif // PLOTWINDOW_H

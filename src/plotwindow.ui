@@ -148,6 +148,19 @@
     <string>kP</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushClearX">
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>270</y>
+     <width>103</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Clear</string>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>

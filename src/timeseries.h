@@ -43,6 +43,12 @@ public:
             Add(x,y);
         }
     }
+
+    void Clear()
+    {
+        _time.clear();
+        _val.clear();
+    }
 };
 
 #endif // TIMESERIES_H
