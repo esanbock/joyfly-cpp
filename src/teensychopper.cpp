@@ -149,7 +149,14 @@ void TeensyChopper::ProcessStatusResponse( const string line)
 
     if( ExtractXYZ(line.substr(3), x, y, z) )
     {
-         _msgSink.OnIMUChanged(x, y , z);
+        if( x < IMU_MINXY || x > IMU_MAXXY ||
+                y < IMU_MINXY || y > IMU_MAXXY ||
+                z < IMU_MINZ || z > IMU_MAXZ )
+        {
+            _msgSink.OnDebug("Out of range error");
+            return;
+        }
+        _msgSink.OnIMUChanged(x, y , z);
     }
 }
 
@@ -326,7 +333,7 @@ void TeensyChopper::SetThrottle(int val)
 void TeensyChopper::ChangePid( int pidNum, float kP, float kI, float kD )
 {
     stringstream sstream;
-    sstream << ":Q" << pidNum << kP << "," << kI << "," << kD;
+    sstream << ":Q " << pidNum << "," << kP << "," << kI << "," << kD;
 
     SendCommand(sstream.str().c_str());
 }
