@@ -106,10 +106,6 @@ void PlotWindow::onIMU( const int , const int , const int  )
     ui->qwtPlot_PIDz->replot();
 }
 
-void PlotWindow::on_counterPidXkP_valueChanged(double value)
-{
-    Controller().GetChopper().ChangePid(0,value, 10, 10);
-}
 
 void PlotWindow::on_pushClearX_clicked()
 {
@@ -124,6 +120,11 @@ void PlotWindow::on_pushClearX_clicked()
      Controller().GetIMUHistory()[2].Clear();
      Controller().GetHeadingHistory()[2].Clear();
      Controller().GetMotorHistory()[2].Clear();
+}
+
+void PlotWindow::on_counterPidXkP_valueChanged(double value)
+{
+    Controller().GetChopper().ChangePid(0,value, 10, 10);
 }
 
 void PlotWindow::on_counterPidYkP_valueChanged(double value)
