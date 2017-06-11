@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>792</width>
-    <height>630</height>
+    <height>799</height>
    </rect>
   </property>
   <property name="focusPolicy">
@@ -249,18 +249,94 @@
     <string>kP</string>
    </property>
   </widget>
-  <zorder>qwtPlot</zorder>
-  <zorder>label</zorder>
-  <zorder>label_2</zorder>
-  <zorder>qwtPlot_PIDx</zorder>
-  <zorder>counterPidXkP</zorder>
-  <zorder>label_3</zorder>
-  <zorder>pushClearX</zorder>
-  <zorder>qwtPlot_PIDx_2</zorder>
-  <zorder>qwtPlot_PIDy</zorder>
-  <zorder>counterPidYkP</zorder>
-  <zorder>label_4</zorder>
-  <zorder>label_5</zorder>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>600</y>
+     <width>31</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>kP</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>580</y>
+     <width>60</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PID Z</string>
+   </property>
+  </widget>
+  <widget class="QwtPlot" name="qwtPlot_PIDz">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>600</y>
+     <width>541</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="canvasBackground">
+    <brush brushstyle="SolidPattern">
+     <color alpha="255">
+      <red>195</red>
+      <green>255</green>
+      <blue>167</blue>
+     </color>
+    </brush>
+   </property>
+  </widget>
+  <widget class="QwtCounter" name="counterPidZkP">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>600</y>
+     <width>141</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="value">
+    <double>1.000000000000000</double>
+   </property>
+   <property name="minimum">
+    <double>0.100000000000000</double>
+   </property>
+   <property name="maximum">
+    <double>25.000000000000000</double>
+   </property>
+   <property name="singleStep">
+    <double>0.100000000000000</double>
+   </property>
+   <property name="stepButton1">
+    <number>1</number>
+   </property>
+   <property name="stepButton2">
+    <number>10</number>
+   </property>
+   <property name="stepButton3">
+    <number>100</number>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>

@@ -43,6 +43,7 @@ private slots:
     void on_counterPidXkP_valueChanged(double value);
     void on_pushClearX_clicked();
     void on_counterPidYkP_valueChanged(double value);
+    void on_counterPidZkP_valueChanged(double value);
 };
 
 #endif // PLOTWINDOW_H
