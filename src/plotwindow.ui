@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>764</width>
-    <height>435</height>
+    <width>792</width>
+    <height>630</height>
    </rect>
   </property>
   <property name="focusPolicy">
@@ -21,7 +21,7 @@
     <rect>
      <x>20</x>
      <y>30</y>
-     <width>451</width>
+     <width>541</width>
      <height>151</height>
     </rect>
    </property>
@@ -151,8 +151,8 @@
   <widget class="QPushButton" name="pushClearX">
    <property name="geometry">
     <rect>
-     <x>570</x>
-     <y>270</y>
+     <x>620</x>
+     <y>30</y>
      <width>103</width>
      <height>28</height>
     </rect>
@@ -161,6 +161,106 @@
     <string>Clear</string>
    </property>
   </widget>
+  <widget class="QwtPlot" name="qwtPlot_PIDy">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>410</y>
+     <width>541</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="canvasBackground">
+    <brush brushstyle="SolidPattern">
+     <color alpha="255">
+      <red>255</red>
+      <green>170</green>
+      <blue>255</blue>
+     </color>
+    </brush>
+   </property>
+  </widget>
+  <widget class="QwtCounter" name="counterPidYkP">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>410</y>
+     <width>141</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="value">
+    <double>1.000000000000000</double>
+   </property>
+   <property name="minimum">
+    <double>0.100000000000000</double>
+   </property>
+   <property name="maximum">
+    <double>25.000000000000000</double>
+   </property>
+   <property name="singleStep">
+    <double>0.100000000000000</double>
+   </property>
+   <property name="stepButton1">
+    <number>1</number>
+   </property>
+   <property name="stepButton2">
+    <number>10</number>
+   </property>
+   <property name="stepButton3">
+    <number>100</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>390</y>
+     <width>60</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PID Y</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>410</y>
+     <width>31</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>kP</string>
+   </property>
+  </widget>
+  <zorder>qwtPlot</zorder>
+  <zorder>label</zorder>
+  <zorder>label_2</zorder>
+  <zorder>qwtPlot_PIDx</zorder>
+  <zorder>counterPidXkP</zorder>
+  <zorder>label_3</zorder>
+  <zorder>pushClearX</zorder>
+  <zorder>qwtPlot_PIDx_2</zorder>
+  <zorder>qwtPlot_PIDy</zorder>
+  <zorder>counterPidYkP</zorder>
+  <zorder>label_4</zorder>
+  <zorder>label_5</zorder>
  </widget>
  <customwidgets>
   <customwidget>

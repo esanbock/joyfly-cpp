@@ -21,9 +21,9 @@ private:
     Ui::PlotWindow *ui;
 
     QwtPlotCurve* _pTempCurve;
-    QwtPlotCurve* _pCurve_imu_x;
-    QwtPlotCurve* _pCurve_heading_x;
-    QwtPlotCurve* _pCurve_motor_x;
+    QwtPlotCurve* _pCurve_imu[3];
+    QwtPlotCurve* _pCurve_heading[3];
+    QwtPlotCurve* _pCurve_motor[3];
 
 public:
     explicit PlotWindow(CJoyFlyGuiController* pController, QWidget *parent = 0);
@@ -42,6 +42,7 @@ protected slots:
 private slots:
     void on_counterPidXkP_valueChanged(double value);
     void on_pushClearX_clicked();
+    void on_counterPidYkP_valueChanged(double value);
 };
 
 #endif // PLOTWINDOW_H
