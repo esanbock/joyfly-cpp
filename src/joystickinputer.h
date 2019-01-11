@@ -4,6 +4,7 @@
 
 #include "SDL2/SDL.h"
 #include <thread>
+#include <functional>
 
 #include "joyflycontroller.h"
 #include "sdljoystick.h"
