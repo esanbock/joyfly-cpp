@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <sstream>
 #include <thread>
+#include <boost/format.hpp>
 
 #include "abstractchopper.h"
 
@@ -71,7 +72,10 @@ void AbstractChopper::SendCommand(const char* szCommand, bool toggle)
 void AbstractChopper::SendSimpleCommand(const char* szCommand, int value)
 {
     stringstream sstream;
-    sstream << szCommand << setfill('0') << setw(3) << value;
+    //sstream << szCommand << setfill('0') << setw(3) << value;
+    boost::format fmt("%03d");
+    fmt % value;
+    sstream << szCommand << fmt.str();
     string command = sstream.str();
     SendCommand( command.c_str() );
 }
